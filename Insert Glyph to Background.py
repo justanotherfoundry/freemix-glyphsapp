@@ -22,7 +22,7 @@ from vanilla import *
 LEFT = '<'
 RIGHT = '>'
 
-Font = Glyphs.font
+font = Glyphs.font
 
 class GlyphnameDialog( object):
 
@@ -52,12 +52,12 @@ class GlyphnameDialog( object):
 			return
 		if len( glyphname ) == 1:
 			uni = ord(glyphname)
-			g = Font.glyphForUnicode_("%.4X" % uni)
+			g = font.glyphForUnicode_("%.4X" % uni)
 			if g:
 				glyphname = g.name
-		other_glyph = Font.glyphs[ glyphname ]
+		other_glyph = font.glyphs[ glyphname ]
 		if not other_glyph:
-			for glyph in Font.glyphs:
+			for glyph in font.glyphs:
 				if glyph.name.startswith( glyphname ):
 					other_glyph = glyph
 					print 'Using', glyph.name
@@ -67,7 +67,7 @@ class GlyphnameDialog( object):
 				self.w.close()
 				return
 		
-		selected_glyphs = set( [ layer.parent for layer in Font.selectedLayers ] )
+		selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
 		
 		for glyph in selected_glyphs:
 			glyph.beginUndo()

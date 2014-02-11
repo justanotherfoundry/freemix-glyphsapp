@@ -1,4 +1,4 @@
-#MenuTitle: mask to master
+#MenuTitle: Mask to Master
 # encoding: utf-8
 
 # by Tim Ahrens
@@ -20,4 +20,3 @@ layers = font.selectedLayers
 
 for layer in layers:
 	layer.background.contentToBackgroundCheckSelection_keepOldBackground_(False, False)
-
