@@ -22,12 +22,11 @@ from vanilla import *
 LEFT = '<'
 RIGHT = '>'
 
-glyphs = Glyphs.font.glyphs
+Font = Glyphs.font
 
 class GlyphnameDialog( object):
 
-	def __init__( self, selected_glyphs ):
-		self.selected_glyphs = selected_glyphs
+	def __init__( self ):
 		x = 10
 		y = 10
 		height = 20
@@ -52,11 +51,13 @@ class GlyphnameDialog( object):
 			self.w.close()
 			return
 		if len( glyphname ) == 1:
-			pass
-			# todo: get Unicode value and choose glyph accordingly
-		other_glyph = glyphs[ glyphname ]
+			uni = ord(glyphname)
+			g = Font.glyphForUnicode_("%.4X" % uni)
+			if g:
+				glyphname = g.name
+		other_glyph = Font.glyphs[ glyphname ]
 		if not other_glyph:
-			for glyph in glyphs:
+			for glyph in Font.glyphs:
 				if glyph.name.startswith( glyphname ):
 					other_glyph = glyph
 					print 'Using', glyph.name
@@ -65,24 +66,22 @@ class GlyphnameDialog( object):
 				print 'No matching glyph found.'
 				self.w.close()
 				return
-		for glyph in self.selected_glyphs:
+		
+		selected_glyphs = set( [ layer.parent for layer in Font.selectedLayers ] )
+		
+		for glyph in selected_glyphs:
 			glyph.beginUndo()
 			for layer in glyph.layers:
-				# clear mask
-				for i in range( len ( layer.background.paths ) ):
-					del layer.background.paths[0]
+				layer.clearBackground()
 				# inert paths
-				for other_layer in other_glyph.layers:
-					if other_layer.associatedMasterId == layer.associatedMasterId:
-						for path in other_layer.copyDecomposedLayer().paths:
-							if title == RIGHT:
-								shift = layer.width - other_layer.width # might not be used
-								for node in path.nodes:
-									node.x = node.x + shift
-							layer.background.paths.append( path )
-						break
+				other_layer = other_glyph.layers[layer.associatedMasterId]
+				for path in other_layer.copyDecomposedLayer().paths:
+					if title == RIGHT:
+						shift = layer.width - other_layer.width # might not be used
+						for node in path.nodes:
+							node.x = node.x + shift
+					layer.background.paths.append( path )
 			glyph.endUndo()
 		self.w.close()
 
-selected_glyphs = set( [ layer.parent for layer in Glyphs.font.selectedLayers ] )
-GlyphnameDialog( selected_glyphs )
+GlyphnameDialog()
