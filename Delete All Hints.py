@@ -6,7 +6,7 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 '''
-Removes all hints front he selected glyphs.
+Removes all hints from the selected glyphs.
 
 '''
 
