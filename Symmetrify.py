@@ -31,7 +31,21 @@ from vanilla import Window, SquareButton
 class SymmetrifyDialog( object ):
 
 	def buttonCallback( self, sender ):
-		self.button = sender.getTitle()
+		button = sender.getTitle()
+		
+		font.disableUpdateInterface()
+		glyph.beginUndo()
+		if button == 'S':
+			rotate()
+		if button == 'T':
+			horiflip()
+		if button == 'C':
+			vertiflip()
+		if button == 'H':
+			bothflip()
+		glyph.endUndo()
+		font.enableUpdateInterface()
+		
 		self.w.close()
 
 	def __init__( self, titles ):
@@ -49,10 +63,6 @@ class SymmetrifyDialog( object ):
 
 	def run( self ):
 		self.w.open()
-		while not self.button:
-			pass
-		return self.button
-
 
 node_types = { 	GSLINE: 'o', GSCURVE: 'o', GSOFFCURVE: '.' }
 
@@ -242,19 +252,6 @@ for layer in layers:
 	if buttons:
 		dialog = SymmetrifyDialog( buttons )
 		button = dialog.run()
-		if button:
-			font.disableUpdateInterface()
-			glyph.beginUndo()
-			if button == 'S':
-				rotate()
-			if button == 'T':
-				horiflip()
-			if button == 'C':
-				vertiflip()
-			if button == 'H':
-				bothflip()
-			glyph.endUndo()
-			font.enableUpdateInterface()
 	else:
 		print 'No symmetrical structures in this glyph.'
 
