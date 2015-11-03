@@ -27,6 +27,10 @@ Expand Kerning like we know it from FontLab.
 - It is sufficient to enter the beginning of the glyph name, e.g. "deg" for "degree".
 
 
+### Insert Glyph
+
+Same as “Insert Glyph to Background” but the glyph is inserted into the active (foreground) layer, not in the background
+
 ### Mask to Master
 
 Simulates the good ol' Mask to Master function we know from FontLab
@@ -34,6 +38,12 @@ Simulates the good ol' Mask to Master function we know from FontLab
 
 You can give it the familiar Cmd+J shortcut via App Shortcuts
 in the Mac OS System Preferences.
+
+UPDATE:
+
+- If nodes are selected then Mask to Master detects the counterparts (closest nodes) in the background
+and shifts the nodes accordingly. In this case, the node structure and node types are not affected.
+- If nothing is selected, it behaves as before (but does not remove existing anchors – this is a fix).
 
 
 ### Paste Background
@@ -62,3 +72,8 @@ C - creates vertical reflection symmetry
 H - creates 2-axis symmetry (ie. all the above)
 
 The buttons are available only as far as the node structure allows.
+
+### Round Kerning
+
+- Rounds the kerning values to full integer numbers.
+- In addition, values smaller than MIN_VALUE are erased.
