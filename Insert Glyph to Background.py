@@ -73,7 +73,7 @@ class GlyphnameDialog( object):
 			glyph.beginUndo()
 			for layer in glyph.layers:
 				layer.clearBackground()
-				# inert paths
+				# insert paths
 				other_layer = other_glyph.layers[layer.associatedMasterId]
 				for path in other_layer.copyDecomposedLayer().paths:
 					if title == RIGHT:
