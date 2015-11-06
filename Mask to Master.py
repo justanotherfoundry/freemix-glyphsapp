@@ -49,6 +49,15 @@ layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
 selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
 
+# if the selection contains the starting node: re-arrange selection to be consecutive
+for path in layer.paths:
+	if path.nodes[0] in layer.selection:
+		first_node = 0
+		while path.nodes[first_node-1] in layer.selection:
+			first_node -= 1
+			selection.insert( 0, selection.pop() )
+		break
+
 glyph.beginUndo()
 
 if selection:
