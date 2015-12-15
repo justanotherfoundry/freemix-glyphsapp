@@ -101,8 +101,9 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 		try:
 			Glyphs = NSApplication.sharedApplication()
 			if len( Layer.background.paths ) > 0 and Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")):
-				# trying to switch off the built-in background (this one does not work)
-				# Glyphs.currentDocument.font.currentTab().showBackground_(0)
+				# switch off the built-in background
+				Glyphs.defaults["showBackground"] = 0
+				# draw the background layer in orange
 				NSColor.orangeColor().set()
 				try:
 					Layer.background.bezierPath().setLineWidth_( 1.0 / self.getScale() )
