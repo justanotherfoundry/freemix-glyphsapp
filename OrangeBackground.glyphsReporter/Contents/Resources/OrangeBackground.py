@@ -102,7 +102,8 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 			Glyphs = NSApplication.sharedApplication()
 			if len( Layer.background.paths ) > 0 and Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")):
 				# switch off the built-in background
-				Glyphs.defaults["showBackground"] = 0
+				if Glyphs.defaults["showBackground"] != 0:
+					Glyphs.defaults["showBackground"] = 0
 				# draw the background layer in orange
 				NSColor.orangeColor().set()
 				try:
