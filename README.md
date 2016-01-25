@@ -4,7 +4,9 @@ Freemix for Glyphs
 Some Python scripts to be used with the [Glyphs](http://www.glyphsapp.com/) font editor.
 
 Tim Ahrens  
+
 [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp) 
+
 [Just Another Foundry](http://justanotherfoundry.com/) 
 
 ### Delete All Hints
