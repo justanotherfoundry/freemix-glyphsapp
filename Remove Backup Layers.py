@@ -15,7 +15,7 @@ from GlyphsApp import *
 font = Glyphs.currentDocument.font
 
 for glyph in font.glyphs:
-	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and not '[' in layer.name and not ']' in layer.name ]
+	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and not '[' in layer.name and not ']' in layer.name and not '{' in layer.name and not '}' in layer.name ]
 	for layerId in associated_layers:
 		print 'deleting extra layer from', glyph.name
 		del glyph.layers[layerId]
