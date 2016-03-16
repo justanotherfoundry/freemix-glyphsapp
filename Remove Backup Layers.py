@@ -11,11 +11,13 @@ Removes all backup layers (i.e. those created using the "Copy" button) from the 
 '''
 
 from GlyphsApp import *
+import re
 
 font = Glyphs.currentDocument.font
+selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
 
-for glyph in font.glyphs:
-	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and not '[' in layer.name and not ']' in layer.name ]
+for glyph in selected_glyphs:
+	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and not re.search( r"(\{[^a-zA-Z]+\})|(\[[^a-zA-Z]+\])", layer.name ) ]
 	for layerId in associated_layers:
 		print 'deleting extra layer from', glyph.name
 		del glyph.layers[layerId]
