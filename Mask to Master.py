@@ -49,18 +49,23 @@ layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
 selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
 
-# if the selection contains the starting node: re-arrange selection to be consecutive
-for path in layer.paths:
-	if path.nodes[0] in layer.selection:
-		first_node = 0
-		while path.nodes[first_node-1] in layer.selection:
-			first_node -= 1
-			selection.insert( 0, selection.pop() )
-		break
+# if all is selected: treat it as if nothing was selected
+not_selected = [ node for path in layer.paths for node in path.nodes if node not in layer.selection ]
+if not not_selected:
+	selection = []
 
 glyph.beginUndo()
 
 if selection:
+	# if the selection contains the starting node: re-arrange selection to be consecutive
+	for path in layer.paths:
+		if path.nodes[0] in layer.selection:
+			first_node = 0
+			while path.nodes[first_node-1] in layer.selection:
+				first_node -= 1
+				selection.insert( 0, selection.pop() )
+			break
+	# move nodes
 	for node, bg_node in counterparts( selection, layer.background ):
 		node.position = bg_node.position
 else:
@@ -71,4 +76,5 @@ else:
 	for path in layer.copyDecomposedLayer().background.paths:
 		# copy across path
 		layer.paths.append( path )
+
 glyph.endUndo()
