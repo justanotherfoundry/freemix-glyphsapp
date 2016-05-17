@@ -100,12 +100,19 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 		"""
 		try:
 			Glyphs = NSApplication.sharedApplication()
-			if len( Layer.background.paths ) > 0 and Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")):
+			if len( Layer.background.paths ) > 0 and ( Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GlyphsToolSelect")) or Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")) ):
+# 			if len( Layer.background.paths ) > 0 and Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")):
 				# switch off the built-in background
 				if Glyphs.defaults["showBackground"] != 0:
 					Glyphs.defaults["showBackground"] = 0
 				# draw the background layer in orange
 				NSColor.orangeColor().set()
+				try:
+					Layer.background.bezierPath.setLineWidth_( 1.0 / self.getScale() )
+					Layer.background.bezierPath.stroke()
+				except:
+					# Layer.background.bezierPath() is None
+					pass
 				try:
 					Layer.background.bezierPath().setLineWidth_( 1.0 / self.getScale() )
 					Layer.background.bezierPath().stroke()
@@ -113,10 +120,17 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 					# Layer.background.bezierPath() is None
 					pass
 				try:
+					Layer.background.openBezierPath.setLineWidth_( 1.0 / self.getScale() )
+					Layer.background.openBezierPath.stroke()
+				except:
+					# Layer.background.bezierPath() is None
+					pass
+				try:
 					Layer.background.openBezierPath().setLineWidth_( 1.0 / self.getScale() )
 					Layer.background.openBezierPath().stroke()
 				except:
-					pass # Layer.background.openBezierPath() is None
+					# Layer.background.openBezierPath() is None
+					pass
 		except Exception as e:
 			self.logToConsole( "drawBackgroundForLayer_: %s" % str(e) )
 	
@@ -130,7 +144,6 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 		because otherwise Glyphs will draw the main outline on top of it, and
 		potentially cover up your background drawing.
 		"""
-
 		pass
 		"""
 		try:
