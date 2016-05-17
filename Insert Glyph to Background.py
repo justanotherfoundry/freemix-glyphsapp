@@ -72,15 +72,18 @@ class GlyphnameDialog( object):
 		for glyph in selected_glyphs:
 			glyph.beginUndo()
 			for layer in glyph.layers:
-				layer.clearBackground()
-				# insert paths
-				other_layer = other_glyph.layers[layer.associatedMasterId]
-				for path in other_layer.copyDecomposedLayer().paths:
-					if title == RIGHT:
-						shift = layer.width - other_layer.width # might not be used
-						for node in path.nodes:
-							node.x = node.x + shift
-					layer.background.paths.append( path )
+				layer.background.clear()
+				# find other layer
+				for other_layer in other_glyph.layers:
+					if other_layer.name == layer.name:
+						# insert paths
+						for path in other_layer.copyDecomposedLayer().paths:
+							if title == RIGHT:
+								shift = layer.width - other_layer.width
+								for node in path.nodes:
+									node.x = node.x + shift
+							layer.background.paths.append( path )
+						break
 			glyph.endUndo()
 		self.w.close()
 
