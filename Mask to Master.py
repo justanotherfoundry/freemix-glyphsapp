@@ -54,21 +54,23 @@ not_selected = [ node for path in layer.paths for node in path.nodes if node not
 if not not_selected:
 	selection = []
 
-glyph.beginUndo()
-
 if selection:
 	# if the selection contains the starting node: re-arrange selection to be consecutive
 	for path in layer.paths:
-		if path.nodes[0] in layer.selection:
+		if path.nodes[0] in layer.selection and len( path.nodes ) != len( layer.selection ):
 			first_node = 0
 			while path.nodes[first_node-1] in layer.selection:
 				first_node -= 1
 				selection.insert( 0, selection.pop() )
 			break
+	# begin undo
+	glyph.beginUndo()
 	# move nodes
 	for node, bg_node in counterparts( selection, layer.background ):
 		node.position = bg_node.position
 else:
+	# begin undo
+	glyph.beginUndo()
 	# delete all paths
 	while layer.paths:
 		del(layer.paths[0])
