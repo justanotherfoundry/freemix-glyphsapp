@@ -23,6 +23,20 @@ LEFT = '<'
 RIGHT = '>'
 
 font = Glyphs.font
+active_layerId = Glyphs.font.selectedLayers[0].layerId
+
+def insert_paths( to_layer, from_layer, alignment = LEFT ):
+	# clear layer
+	to_layer.background.clear()
+	# insert all paths
+	for path in from_layer.copyDecomposedLayer().paths:
+		if alignment == RIGHT:
+			shift = to_layer.width - from_layer.width
+			for node in path.nodes:
+				node.x = node.x + shift
+		to_layer.background.paths.append( path )
+		# select path (makes is quicker to move around the shape later)
+		to_layer.background.paths[-1].selected = True
 
 class GlyphnameDialog( object):
 
@@ -45,7 +59,7 @@ class GlyphnameDialog( object):
 		self.w.open()
 
 	def buttonCallback( self, sender ):
-		title = sender.getTitle()
+		alignment = sender.getTitle()
 		glyphname = self.w.glyphname.get()
 		if not glyphname:
 			self.w.close()
@@ -72,18 +86,14 @@ class GlyphnameDialog( object):
 		for glyph in selected_glyphs:
 			glyph.beginUndo()
 			for layer in glyph.layers:
-				layer.background.clear()
 				# find other layer
 				for other_layer in other_glyph.layers:
 					if other_layer.name == layer.name:
-						# insert paths
-						for path in other_layer.copyDecomposedLayer().paths:
-							if title == RIGHT:
-								shift = layer.width - other_layer.width
-								for node in path.nodes:
-									node.x = node.x + shift
-							layer.background.paths.append( path )
+						insert_paths( layer, other_layer, alignment )
 						break
+				else:
+					if active_layerId == layer.layerId:
+						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment )
 			glyph.endUndo()
 		self.w.close()
 
