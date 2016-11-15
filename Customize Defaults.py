@@ -9,7 +9,7 @@
 This is not a macro you would use daily but more of a documentation of
 settings that can be accessed in Python via intDefaults.
 
-Values that cannot be set via the Glyphs UI (this not commented out here)
+Values that cannot be set via the Glyphs UI (those not commented out here)
 are particularly interesting.
 
 Feel free to contribute more if you find other values that may be useful 

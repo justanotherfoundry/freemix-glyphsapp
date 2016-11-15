@@ -9,6 +9,11 @@ Tim Ahrens
 
 [Just Another Foundry](http://justanotherfoundry.com/) 
 
+### Customize Defaults
+
+This is not a macro you would use daily but more of a documentation of settings that can be accessed in Python via intDefaults.
+
+
 ### Delete All Hints
 
 Removes all hints from the selected glyphs.
@@ -42,11 +47,8 @@ Simulates the good ol' Mask to Master function we know from FontLab
 You can give it the familiar Cmd+J shortcut via App Shortcuts
 in the Mac OS System Preferences.
 
-UPDATE:
-
-- If nodes are selected then Mask to Master detects the counterparts (closest nodes) in the background
+If nodes are selected then Mask to Master detects the counterparts (closest nodes) in the background
 and shifts the nodes accordingly. In this case, the node structure and node types are not affected.
-- If nothing is selected, it behaves as before (but does not remove existing anchors – this is a fix).
 
 
 ### Paste Background
@@ -55,6 +57,11 @@ Pastes the background contours into the current layer.
 
 Former FontLab users can give it the familiar Cmd+L shortcut via App Shortcuts
 in the Mac OS System Preferences.
+
+
+### Print Coeffs
+
+Prints the interpolation coefficients for each master in all instances.
 
 
 ### Remove Backup Layers
@@ -80,3 +87,9 @@ The buttons are available only as far as the node structure allows.
 
 - Rounds the kerning values to full integer numbers.
 - In addition, values smaller than MIN_VALUE are erased.
+
+### Toggle Backup Layer
+
+- This script toggles between the master layer and the last backup layer in the list.
+
+- Given a keyboard shortcut, this is useful for quickly comparing two versions of a glyph.
