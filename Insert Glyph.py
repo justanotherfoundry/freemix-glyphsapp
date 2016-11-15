@@ -24,6 +24,19 @@ RIGHT = '>'
 
 font = Glyphs.font
 
+def insert_paths( to_layer, from_layer, alignment = LEFT ):
+	# clear layer
+	to_layer.background.clear()
+	# insert all paths
+	for path in from_layer.copyDecomposedLayer().paths:
+		if alignment == RIGHT:
+			shift = to_layer.width - from_layer.width
+			for node in path.nodes:
+				node.x = node.x + shift
+		to_layer.paths.append( path )
+		# select path (makes is quicker to move around the shape later)
+		to_layer.paths[-1].selected = True
+
 class GlyphnameDialog( object):
 
 	def __init__( self ):
@@ -85,10 +98,57 @@ class GlyphnameDialog( object):
 								node.x = node.x + shift
 						layer.paths.append( path )
 						# select path
-						for node in layer.paths[-1].nodes:
-							layer.addSelection_( node )
+						layer.paths[-1].selected = True
 					break
 			glyph.endUndo()
 		self.w.close()
 
-GlyphnameDialog()
+GSSelectGlyphsDialogController = objc.lookUpClass("GSSelectGlyphsDialogController")
+selectGlyphPanel = GSSelectGlyphsDialogController.alloc().init()
+selectGlyphPanel.setTitle_("Find Glyphs")
+
+master = Font.masters[0] # Pick with master you are interested in, e.g., currentTab.masterIndex
+selectGlyphPanel.setMasterID_(master.id)
+selectGlyphPanel.setContent_(list(Font.glyphs))
+PreviousSearch = Glyphs.defaults["PickGlyphsSearch"]
+if PreviousSearch and len(PreviousSearch) > 0:
+	selectGlyphPanel.setSearch_(PreviousSearch)
+
+if selectGlyphPanel.runModal():
+	alignment = LEFT
+	Glyphs.defaults["PickGlyphsSearch"] = selectGlyphPanel.glyphsSelectSearchField().stringValue()
+	other_glyph = selectGlyphPanel.selectedGlyphs()[0]
+else:
+	alignment = RIGHT
+	glyphname =  selectGlyphPanel.glyphsSelectSearchField().stringValue()
+	other_glyph = font.glyphs[ glyphname ]
+for layer in font.selectedLayers:
+	glyph = layer.parent
+	glyph.beginUndo()
+	# deselect all
+	for path in layer.paths:
+		for node in path.nodes:
+			layer.removeObjectFromSelection_( node )
+	# find other layer
+	for other_layer in other_glyph.layers:
+		if other_layer.name == layer.name:
+			insert_paths( layer, other_layer, alignment )
+			'''
+			# insert paths
+			for path in other_layer.copyDecomposedLayer().paths:
+				if alignment == RIGHT:
+					shift = layer.width - other_layer.width
+					for node in path.nodes:
+						node.x = node.x + shift
+				layer.paths.append( path )
+				# select path
+				for node in layer.paths[-1].nodes:
+					layer.addSelection_( node )
+			'''
+			break
+	else:
+		insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment )
+	glyph.endUndo()
+
+
+# GlyphnameDialog()
