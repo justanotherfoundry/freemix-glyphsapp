@@ -11,6 +11,10 @@ Simulates the good ol' Mask to Master function we know from FontLab
 
 You can give it the familiar Cmd+J shortcut via App Shortcuts
 in the Mac OS System Preferences.
+
+The main improvement is that it is appplied only to the selection.
+In combination with Insert Glyph to Background, you can easily
+transfer parts of the outline between glyphs.
 '''
 
 from GlyphsApp import *
@@ -31,7 +35,7 @@ def counterparts( selection, background ):
 			# calculate deviation
 			for node in selection:
 				bg_node = bg_nodes[indx]
-				if node.type != bg_node.type:
+				if ( node.type == OFFCURVE ) != ( bg_node.type == OFFCURVE ):
 					break
 				deviation += abs( node.x - bg_node.x )
 				deviation += abs( node.y - bg_node.y )
@@ -45,6 +49,41 @@ def counterparts( selection, background ):
 				best_point_range = point_range
 	return zip( selection, best_point_range )
 
+def subpaths( selection ):
+	selection.append( GSNode() )
+	# build subpaths
+	subpaths = []
+	tail = []
+	nextNode = None
+	current_subpath = []
+	current_subpath_is_tail = False
+	for node in selection:
+		if node == nextNode:
+			current_subpath.append( node )
+		else:
+			if current_subpath_is_tail:
+				if current_subpath[0] == nextNode:
+					subpaths.append( current_subpath )
+				else:
+					tail = current_subpath
+			else:
+				if tail and tail[0] == nextNode:
+					current_subpath.extend( tail )
+					tail = []
+				if current_subpath:
+					subpaths.append( current_subpath )
+			# start new subpath
+			current_subpath = [ node ]
+			# starting a new tail?
+			if node.prevNode in selection:
+				assert( not tail )
+				current_subpath_is_tail = True
+				tail = [ node ]
+			else:
+				current_subpath_is_tail = False
+		nextNode = node.nextNode
+	return subpaths
+
 layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
 selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
@@ -55,19 +94,13 @@ if not not_selected:
 	selection = []
 
 if selection:
-	# if the selection contains the starting node: re-arrange selection to be consecutive
-	for path in layer.paths:
-		if path.nodes[0] in layer.selection and len( path.nodes ) != len( layer.selection ):
-			first_node = 0
-			while path.nodes[first_node-1] in layer.selection:
-				first_node -= 1
-				selection.insert( 0, selection.pop() )
-			break
+	subpaths = subpaths( selection )
 	# begin undo
 	glyph.beginUndo()
 	# move nodes
-	for node, bg_node in counterparts( selection, layer.background ):
-		node.position = bg_node.position
+	for subpath in subpaths:
+		for node, bg_node in counterparts( subpath, layer.background ):
+			node.position = bg_node.position
 else:
 	# begin undo
 	glyph.beginUndo()
