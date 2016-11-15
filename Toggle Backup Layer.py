@@ -11,6 +11,8 @@ the last backup layer in the list.
 
 Given a keyboard shortcut, this is useful for
 comparing two versions of a glyph.
+
+Requires Glyphs v 2.4 (938) or later.
 """
 
 from GlyphsApp import *
