@@ -94,43 +94,49 @@ class OrangeBackgroundClass ( NSObject, GlyphsReporterProtocol ):
 		"""
 		pass
 	
-	def drawBackgroundForLayer_( self, Layer ):
+	def drawBackgroundForLayer_( self, layer ):
 		"""
 		Whatever you draw here will be displayed BEHIND the paths.
 		"""
 		try:
 			Glyphs = NSApplication.sharedApplication()
-			if len( Layer.background.paths ) > 0 and ( Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GlyphsToolSelect")) or Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")) ):
-# 			if len( Layer.background.paths ) > 0 and Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")):
+			if ( Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GlyphsToolSelect")) or Glyphs.currentDocument.windowController().toolDrawDelegate().isKindOfClass_(NSClassFromString("GSToolSelect")) ):
 				# switch off the built-in background
 				if Glyphs.defaults["showBackground"] != 0:
 					Glyphs.defaults["showBackground"] = 0
-				# draw the background layer in orange
+				# determine "background" layer
+				try:
+					background = layer.foreground()
+					# background is active
+				except:
+					# foreground is active
+					background = layer.background
+				# draw the "background" layer in orange
 				NSColor.orangeColor().set()
 				try:
-					Layer.background.bezierPath.setLineWidth_( 1.0 / self.getScale() )
-					Layer.background.bezierPath.stroke()
+					background.bezierPath.setLineWidth_( 1.0 / self.getScale() )
+					background.bezierPath.stroke()
 				except:
-					# Layer.background.bezierPath() is None
+					# background.bezierPath() is None
 					pass
 				try:
-					Layer.background.bezierPath().setLineWidth_( 1.0 / self.getScale() )
-					Layer.background.bezierPath().stroke()
+					background.bezierPath().setLineWidth_( 1.0 / self.getScale() )
+					background.bezierPath().stroke()
 				except:
-					# Layer.background.bezierPath() is None
+					# background.bezierPath() is None
 					pass
 				try:
-					Layer.background.openBezierPath.setLineWidth_( 1.0 / self.getScale() )
-					Layer.background.openBezierPath.stroke()
+					background.openBezierPath.setLineWidth_( 1.0 / self.getScale() )
+					background.openBezierPath.stroke()
 				except:
-					# Layer.background.bezierPath() is None
+					# background.bezierPath() is None
 					pass
 				try:
-					Layer.background.openBezierPath().setLineWidth_( 1.0 / self.getScale() )
-					Layer.background.openBezierPath().stroke()
+					background.openBezierPath().setLineWidth_( 1.0 / self.getScale() )
+					background.openBezierPath().stroke()
 				except:
-					# Layer.background.openBezierPath() is None
-					pass
+					# background.openBezierPath() is None
+						pass
 		except Exception as e:
 			self.logToConsole( "drawBackgroundForLayer_: %s" % str(e) )
 	
