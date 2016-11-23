@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-"""
+__doc__="""
 This script toggles between the master layer and
 the last backup layer in the list.
 

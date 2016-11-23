@@ -1,7 +1,7 @@
 #MenuTitle: Select Inaccessible Glyphs
 # encoding: utf-8
 
-'''
+__doc__='''
 Run this macro while in the Font View.
 
 The macro selects all glyphs that

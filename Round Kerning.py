@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-"""
+__doc__="""
 Rounds the kerning values to full integer numbers.
 
 In addition, values smaller than MIN_VALUE are erased.

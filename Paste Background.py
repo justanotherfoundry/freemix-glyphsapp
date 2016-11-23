@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 Pastes the background contours into the current layer.
 
 Former FontLab users can give it the familiar Cmd+L shortcut via App Shortcuts

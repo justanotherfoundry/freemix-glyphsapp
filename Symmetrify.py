@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 Symmetrifies the glyph shape.
 
 S - creates point reflection (rotational symmetry)

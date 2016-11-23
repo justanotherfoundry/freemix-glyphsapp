@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 Removes all zero-thickness hints from all glyphs in the font.
 
 '''

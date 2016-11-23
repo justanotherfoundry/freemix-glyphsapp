@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-"""
+__doc__="""
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.

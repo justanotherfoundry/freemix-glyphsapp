@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 Prints the interpolation coefficients for each master in all instances.
 '''
 

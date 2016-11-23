@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 This is not a macro you would use daily but more of a documentation of
 settings that can be accessed in Python via intDefaults.
 

@@ -5,7 +5,7 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__='''
 Simulates the good ol' Mask to Master function we know from FontLab
 (i.e. replaces the current outline with the background).
 
