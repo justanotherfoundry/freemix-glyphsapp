@@ -9,4 +9,4 @@ __doc__="""
 Activates the previous glyph in the tab for editing. You can give it a keyboard shortcut in the macOS system preferences.
 """
 
-Font.currentTab.textCursor -= 1
+Font.currentTab.textCursor = (Font.currentTab.textCursor - 1) % len(Font.currentTab.layers)
