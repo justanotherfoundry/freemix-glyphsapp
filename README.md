@@ -19,6 +19,16 @@ This is not a macro you would use daily but more of a documentation of settings 
 Removes all hints from the selected glyphs.
 
 
+### Delete Zero-Thickness Hints
+
+Removes all zero-thickness hints from all glyphs in the font.
+
+
+### Edit Next Glyph/ Previous Glyph
+
+Activates the next/ previous glyph in the tab for editing. Makes most sense if you give it a keyboard shortcut in the macOS system preferences.
+
+
 ### Expand Kerning
 
 Expand Kerning like we know it from FontLab.
@@ -39,6 +49,7 @@ Expand Kerning like we know it from FontLab.
 
 Same as “Insert Glyph to Background” but the glyph is inserted into the active (foreground) layer, not in the background
 
+
 ### Mask to Master
 
 Simulates the good ol' Mask to Master function we know from FontLab
@@ -47,8 +58,9 @@ Simulates the good ol' Mask to Master function we know from FontLab
 You can give it the familiar Cmd+J shortcut via App Shortcuts
 in the Mac OS System Preferences.
 
-If nodes are selected then Mask to Master detects the counterparts (closest nodes) in the background
-and shifts the nodes accordingly. In this case, the node structure and node types are not affected.
+The main improvement is that it is appplied only to the selection.
+In combination with Insert Glyph to Background, you can easily
+transfer parts of the outline between glyphs.
 
 
 ### Paste Background
@@ -66,7 +78,28 @@ Prints the interpolation coefficients for each master in all instances.
 
 ### Remove Backup Layers
 
-Removes all backup layers (i.e. those created using the "Copy" button) from the font.
+Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
+
+
+### Round Kerning
+
+Rounds the kerning values to full integer numbers.
+
+In addition, values smaller than MIN_VALUE are erased.
+
+
+### Select Inaccessible Glyphs
+
+Run this macro while in the Font View.
+
+The macro selects all glyphs that
+- export
+- do not have a Unicode value and 
+- are not covered by any OT feature
+
+i.e. are not accessible in the final font.
+
+These glyphs can usually be excluded from the final exported OTF font.
 
 
 ### Symmetrify
@@ -80,6 +113,8 @@ T - creates horizontal reflection symmetry
 C - creates vertical reflection symmetry
 
 H - creates 2-axis symmetry (ie. all the above)
+
+* - creates 5-fold rotational symmetry, useful for asterisks (note that this automatically also applies horizontal reflection symmetry)
 
 The buttons are available only as far as the node structure allows.
 
