@@ -12,9 +12,9 @@ S - creates point reflection (rotational symmetry)
 T - creates horizontal reflection symmetry
 C - creates vertical reflection symmetry
 H - creates 2-axis symmetry (ie. all the above)
+* - creates 5-fold rotational symmetry
 
 The buttons are available only as far as the node structure allows.
-
 '''
 
 from GlyphsApp import *
@@ -23,8 +23,6 @@ doc = Glyphs.currentDocument
 font = doc.font
 layers = doc.selectedLayers()
 glyph = layers[0].parent
-
-# print '______________________________________________________________'
 
 from vanilla import Window, SquareButton
 
@@ -43,6 +41,15 @@ class SymmetrifyDialog( object ):
 			vertiflip()
 		if button == 'H':
 			bothflip()
+		if button == '*':
+			rotate5()
+			horiflip()
+			rotate5()
+			horiflip()
+			rotate5()
+			horiflip()
+			rotate5()
+			horiflip()
 		glyph.endUndo()
 		font.enableUpdateInterface()
 		
@@ -68,13 +75,21 @@ node_types = { 	GSLINE: 'o', GSCURVE: 'o', GSOFFCURVE: '.' }
 
 for layer in layers:
 
-	# center x and y
-	cx = layer.bounds.origin.x + 0.5 * layer.bounds.size.width
-	cy = layer.bounds.origin.y + 0.5 * layer.bounds.size.height
 	# all the nodes, sorted by contour
-	contours = [ [ node for node in path.nodes ] for path in layer.paths ]
+	contours = [ [ node for node in path.nodes if node.selected ] for path in layer.paths ]
+	contours = [ contour for contour in contours if contour ]
+	if not contours:
+		contours = [ [ node for node in path.nodes ] for path in layer.paths ]
 	# node structures of the contours
-	structures = [ [ node_types[node.type] for node in path.nodes ] for path in layer.paths ]
+	structures = [ [ node_types[node.type] for node in contour ] for contour in contours ]
+
+	# center x and y
+	max_x = max( [ node.position.x for node in contour for contour in contours ] )
+	min_x = min( [ node.position.x for node in contour for contour in contours ] )
+	max_y = max( [ node.position.y for node in contour for contour in contours ] )
+	min_y = min( [ node.position.y for node in contour for contour in contours ] )
+	cx = 0.5 * ( max_x + min_x )
+	cy = 0.5 * ( max_y + min_y )
 
 	# can it be rotated?
 	allow_rotate = 0
@@ -87,6 +102,21 @@ for layer in layers:
 				break
 	else:
 		allow_rotate = 1
+
+	# can it be 5-fold?
+	allow_rotate5 = 0
+	for c in range( len( contours ) ):
+		if len( contours[c] ) % 5 == 1:
+			break
+		else:
+			rotated_structure = structures[c][len(structures[c])/5:] + structures[c][:len(structures[c])/5]
+			if structures[c] != rotated_structure:
+				break
+			rotated_structure2 = structures[c][2*len(structures[c])/5:] + structures[c][:2*len(structures[c])/5]
+			if structures[c] != rotated_structure2:
+				break
+	else:
+		allow_rotate5 = 1
 
 	# can it be flipped?
 	allow_flip = 0
@@ -226,18 +256,58 @@ for layer in layers:
 
 	def rotate():
 		global cx, cy
-		for c in range(len(contours)):
+		for contour in contours:
 			partner = len(contours[c])/2
 			for n in range(partner):
-				contours[c][n].x	 = 0.50001*contours[c][n].x - 0.50001*contours[c][partner].x + cx
-				contours[c][partner].x = 2.0*cx - contours[c][n].x
-				contours[c][n].y	 = 0.50001*contours[c][n].y - 0.50001*contours[c][partner].y + cy
-				contours[c][partner].y = 2.0*cy - contours[c][n].y
-				if partner == len(contours[c])-1:
-					partner = 0
-				else:
-					partner += 1
-		# TODO: set advance width
+				contour[n].x	 = 0.50001*contour[n].x - 0.50001*contour[partner].x + cx
+				contour[partner].x = 2.0*cx - contour[n].x
+				contour[n].y	 = 0.50001*contour[n].y - 0.50001*contour[partner].y + cy
+				contour[partner].y = 2.0*cy - contour[n].y
+				partner = ( partner + 1 ) % len(contour)
+		# TODO: set advance width?
+	
+	####################################################################################################
+
+	def blend_points( p0, p1, p2, p3, p4 ):
+		return NSPoint( 0.2 * ( p0.x + p1.x + p2.x + p3.x + p4.x ), 0.2 * ( p0.y + p1.y + p2.y + p3.y + p4.y ) )
+	
+	import math
+	# returns the vector p-center, rotated around center by angle (given in radians)
+	def rotated_vector( p, angle, center = NSPoint( 0, 0 ) ):
+		v = NSPoint( p.x - center.x, p.y - center.y )
+		result = NSPoint()
+		result.x += v.x * math.cos( angle ) - v.y * math.sin( angle )
+		result.y += v.x * math.sin( angle ) + v.y * math.cos( angle )
+		return result
+
+	def rotate5():
+		fifth_circle = - math.pi * 2 / 5;
+		sum_x = sum( [ p.x for c in contours for p in c ] )
+		sum_y = sum( [ p.y for c in contours for p in c ] )
+		num_p = sum( [ len( c ) for c in contours ] )
+		cgx = sum_x / num_p
+		cgy = sum_y / num_p
+		cg = NSPoint( cgx, cgy )
+		for contour in contours:
+			partner1 = len(contour)/5
+			partner2 = 2 * partner1
+			partner3 = 3 * partner1
+			partner4 = 4 * partner1
+			for n in range(partner1):
+				vector = blend_points( subtractPoints( contour[n].position, cg ),
+					rotated_vector( contour[partner1].position, fifth_circle, cg ),
+					rotated_vector( contour[partner2].position, fifth_circle * 2, cg ),
+					rotated_vector( contour[partner3].position, fifth_circle * 3, cg ),
+					rotated_vector( contour[partner4].position, fifth_circle * 4, cg ) )
+				contour[n].position = addPoints( cg, vector )
+				contour[partner1].position = addPoints( cg, rotated_vector( vector, -fifth_circle ) )
+				contour[partner2].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 2 ) )
+				contour[partner3].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 3 ) )
+				contour[partner4].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 4 ) )
+				partner1 = ( partner1 + 1 ) % len(contour)
+				partner2 = ( partner2 + 1 ) % len(contour)
+				partner3 = ( partner3 + 1 ) % len(contour)
+				partner4 = ( partner4 + 1 ) % len(contour)
 	
 	####################################################################################################
 
@@ -249,6 +319,8 @@ for layer in layers:
 		buttons += [ 'T', 'C' ]
 		if 'S' in buttons:
 			buttons += [ 'H' ]
+	if allow_rotate5:
+		buttons += [ '*' ]
 	if buttons:
 		dialog = SymmetrifyDialog( buttons )
 		button = dialog.run()
