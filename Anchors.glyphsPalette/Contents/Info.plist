@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.rmx.AnchorsPalette</string>
+	<string>com.remixtools.AnchorsPalette</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -21,11 +21,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>UpdateFeedURL</key>
-	<string>____OnlineUrlToThisPlist____</string>
+	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
-	<string>____ProductPageURL____</string>
-	<key>productReleaseNotes</key>
-	<string>____LatestReleaseNotes____</string>
+	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2017</string>
 	<key>NSPrincipalClass</key>
