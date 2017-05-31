@@ -1,13 +1,31 @@
 Freemix for Glyphs
 =================
 
-Some Python scripts to be used with the [Glyphs](http://www.glyphsapp.com/) font editor.
+Some Python scripts to be used with the [Glyphs](http://www.glyphsapp.com/) font editor, written by Tim Ahrens.
 
-Tim Ahrens  
+To install in Glyphs,
 
-[Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp) 
+* download the whole freemix package using “Clone or download”, “Download ZIP”.
+* in Glyphs, press Cmd+Shift+Y, which opens a Finder window
+* move the `.py` files from the freemix package into the `Scripts` subfolder
+* move the `.glyphsReporter` and `.glyphsPalette` files into the `Plugins` subfolder
+* restart Glyphs
 
-[Just Another Foundry](http://justanotherfoundry.com/) 
+See also:
+[Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp)
+[Just Another Foundry](http://justanotherfoundry.com/)
+
+### Anchors palette
+
+The palette shows the position of anchors in the selected glyphs. This helps you check for consistent positioning of anchors if multiple glyphs are selected. For example, select A–Z to see whether all `top` anchors are on the same height, and adjust their position. If the position of the anchors is not identical in all selected glyphs then a gray x or y is shown.
+
+The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respecive name (anchors are never insterted or removed).
+
+
+### Orange Background
+
+Makes contours in the background shown in orange instead of gray.
+
 
 ### Customize Defaults
 
@@ -94,7 +112,7 @@ Run this macro while in the Font View.
 
 The macro selects all glyphs that
 - export
-- do not have a Unicode value and 
+- do not have a Unicode value and
 - are not covered by any OT feature
 
 i.e. are not accessible in the final font.
