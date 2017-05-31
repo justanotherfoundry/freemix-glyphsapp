@@ -5,29 +5,29 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>OrangeBackground</string>
+	<string>Anchors Palette</string>
 	<key>CFBundleExecutable</key>
 	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.remixtools.OrangeBackground</string>
+	<string>com.remixtools.AnchorsPalette</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>OrangeBackground</string>
+	<string>Anchors Palette</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.01</string>
+	<string>1.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.01</string>
+	<string>1.0</string>
 	<key>UpdateFeedURL</key>
-	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/OrangeBackground.glyphsReporter/Contents/Info.plist</string>
+	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2017</string>
 	<key>NSPrincipalClass</key>
-	<string>OrangeBackgroundClass</string>
+	<string>AnchorsPalette</string>
 	<key>PyMainFileNames</key>
 	<array>
 		<string>../MacOS/main.py</string>
