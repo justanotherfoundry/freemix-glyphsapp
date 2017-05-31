@@ -3,7 +3,7 @@ Freemix for Glyphs
 
 Some Python scripts to be used with the [Glyphs](http://www.glyphsapp.com/) font editor, written by Tim Ahrens.
 
-To install in Glyphs,
+To install Freemix in Glyphs,
 
 * download the whole freemix package using “Clone or download”, “Download ZIP”.
 * in Glyphs, press Cmd+Shift+Y, which opens a Finder window
@@ -11,11 +11,9 @@ To install in Glyphs,
 * move the `.glyphsReporter` and `.glyphsPalette` files into the `Plugins` subfolder
 * restart Glyphs
 
-See also:
-[Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp)
-[Just Another Foundry](http://justanotherfoundry.com/)
+See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Just Another Foundry](http://justanotherfoundry.com/)
 
-### Anchors palette
+### Anchors Palette
 
 The palette shows the position of anchors in the selected glyphs. This helps you check for consistent positioning of anchors if multiple glyphs are selected. For example, select A–Z to see whether all `top` anchors are on the same height, and adjust their position. If the position of the anchors is not identical in all selected glyphs then a gray x or y is shown.
 
