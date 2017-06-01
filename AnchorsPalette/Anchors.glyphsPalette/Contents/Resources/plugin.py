@@ -53,15 +53,12 @@ class AnchorsPalette (PalettePlugin):
 		except ValueError:
 			self.update()
 			return
-		print index, anchorName, newValue
 		for layer in self.font.selectedLayers:
 			for anchor in layer.anchors:
 				if anchor.name == anchorName:
 					if xPos == self.posx_xTextField:
-						print 'x'
 						layer.anchors[anchorName].position = NSPoint( newValue, layer.anchors[anchorName].position.y )
 					else:
-						print 'y'
 						layer.anchors[anchorName].position = NSPoint( layer.anchors[anchorName].position.x, newValue )
 
 
