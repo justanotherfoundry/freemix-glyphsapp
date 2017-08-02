@@ -112,4 +112,5 @@ else:
 		# copy across path
 		layer.paths.append( path )
 
+layer.syncMetrics()
 glyph.endUndo()

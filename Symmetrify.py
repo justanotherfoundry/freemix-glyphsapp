@@ -188,8 +188,7 @@ for layer in layers:
 					partner = len(contours[c])-1
 				else:
 					partner -= 1
-		# TODO: set advance width
-		# g.SetMetrics( Point( cx*2, g.GetMetrics(m).y ), m )
+		layer.syncMetrics()
 	
 	####################################################################################################
 	
@@ -209,6 +208,7 @@ for layer in layers:
 					partner = len(contours[c])-1
 				else:
 					partner -= 1
+		layer.syncMetrics()
 	
 	####################################################################################################
 
@@ -250,7 +250,7 @@ for layer in layers:
 					partner_rotate = 0
 				else:
 					partner_rotate += 1
-		# TODO: set advance width
+		layer.syncMetrics()
 	
 	####################################################################################################
 
@@ -264,7 +264,7 @@ for layer in layers:
 				contour[n].y	 = 0.50001*contour[n].y - 0.50001*contour[partner].y + cy
 				contour[partner].y = 2.0*cy - contour[n].y
 				partner = ( partner + 1 ) % len(contour)
-		# TODO: set advance width?
+		layer.syncMetrics()
 	
 	####################################################################################################
 
