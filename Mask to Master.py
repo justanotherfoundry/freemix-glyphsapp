@@ -108,9 +108,8 @@ else:
 	while layer.paths:
 		del(layer.paths[0])
 	# insert background
-	for path in layer.copyDecomposedLayer().background.paths:
-		# copy across path
-		layer.paths.append( path )
+	for path in layer.background.paths:
+		layer.paths.append( path.copy() )
 
 layer.syncMetrics()
 glyph.endUndo()
