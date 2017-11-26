@@ -27,11 +27,9 @@ for layer in layers:
 		for node in path.nodes:
 			layer.removeObjectFromSelection_( node )
 		# layer.removeObjectsFromSelection_( path.pyobjc_instanceMethods.nodes() )
-
 	# paste in background
-	for path in layer.copyDecomposedLayer().background.paths:
-		# copy across path
-		layer.paths.append( path )
+	for path in layer.background.paths:
+		layer.paths.append( path.copy() )
 		# select path
 		for node in layer.paths[-1].nodes:
 			layer.addSelection_( node )
