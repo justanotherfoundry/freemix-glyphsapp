@@ -11,7 +11,7 @@
 #
 ###########################################################################################################
 
-
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
 import operator
