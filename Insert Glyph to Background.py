@@ -16,8 +16,7 @@ __doc__="""
 
 """
 
-from GlyphsApp import *
-from vanilla import *
+from vanilla import Window, EditText, Button
 
 LEFT = '<'
 RIGHT = '>'

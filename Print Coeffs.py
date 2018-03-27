@@ -9,7 +9,6 @@ __doc__='''
 Prints the interpolation coefficients for each master in all instances.
 '''
 
-from GlyphsApp import *
 import re
 
 abbreviations = {

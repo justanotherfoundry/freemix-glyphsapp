@@ -17,7 +17,6 @@ In combination with Insert Glyph to Background, you can easily
 transfer parts of the outline between glyphs.
 '''
 
-from GlyphsApp import *
 import sys
 
 def counterparts( selection, background ):
@@ -76,7 +75,6 @@ def subpaths( selection ):
 			current_subpath = [ node ]
 			# starting a new tail?
 			if node.prevNode in selection:
-				assert( not tail )
 				current_subpath_is_tail = True
 				tail = [ node ]
 			else:

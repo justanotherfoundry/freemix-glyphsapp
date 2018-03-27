@@ -16,8 +16,7 @@ __doc__="""
 
 """
 
-from GlyphsApp import *
-from vanilla import *
+from vanilla import Window, EditText, Button
 
 LEFT = '<'
 RIGHT = '>'
@@ -25,8 +24,6 @@ RIGHT = '>'
 font = Glyphs.font
 
 def insert_paths( to_layer, from_layer, alignment = LEFT ):
-	# clear layer
-	to_layer.background.clear()
 	# insert all paths
 	for path in from_layer.copyDecomposedLayer().paths:
 		if alignment == RIGHT:

@@ -6,11 +6,10 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__='''
-Removes all backup layers (i.e. those created using the "Copy" button) from the font.
+Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
 
 '''
 
-from GlyphsApp import *
 import re
 
 font = Glyphs.currentDocument.font
