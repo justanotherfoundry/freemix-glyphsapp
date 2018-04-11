@@ -17,4 +17,6 @@ font = doc.font
 layers = doc.selectedLayers()
 
 for layer in layers:
-	layer.hints = []
+	for i in range( len( layer.hints ) -1, -1, -1 ):
+		if layer.hints[i].type != CORNER and layer.hints[i].type != CAP:
+			del layer.hints[i]
