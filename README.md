@@ -9,6 +9,7 @@ To install Freemix in Glyphs,
 * in Glyphs, press Cmd+Shift+Y, which opens a Finder window
 * move the `.py` files from the freemix package into the `Scripts` subfolder
 * move the `.glyphsReporter` and `.glyphsPalette` files into the `Plugins` subfolder
+* in Glyphs, open Preferences (Cmd+,) / Addons / Modules and press “Install Modules” 
 * restart Glyphs
 
 See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Just Another Foundry](http://justanotherfoundry.com/)
