@@ -21,3 +21,10 @@ while 1:
 	except:
 		# this happens when the cursor reaches a line break
 		pass
+
+layer = Glyphs.font.selectedLayers[0]
+tab = Glyphs.font.currentTab
+if tab.viewPort.origin.x + tab.viewPort.size.width < tab.bounds.origin.x + tab.bounds.size.width:
+	vp = tab.viewPort
+	vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
+	tab.viewPort = vp
