@@ -73,7 +73,8 @@ class AnchorsPalette (PalettePlugin):
 		if sender:
 			self.font = sender.object()
 		anchorsNumber = {}
-
+		if not self.font:
+			return
 		if self.font.selectedLayers:
 			for layer in self.font.selectedLayers:
 				for anchor in layer.anchors:
