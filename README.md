@@ -21,11 +21,6 @@ The palette shows the position of anchors in the selected glyphs. This helps you
 The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respecive name (anchors are never insterted or removed).
 
 
-### Orange Background
-
-Makes contours in the background shown in orange instead of gray.
-
-
 ### Customize Defaults
 
 This is not a macro you would use daily but more of a documentation of settings that can be accessed in Python via intDefaults.
