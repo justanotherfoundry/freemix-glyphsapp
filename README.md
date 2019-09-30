@@ -14,6 +14,14 @@ To install Freemix in Glyphs,
 
 See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Just Another Foundry](http://justanotherfoundry.com/)
 
+### Alignment Palette
+
+The palette shows the position of the center of the glphs’s bounding box. This works with conponents, with multiple glyphs selected and is also editable. Useful for centering all case-sensitive punctuation vertically, or to check whether mathematical operands are on the same x position (use Glyphs’ built-in glyph info to check whether they have the same advance width).
+Note that the bounding box center may be .5 even if your font has a grid of 1 without subdivisions (i.e. integer coordinates). The node/path selection is intentionally ignored.
+
+The Overshoots section displays the overshoot of the selected glyph(s) relative to each alignment zone.
+
+
 ### Anchors Palette
 
 The palette shows the position of anchors in the selected glyphs. This helps you check for consistent positioning of anchors if multiple glyphs are selected. For example, select A–Z to see whether all `top` anchors are on the same height, and adjust their position. If the position of the anchors is not identical in all selected glyphs then a gray x or y is shown.
