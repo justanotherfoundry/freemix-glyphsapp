@@ -9,14 +9,14 @@ To install Freemix in Glyphs,
 * in Glyphs, press Cmd+Shift+Y, which opens a Finder window
 * move the `.py` files from the freemix package into the `Scripts` subfolder
 * move the `.glyphsReporter` and `.glyphsPalette` files into the `Plugins` subfolder
-* in Glyphs, open Preferences (Cmd+,) / Addons / Modules and press “Install Modules” 
+* in Glyphs, open Preferences (Cmd+,) / Addons / Modules and press “Install Modules”
 * restart Glyphs
 
 See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Just Another Foundry](http://justanotherfoundry.com/)
 
 ### Alignment Palette
 
-The palette shows the position of the center of the glphs’s bounding box. This works with conponents, with multiple glyphs selected and is also editable. Useful for centering all case-sensitive punctuation vertically, or to check whether mathematical operands are on the same x position (use Glyphs’ built-in glyph info to check whether they have the same advance width).
+The palette shows the position of the center of the glphs’s bounding box. This works with components, with multiple glyphs selected and is also editable. Useful for centering all case-sensitive punctuation vertically, or to check whether mathematical operands are on the same x position (use Glyphs’ built-in glyph info to check whether they have the same advance width).
 Note that the bounding box center may be .5 even if your font has a grid of 1 without subdivisions (i.e. integer coordinates). The node/path selection is intentionally ignored.
 
 The Overshoots section displays the overshoot of the selected glyph(s) relative to each alignment zone.
@@ -26,7 +26,7 @@ The Overshoots section displays the overshoot of the selected glyph(s) relative 
 
 The palette shows the position of anchors in the selected glyphs. This helps you check for consistent positioning of anchors if multiple glyphs are selected. For example, select A–Z to see whether all `top` anchors are on the same height, and adjust their position. If the position of the anchors is not identical in all selected glyphs then a gray x or y is shown.
 
-The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respecive name (anchors are never insterted or removed).
+The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respective name (anchors are never inserted or removed).
 
 
 ### Customize Defaults
