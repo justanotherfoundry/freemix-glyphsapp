@@ -20,6 +20,7 @@ transfer parts of the outline between glyphs.
 import sys
 
 def counterparts( selection, background ):
+	background = background.copyDecomposedLayer()
 	len_selection = len( selection )
 	best_point_range = []
 	best_deviation = sys.maxint
