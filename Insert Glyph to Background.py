@@ -5,18 +5,20 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__="""
+__doc__= u"""
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.
 
-- With right align selected, the contours will be pasted as if the advance widths were aligned.
-- The keyboard shortcuts for left and right aligned are Enter and Esc.
-- It is sufficient to enter the beginning of the glyph name, e.g. "deg" for "degree".
+• With right align selected, the contours will be pasted as if the advance widths were aligned.
+
+• The keyboard shortcuts for left and right aligned are Enter and Esc.
+
+• It is sufficient to enter the beginning of the glyph name, e.g. “deg” for “degree”.
 
 """
 
-from vanilla import Window, EditText, Button
+from vanilla import Window, EditText, Button, CheckBox
 
 LEFT = '<'
 RIGHT = '>'
@@ -24,42 +26,76 @@ RIGHT = '>'
 font = Glyphs.font
 active_layerId = Glyphs.font.selectedLayers[0].layerId
 
-def insert_paths( to_layer, from_layer, alignment = LEFT ):
+def insert_paths( to_layer, from_layer, alignment, as_component_is_checked, clear_contents ):
 	# clear layer
-	to_layer.background.clear()
-	# insert all paths
-	for path in from_layer.copyDecomposedLayer().paths:
-		if alignment == RIGHT:
-			shift = to_layer.width - from_layer.width
-			for node in path.nodes:
-				node.x = node.x + shift
-		to_layer.background.paths.append( path )
-		# select path (makes is quicker to move around the shape later)
-		to_layer.background.paths[-1].selected = True
+	if clear_contents:
+		to_layer.background.clear()
+	if as_component_is_checked:
+		# insert as component
+		shift = ( to_layer.width - from_layer.width ) if alignment == RIGHT else 0
+		from_glyph_name = from_layer.parent.name
+		to_layer.background.components.append( GSComponent( from_glyph_name, NSPoint( shift, 0 ) ) )
+	else:
+		# insert all paths
+		for path in from_layer.copyDecomposedLayer().paths:
+			if alignment == RIGHT:
+				shift = to_layer.width - from_layer.width
+				for node in path.nodes:
+					node.x = node.x + shift
+			to_layer.background.paths.append( path )
+			# select path (makes is quicker to move around the shape later)
+			to_layer.background.paths[-1].selected = True
 
 class GlyphnameDialog( object):
 
 	def __init__( self ):
-		x = 10
-		y = 10
-		height = 20
+		hori_margin = 10
+		verti_margin = hori_margin
 		button_width = 30
 		glyphname_width = 180
-		gap = 6
-		self.w = Window( ( x + button_width + gap + glyphname_width + gap + button_width + x, y + height + y ), "insert glyph" )
+		line_height = 20
+		gap = 9
+		dialog_height = line_height + gap + line_height + gap + line_height
+		dialog_width = button_width + gap + glyphname_width + gap + button_width
+		self.w = Window( ( hori_margin + dialog_width + hori_margin, verti_margin + dialog_height + verti_margin ), "insert glyph" )
 		self.w.center()
-		self.w.glyphname = EditText( ( x, y, glyphname_width, height ), '')
+		x = hori_margin
+		y = verti_margin
+		# glyph name
+		self.w.glyphname = EditText( ( x, y, glyphname_width, line_height ), '')
+		self.w.glyphname.getNSTextField().setToolTip_( u'Enter the name of the glyph to be inserted. It is sufficient to enter the beginning of the glyph name, e.g. “deg” for “degree”.' )
+		# buttons
 		x += glyphname_width + gap
-		self.w.alignleft = Button( ( x, y, button_width, height ), LEFT, callback = self.buttonCallback )
+		self.w.alignleft = Button( ( x, y, button_width, line_height ), LEFT, callback = self.buttonCallback )
+		self.w.alignleft.getNSButton().setToolTip_( 'Insert the other glyph left-aligned, i.e. at its original same position. Keyboard shortcut: Enter' )
 		x += button_width + gap
-		self.w.alignright = Button( ( x, y, button_width, height ), RIGHT, callback = self.buttonCallback )
+		self.w.alignright = Button( ( x, y, button_width, line_height ), RIGHT, callback = self.buttonCallback )
+		self.w.alignright.getNSButton().setToolTip_( 'Insert the other glyph right-aligned with respect to the advance widths. Keyboard shortcut: Esc' )
 		self.w.setDefaultButton( self.w.alignleft )
 		self.w.alignright.bind( "\x1b", [] )
+		# insert as component
+		as_component_is_checked = True
+		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"]  is not None:
+			as_component_is_checked = Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"]
+		y += line_height + gap
+		x = hori_margin
+		self.w.as_component = CheckBox( ( x, y, dialog_width, line_height ), 'Insert as component', callback=None, value=as_component_is_checked )
+		self.w.as_component.getNSButton().setToolTip_( 'If checked, the other glyph is inserted to the background as a component. Otherwise, it is inserted as paths (even if the other glyph is made of components).' )
+		# clear current contents
+		y += line_height + gap
+		clear_contents_is_checked = True
+		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"]  is not None:
+			clear_contents_is_checked = Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"]
+		self.w.clear_contents = CheckBox( ( x, y, dialog_width, line_height ), 'Clear current contents', callback=None, value=clear_contents_is_checked )
+		self.w.clear_contents.getNSButton().setToolTip_( 'Check this to clear the background before inserting the other glyph. Uncheck to keep the current contents of the background.' )
 		self.w.open()
 
 	def buttonCallback( self, sender ):
 		alignment = sender.getTitle()
 		glyphname = self.w.glyphname.get()
+		as_component_is_checked = self.w.as_component.get()
+		clear_contents_is_checked = self.w.clear_contents.get()
+		print 'as_component_is_checked', as_component_is_checked
 		if not glyphname:
 			self.w.close()
 			return
@@ -88,12 +124,14 @@ class GlyphnameDialog( object):
 				# find other layer
 				for other_layer in other_glyph.layers:
 					if other_layer.name == layer.name:
-						insert_paths( layer, other_layer, alignment )
+						insert_paths( layer, other_layer, alignment, as_component_is_checked, clear_contents_is_checked )
 						break
 				else:
 					if active_layerId == layer.layerId:
-						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment )
+						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment, as_component_is_checked, clear_contents_is_checked )
 			glyph.endUndo()
+		Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"] = as_component_is_checked
+		Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"] = as_component_is_checked
 		self.w.close()
 
 GlyphnameDialog()
