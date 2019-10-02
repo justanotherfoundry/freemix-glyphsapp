@@ -6,10 +6,9 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__='''
-Pastes the background contours into the current layer.
+Pastes the background into the current layer.
 
-Former FontLab users can give it the familiar Cmd+L shortcut via App Shortcuts
-in the Mac OS System Preferences.
+Components are pasted as paths (i.e. decomposed).
 '''
 
 from GlyphsApp import *
@@ -22,13 +21,13 @@ glyph = layers[0].parent
 glyph.beginUndo()
 
 for layer in layers:
-	# deselect all
+	# deselect all in the foreground
 	for path in layer.paths:
 		for node in path.nodes:
 			layer.removeObjectFromSelection_( node )
 		# layer.removeObjectsFromSelection_( path.pyobjc_instanceMethods.nodes() )
-	# paste in background
-	for path in layer.background.paths:
+	# insert the background contents and select them
+	for path in layer.background.copyDecomposedLayer().paths:
 		layer.paths.append( path.copy() )
 		# select path
 		for node in layer.paths[-1].nodes:
