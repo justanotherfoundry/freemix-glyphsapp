@@ -95,7 +95,6 @@ class GlyphnameDialog( object):
 		glyphname = self.w.glyphname.get()
 		as_component_is_checked = self.w.as_component.get()
 		clear_contents_is_checked = self.w.clear_contents.get()
-		print 'as_component_is_checked', as_component_is_checked
 		if not glyphname:
 			self.w.close()
 			return
