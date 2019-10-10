@@ -107,7 +107,7 @@ else:
 	while layer.paths:
 		del(layer.paths[0])
 	# insert background
-	for path in layer.background.paths:
+	for path in layer.background.copyDecomposedLayer().paths:
 		layer.paths.append( path.copy() )
 
 layer.syncMetrics()
