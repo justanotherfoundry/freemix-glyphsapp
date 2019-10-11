@@ -30,8 +30,10 @@ class SuffixesPalette( PalettePlugin ):
 
 	# splits a glyph nname into its base name and the dot suffixes, retaining the dots
 	def dotSplit( self, glyphName ):
+		if not glyphName:
+			# this happens when line breaks are selected
+			return []
 		ds = [ '.' + n if i != 0 else n for i, n in enumerate( glyphName.split('.') ) ]
-		assert ds != []
 		if not ds[0]:
 			# this happens for .notdef
 			del ds[0]
