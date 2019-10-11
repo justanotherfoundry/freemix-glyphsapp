@@ -112,30 +112,31 @@ def overshootsOfLayer( layer ):
 	zones = namedZones( layer )
 	overshoots = [ [ name, None ] for name, zone, height in zones ]
 	for path in layer.copyDecomposedLayer().paths:
-		if path.direction == CLOCKWISE:
+		if path.direction == CLOCKWISE or len( path.nodes ) < 2:
 			continue
+		node2 = path.nodes[-2]
+		node3 = path.nodes[-1]
 		for node in path.nodes:
-			if not node.prevNode or not node.nextNode:
-				continue
-				# ^ for unkown reasons (bug in Glyphs?),
-				# node.prevNode or node.nextNode seem to be None
-				# under certain circumstances
-			y = node.y
-			if y == node.prevNode.y and y == node.nextNode.y:
+			node1 = node2
+			node2 = node3
+			node3 = node
+			# this means we start with
+			# path.nodes[-2], path.nodes[-1] and path.nodes[0]
+			if node2.y == node1.y and node2.y == node3.y:
 				pass
 			# top extremum
-			elif y >= node.prevNode.y and y >= node.nextNode.y and node.prevNode.x > node.nextNode.x:
+			elif node2.y >= node1.y and node2.y >= node3.y and node1.x > node3.x:
 				for index, ( name, zone, height ) in enumerate( zones ):
-					if zone.size > 0 and y >= zone.position and y <= zone.position + zone.size:
-						overshoot = y - height
+					if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
+						overshoot = node2.y - height
 						existingOvershoot = overshoots[index][1]
 						if overshoot > existingOvershoot:
 							overshoots[index][1] = overshoot
 			# bottom extremum
-			elif node.y <= node.prevNode.y and node.y <= node.nextNode.y and node.prevNode.x < node.nextNode.x:
+			elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
 				for index, ( name, zone, height ) in enumerate( zones ):
-					if zone.size < 0 and y <= zone.position and y >= zone.position + zone.size:
-						overshoot = height - y
+					if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
+						overshoot = height - node2.y
 						existingOvershoot = overshoots[index][1]
 						if overshoot > existingOvershoot:
 							overshoots[index][1] = overshoot
