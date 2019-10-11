@@ -115,6 +115,11 @@ def overshootsOfLayer( layer ):
 		if path.direction == CLOCKWISE:
 			continue
 		for node in path.nodes:
+			if not node.prevNode or not node.nextNode:
+				continue
+				# ^ for unkown reasons (bug in Glyphs?),
+				# node.prevNode or node.nextNode seem to be None
+				# under certain circumstances
 			y = node.y
 			if y == node.prevNode.y and y == node.nextNode.y:
 				pass
