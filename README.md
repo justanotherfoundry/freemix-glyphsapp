@@ -29,6 +29,13 @@ The palette shows the position of anchors in the selected glyphs. This helps you
 The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respective name (anchors are never inserted or removed).
 
 
+### Suffixes Palette
+
+The palette shows the name(s) of the selected glyph(s), split by suffix. The fields are editable.
+
+This is useful for quickly changing the suffix of multiple glyphs at once.
+
+
 ### Customize Defaults
 
 This is not a macro you would use daily but more of a documentation of settings that can be accessed in Python via intDefaults.
