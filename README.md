@@ -21,7 +21,7 @@ Note that the bounding box center may be .5 even if your font has a grid of 1 wi
 
 The Overshoots section displays the overshoot of the selected glyph(s) relative to each alignment zone.
 
-<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/AlignmentPalette.png" width="260" />
+<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/AlignmentPalette.png" width="320" />
 
 
 ### Anchors Palette
