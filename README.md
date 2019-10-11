@@ -21,7 +21,7 @@ Note that the bounding box center may be .5 even if your font has a grid of 1 wi
 
 The Overshoots section displays the overshoot of the selected glyph(s) relative to each alignment zone.
 
-<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/AlignmentPalette.png" width="160" />
+<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/AlignmentPalette.png" width="260" />
 
 
 ### Anchors Palette
@@ -30,7 +30,7 @@ The palette shows the position of anchors in the selected glyphs. This helps you
 
 The palette shows the four most frequently used anchors. Setting the x or y position of a particular anchor via the palette only affects glyphs that have an anchor with the respective name (anchors are never inserted or removed).
 
-<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/AnchorsPalette.png" width="160" />
+<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/AnchorsPalette.png" width="240" />
 
 
 ### Suffixes Palette
