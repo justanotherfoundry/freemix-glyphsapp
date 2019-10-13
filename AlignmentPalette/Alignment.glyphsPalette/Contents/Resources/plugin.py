@@ -221,6 +221,8 @@ class AlignmentPalette (PalettePlugin):
 			return
 		if sender:
 			self.font = sender.object()
+		if not self.font:
+			return
 		# do not update when too may glyphs are selected
 		if not self.font.selectedLayers or len( self.font.selectedLayers ) > MAX_GLYPHS_COUNT:
 			self.paletteView.group.centerX.show( False )
