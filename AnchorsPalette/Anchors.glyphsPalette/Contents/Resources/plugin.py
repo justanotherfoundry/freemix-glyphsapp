@@ -83,9 +83,18 @@ class AnchorsPalette (PalettePlugin):
 					else:
 						anchorsNumber[anchor.name] = 1
 		anchorsNumber = sorted( anchorsNumber.items(), key=operator.itemgetter(1), reverse=True )
+		if len( anchorsNumber ) > 4:
+			print 'trying to resize ...'
+			# via setCurrentHeight_(), does not seem to work:
+			self.setCurrentHeight_( 160 )
+			# via self.paletteView, does not seem to work:
+			self.paletteView.group.resize( self.width, 160 )
+			self.paletteView.resize( self.width, 160 )
+			self.dialog = self.paletteView.group.getNSView()
+			#  via setFrameSize_(), does not seem to work:
+			self.theView().setFrameSize_( NSMakeSize( self.width, 160 ) )
 		# trim to max 4 elements
 		del anchorsNumber[4:]
-		# anchorsNumber.sort()
 		self.anchorNames = []
 		for i in xrange( 4 ):
 			try:
