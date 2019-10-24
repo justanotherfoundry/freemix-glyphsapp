@@ -133,7 +133,7 @@ class GlyphnameDialog( object):
 						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment, as_component_is_checked, clear_contents_is_checked )
 			glyph.endUndo()
 		Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"] = as_component_is_checked
-		Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"] = as_component_is_checked
+		Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"] = clear_contents_is_checked
 		self.w.close()
 
 GlyphnameDialog()
