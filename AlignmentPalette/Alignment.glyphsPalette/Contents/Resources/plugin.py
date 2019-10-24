@@ -116,6 +116,9 @@ def overshootsOfLayer( layer ):
 			continue
 		node2 = path.nodes[-2]
 		node3 = path.nodes[-1]
+		if not node2 or not node3:
+			# this can happen with open paths
+			continue
 		for node in path.nodes:
 			node1 = node2
 			node2 = node3
