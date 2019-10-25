@@ -17,7 +17,7 @@ import operator
 
 MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
-VERTICAL_MARGIN = 12
+VERTICAL_MARGIN = 5
 
 class AnchorsPalette (PalettePlugin):
 	

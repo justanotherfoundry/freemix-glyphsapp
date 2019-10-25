@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,11 +44,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView wantsLayer="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="164" height="272"/>
+        <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="164" height="214"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="q2t-JE-Eu5">
-                    <rect key="frame" x="72" y="245" width="36" height="19"/>
+                    <rect key="frame" x="72" y="194" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="9gz-pi-C0f">
                         <font key="font" metaFont="toolTip"/>
@@ -60,7 +60,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="t37-ZF-RKq">
-                    <rect key="frame" x="110" y="245" width="36" height="19"/>
+                    <rect key="frame" x="110" y="194" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="l9g-cC-nUP">
                         <font key="font" metaFont="toolTip"/>
@@ -72,7 +72,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="AnE-DY-yBU">
-                    <rect key="frame" x="9" y="247" width="62" height="14"/>
+                    <rect key="frame" x="9" y="196" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="VqQ-9F-XiY">
                         <font key="font" metaFont="toolTip"/>
@@ -81,7 +81,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="1" id="RjK-mb-Tt9">
-                    <rect key="frame" x="72" y="220" width="36" height="19"/>
+                    <rect key="frame" x="72" y="173" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="QXY-9H-5jq">
                         <font key="font" metaFont="toolTip"/>
@@ -93,7 +93,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="1" id="R3Y-gf-LCw">
-                    <rect key="frame" x="110" y="220" width="36" height="19"/>
+                    <rect key="frame" x="110" y="173" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="8df-HT-baT">
                         <font key="font" metaFont="toolTip"/>
@@ -105,7 +105,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="smM-oH-Dii">
-                    <rect key="frame" x="9" y="222" width="62" height="14"/>
+                    <rect key="frame" x="9" y="175" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="kEW-U2-wE3">
                         <font key="font" metaFont="toolTip"/>
@@ -114,7 +114,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="2" id="wr3-nm-J64">
-                    <rect key="frame" x="72" y="195" width="36" height="19"/>
+                    <rect key="frame" x="72" y="152" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="E8D-wG-WvQ">
                         <font key="font" metaFont="toolTip"/>
@@ -126,7 +126,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="2" id="mp8-6Z-4iV">
-                    <rect key="frame" x="110" y="195" width="36" height="19"/>
+                    <rect key="frame" x="110" y="152" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="qAf-7C-5v4">
                         <font key="font" metaFont="toolTip"/>
@@ -138,7 +138,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fMT-R1-Ilw">
-                    <rect key="frame" x="9" y="197" width="62" height="14"/>
+                    <rect key="frame" x="9" y="154" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="XsG-hS-xLX">
                         <font key="font" metaFont="toolTip"/>
@@ -147,7 +147,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="3" id="OIb-ge-FZh">
-                    <rect key="frame" x="72" y="170" width="36" height="19"/>
+                    <rect key="frame" x="72" y="131" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="TOw-Te-b7j">
                         <font key="font" metaFont="toolTip"/>
@@ -159,7 +159,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="3" id="lOe-WO-r1y">
-                    <rect key="frame" x="110" y="170" width="36" height="19"/>
+                    <rect key="frame" x="110" y="131" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="yfg-wh-44h">
                         <font key="font" metaFont="toolTip"/>
@@ -171,7 +171,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="LBO-Eg-HuC">
-                    <rect key="frame" x="9" y="172" width="62" height="14"/>
+                    <rect key="frame" x="9" y="133" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="ZHh-kW-rEk">
                         <font key="font" metaFont="toolTip"/>
@@ -180,7 +180,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="4" id="Gtb-cC-1xY">
-                    <rect key="frame" x="72" y="145" width="36" height="19"/>
+                    <rect key="frame" x="72" y="110" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="XX5-9C-IMS">
                         <font key="font" metaFont="toolTip"/>
@@ -192,7 +192,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="4" id="Uxi-6y-eeU">
-                    <rect key="frame" x="110" y="145" width="36" height="19"/>
+                    <rect key="frame" x="110" y="110" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="XAM-LT-Z7x">
                         <font key="font" metaFont="toolTip"/>
@@ -204,7 +204,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="21h-zI-U0K">
-                    <rect key="frame" x="9" y="147" width="62" height="14"/>
+                    <rect key="frame" x="9" y="112" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="50F-Qe-AdA">
                         <font key="font" metaFont="toolTip"/>
@@ -213,7 +213,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="5" id="BBY-Fy-VeT">
-                    <rect key="frame" x="72" y="120" width="36" height="19"/>
+                    <rect key="frame" x="72" y="89" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Ak9-lI-5qb">
                         <font key="font" metaFont="toolTip"/>
@@ -225,7 +225,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="5" id="cL5-fP-Asf">
-                    <rect key="frame" x="110" y="120" width="36" height="19"/>
+                    <rect key="frame" x="110" y="89" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="tUa-WH-ajv">
                         <font key="font" metaFont="toolTip"/>
@@ -237,7 +237,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2kf-uS-PPq">
-                    <rect key="frame" x="9" y="122" width="62" height="14"/>
+                    <rect key="frame" x="9" y="91" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="qPZ-V4-xIm">
                         <font key="font" metaFont="toolTip"/>
@@ -246,7 +246,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="6" id="ck2-fP-dUK">
-                    <rect key="frame" x="72" y="95" width="36" height="19"/>
+                    <rect key="frame" x="72" y="68" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="IwJ-Aw-kjA">
                         <font key="font" metaFont="toolTip"/>
@@ -258,7 +258,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="6" id="do8-Zb-M0w">
-                    <rect key="frame" x="110" y="95" width="36" height="19"/>
+                    <rect key="frame" x="110" y="68" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="VfU-MB-FL8">
                         <font key="font" metaFont="toolTip"/>
@@ -270,7 +270,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EyT-9e-1Qp">
-                    <rect key="frame" x="9" y="97" width="62" height="14"/>
+                    <rect key="frame" x="9" y="70" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="PcS-k7-80R">
                         <font key="font" metaFont="toolTip"/>
@@ -279,7 +279,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="7" id="5CN-e2-UZ8">
-                    <rect key="frame" x="72" y="70" width="36" height="19"/>
+                    <rect key="frame" x="72" y="47" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Lno-QU-yC3">
                         <font key="font" metaFont="toolTip"/>
@@ -291,7 +291,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="7" id="TBB-8D-2H9">
-                    <rect key="frame" x="110" y="70" width="36" height="19"/>
+                    <rect key="frame" x="110" y="47" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="gRO-nN-h4U">
                         <font key="font" metaFont="toolTip"/>
@@ -303,7 +303,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="WGd-CS-FPd">
-                    <rect key="frame" x="9" y="72" width="62" height="14"/>
+                    <rect key="frame" x="9" y="49" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="xvP-xd-Nqm">
                         <font key="font" metaFont="toolTip"/>
@@ -312,7 +312,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="8" id="nwd-3Q-jmd">
-                    <rect key="frame" x="72" y="45" width="36" height="19"/>
+                    <rect key="frame" x="72" y="26" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="UxH-ep-Q8A">
                         <font key="font" metaFont="toolTip"/>
@@ -324,7 +324,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="8" id="Cen-qF-4Ga">
-                    <rect key="frame" x="110" y="45" width="36" height="19"/>
+                    <rect key="frame" x="110" y="26" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="ppT-EN-9Uk">
                         <font key="font" metaFont="toolTip"/>
@@ -336,7 +336,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="gOa-Ma-vHR">
-                    <rect key="frame" x="9" y="47" width="62" height="14"/>
+                    <rect key="frame" x="9" y="28" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="4px-gN-aAD">
                         <font key="font" metaFont="toolTip"/>
@@ -345,7 +345,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="9" id="sZG-BV-MWf">
-                    <rect key="frame" x="72" y="20" width="36" height="19"/>
+                    <rect key="frame" x="72" y="6" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="i3z-Mc-f4H">
                         <font key="font" metaFont="toolTip"/>
@@ -357,7 +357,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" tag="9" id="Sje-hw-Qrm">
-                    <rect key="frame" x="110" y="20" width="36" height="19"/>
+                    <rect key="frame" x="110" y="6" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="lQP-YB-UNy">
                         <font key="font" metaFont="toolTip"/>
@@ -369,7 +369,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnb-Fd-ahF">
-                    <rect key="frame" x="9" y="22" width="62" height="14"/>
+                    <rect key="frame" x="9" y="8" width="62" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="sOj-SN-WeY">
                         <font key="font" metaFont="toolTip"/>
@@ -379,9 +379,9 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="height" constant="112" id="neg-iS-sWc"/>
+                <constraint firstAttribute="height" constant="214" id="neg-iS-sWc"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="329"/>
+            <point key="canvasLocation" x="139" y="300"/>
         </customView>
     </objects>
 </document>
