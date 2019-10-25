@@ -139,7 +139,7 @@ class AnchorsPalette (PalettePlugin):
 		height = 0
 		if lines > 0:
 			height = lines * self.lineheight + 10
-		self.heightConstrains.animator().setConstant_( height )
+		self.heightConstrains.setConstant_( height )
 
 	def __file__(self):
 		"""Please leave this method unchanged"""
