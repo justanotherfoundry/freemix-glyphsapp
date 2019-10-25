@@ -17,15 +17,17 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
+	<key>productReleaseNotes</key>
+	<string>Automatically increase palette height as needed if more than 4 anchors to show</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Tim Ahrens, 2017</string>
+	<string>Copyright, Tim Ahrens, 2019</string>
 	<key>NSPrincipalClass</key>
 	<string>AnchorsPalette</string>
 	<key>PyMainFileNames</key>
