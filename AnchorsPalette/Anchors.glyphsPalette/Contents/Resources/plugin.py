@@ -153,11 +153,7 @@ class AnchorsPalette (PalettePlugin):
 	
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
-	_sortID = 0
 	def setSortID_(self, id):
-		try:
-			self._sortID = id
-		except Exception as e:
-			self.logToConsole( "setSortID_: %s" % str(e) )
+		pass
 	def sortID(self):
-		return self._sortID
+		return 1000
