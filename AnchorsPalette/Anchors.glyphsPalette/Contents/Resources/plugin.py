@@ -13,36 +13,48 @@
 
 from GlyphsApp import *
 from GlyphsApp.plugins import *
-from vanilla import *
 import operator
+
+MAX_NUMBER_OF_LINES = 10
 
 class AnchorsPalette (PalettePlugin):
 	
-	# dialog = objc.IBOutlet()
-	# textField = objc.IBOutlet()
+	dialog = objc.IBOutlet()
+	label0 = objc.IBOutlet()
+	label1 = objc.IBOutlet()
+	label2 = objc.IBOutlet()
+	label3 = objc.IBOutlet()
+	label4 = objc.IBOutlet()
+	label5 = objc.IBOutlet()
+	label6 = objc.IBOutlet()
+	label7 = objc.IBOutlet()
+	label8 = objc.IBOutlet()
+	label9 = objc.IBOutlet()
+	posx0 = objc.IBOutlet()
+	posx1 = objc.IBOutlet()
+	posx2 = objc.IBOutlet()
+	posx3 = objc.IBOutlet()
+	posx4 = objc.IBOutlet()
+	posx5 = objc.IBOutlet()
+	posx6 = objc.IBOutlet()
+	posx7 = objc.IBOutlet()
+	posx8 = objc.IBOutlet()
+	posx9 = objc.IBOutlet()
+	posy0 = objc.IBOutlet()
+	posy1 = objc.IBOutlet()
+	posy2 = objc.IBOutlet()
+	posy3 = objc.IBOutlet()
+	posy4 = objc.IBOutlet()
+	posy5 = objc.IBOutlet()
+	posy6 = objc.IBOutlet()
+	posy7 = objc.IBOutlet()
+	posy8 = objc.IBOutlet()
+	posy9 = objc.IBOutlet()
 
 	def settings(self):
 		self.name = Glyphs.localize({'en': u'Anchors'})
-		
-		# Create Vanilla window and group with controls
-		width = 150
-		height = 80
-		self.paletteView = Window( (width, height), minSize=(width, height - 10), maxSize=(width, height + 200 ) )
-		self.paletteView.group = Group( (0, 0, width, height ) )
-
-		self.marginTop = 5
-		self.lineSpacing = 18
-		textFieldHeight = 15
-		textFieldWidth = 34
-		self.posx_xTextField = width - 2 * textFieldWidth - 5
-		self.posx_yTextField = self.posx_xTextField + textFieldWidth + 4
-		for i in xrange( 4 ):
-			posy = self.lineSpacing * i + self.marginTop
-			setattr( self.paletteView.group, 'txt' + str( i ), TextBox( ( 10, posy, 80, 18 ), 'anchornamsdfsdfs fd d', sizeStyle='mini' ) )
-			setattr( self.paletteView.group, 'posx' + str( i ), EditText( ( self.posx_xTextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='x', sizeStyle='mini' ) )
-			setattr( self.paletteView.group, 'posy' + str( i ), EditText( ( self.posx_yTextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='y', sizeStyle='mini' ) )
-		# Set dialog to NSView
-		self.dialog = self.paletteView.group.getNSView()
+		self.loadNib( 'AnchorsPaletteView', __file__ )
+		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
 
 	def editTextCallback(self, editText):
 		xPos, yPos, wd, ht = editText.getPosSize()
@@ -83,45 +95,49 @@ class AnchorsPalette (PalettePlugin):
 					else:
 						anchorsNumber[anchor.name] = 1
 		anchorsNumber = sorted( anchorsNumber.items(), key=operator.itemgetter(1), reverse=True )
-		# trim to max 4 elements
-		del anchorsNumber[4:]
-		# anchorsNumber.sort()
+		# trim to max MAX_NUMBER_OF_LINES elements
+		del anchorsNumber[MAX_NUMBER_OF_LINES:]
 		self.anchorNames = []
-		for i in xrange( 4 ):
+		for i in xrange( MAX_NUMBER_OF_LINES ):
 			try:
 				anchorName, number = anchorsNumber[i]
-				getattr( self.paletteView.group, 'txt' + str( i ) ).set( anchorName )
-				getattr( self.paletteView.group, 'posx' + str( i ) ).show( True )
-				getattr( self.paletteView.group, 'posy' + str( i ) ).show( True )
-				x = None
-				y = None
-				multipleX = False
-				multipleY = False
-				for layer in self.font.selectedLayers:
-					for anchor in layer.anchors:
-						if anchor.name == anchorName:
-							if x == None:
-								x = anchor.position.x
-								if x == round( x, 3 ):
-									x = int( x )
-							elif x != round( anchor.position.x, 3 ):
-								multipleX = True
-								x = ''
-							if y == None:
-								y = anchor.position.y
-								if y == round( y, 3 ):
-									y = int( y )
-							elif y != round( anchor.position.y, 3 ):
-								multipleY = True
-								y = ''
-				getattr( self.paletteView.group, 'posx' + str( i ) ).set( x )
-				getattr( self.paletteView.group, 'posy' + str( i ) ).set( y )
-				self.anchorNames.append( anchorName )
 			except IndexError:
-				getattr( self.paletteView.group, 'txt' + str( i ) ).set( '' )
-				getattr( self.paletteView.group, 'posx' + str( i ) ).show( False )
-				getattr( self.paletteView.group, 'posy' + str( i ) ).show( False )
-	
+				getattr( self, 'label' + str( i ) ).setStringValue_( '' )
+				getattr( self, 'posx' + str( i ) ).setHidden_( True )
+				getattr( self, 'posy' + str( i ) ).setHidden_( True )
+				continue
+			getattr( self, 'posx' + str( i ) ).setHidden_( False )
+			getattr( self, 'posy' + str( i ) ).setHidden_( False )
+			getattr( self, 'label' + str( i ) ).setStringValue_( anchorName )
+			x = None
+			y = None
+			for layer in self.font.selectedLayers:
+				for anchor in layer.anchors:
+					if anchor.name == anchorName:
+						if x == None:
+							x = anchor.position.x
+							if x == round( x, 3 ):
+								x = int( x )
+						elif x != round( anchor.position.x, 3 ):
+							x = ''
+						if y == None:
+							y = anchor.position.y
+							if y == round( y, 3 ):
+								y = int( y )
+						elif y != round( anchor.position.y, 3 ):
+							y = ''
+			if x == '':
+				getattr( self, 'posx' + str( i ) ).setStringValue_( '' )
+			else:
+				getattr( self, 'posx' + str( i ) ).setIntValue_( x )
+			if y == '':
+				getattr( self, 'posy' + str( i ) ).setStringValue_( '' )
+			else:
+				getattr( self, 'posy' + str( i ) ).setIntValue_( y )
+			self.anchorNames.append( anchorName )
+		lines = max( 4, len( anchorsNumber ) )
+		self.setCurrentHeight_( 30 + lines * self.lineheight )
+
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
@@ -136,4 +152,3 @@ class AnchorsPalette (PalettePlugin):
 			self.logToConsole( "setSortID_: %s" % str(e) )
 	def sortID(self):
 		return self._sortID
-	
