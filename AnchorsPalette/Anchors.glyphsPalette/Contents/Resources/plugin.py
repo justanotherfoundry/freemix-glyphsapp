@@ -50,7 +50,8 @@ class AnchorsPalette (PalettePlugin):
 	posy7 = objc.IBOutlet()
 	posy8 = objc.IBOutlet()
 	posy9 = objc.IBOutlet()
-
+	heightConstrains = objc.IBOutlet()
+	
 	def settings(self):
 		self.name = Glyphs.localize({'en': u'Anchors'})
 		self.loadNib( 'AnchorsPaletteView', __file__ )
@@ -72,8 +73,7 @@ class AnchorsPalette (PalettePlugin):
 						layer.anchors[anchorName].position = NSPoint( newValue, layer.anchors[anchorName].position.y )
 					else:
 						layer.anchors[anchorName].position = NSPoint( layer.anchors[anchorName].position.x, newValue )
-
-
+	
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
@@ -135,8 +135,11 @@ class AnchorsPalette (PalettePlugin):
 			else:
 				getattr( self, 'posy' + str( i ) ).setIntValue_( y )
 			self.anchorNames.append( anchorName )
-		lines = max( 4, len( anchorsNumber ) )
-		self.setCurrentHeight_( 30 + lines * self.lineheight )
+		lines = len( anchorsNumber )
+		height = 0
+		if lines > 0:
+			height = lines * self.lineheight + 10
+		self.heightConstrains.setConstant_( height )
 
 	def __file__(self):
 		"""Please leave this method unchanged"""
