@@ -144,7 +144,7 @@ class AnchorsPalette (PalettePlugin):
 		# so as to minimize the changes (frequent height change
 		# would be very distracting as we step through glyphs
 		# in edit view)
-		if height > self.heightConstrains.constant():
+		if height != self.heightConstrains.constant():
 			self.heightConstrains.setConstant_( height )
 
 	def __file__(self):
