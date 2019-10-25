@@ -15,7 +15,9 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 import operator
 
+MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
+VERTICAL_MARGIN = 12
 
 class AnchorsPalette (PalettePlugin):
 	
@@ -135,11 +137,14 @@ class AnchorsPalette (PalettePlugin):
 			else:
 				getattr( self, 'posy' + str( i ) ).setIntValue_( y )
 			self.anchorNames.append( anchorName )
-		lines = len( anchorsNumber )
-		height = 0
-		if lines > 0:
-			height = lines * self.lineheight + 10
-		self.heightConstrains.setConstant_( height )
+		lines = max( MIN_NUMBER_OF_LINES, len( anchorsNumber ) )
+		height = VERTICAL_MARGIN + lines * self.lineheight
+		# we are never reducing the height of the palette
+		# so as to minimize the changes (frequent height change
+		# would be very distracting as we step through glyphs
+		# in edit view)
+		if height > self.heightConstrains.constant():
+			self.heightConstrains.setConstant_( height )
 
 	def __file__(self):
 		"""Please leave this method unchanged"""
