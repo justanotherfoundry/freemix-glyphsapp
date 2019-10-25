@@ -58,24 +58,25 @@ class AnchorsPalette (PalettePlugin):
 		self.name = Glyphs.localize({'en': u'Anchors'})
 		self.loadNib( 'AnchorsPaletteView', __file__ )
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
+		self.posxFieldsOriginX = self.posx0.frame().origin.x
 
-	def editTextCallback(self, editText):
-		xPos, yPos, wd, ht = editText.getPosSize()
-		index = ( yPos - self.marginTop ) / self.lineSpacing
-		anchorName = self.anchorNames[index]
+	@objc.IBAction
+	def editTextCallback_(self, textField):
 		try:
-			newValue = float( editText.get() )
+			newValue = float( textField.stringValue() )
 		except ValueError:
 			self.update()
 			return
+		anchorName = self.anchorNames[textField.tag()]
 		for layer in self.font.selectedLayers:
 			for anchor in layer.anchors:
 				if anchor.name == anchorName:
-					if xPos == self.posx_xTextField:
+					if textField.frame().origin.x == self.posxFieldsOriginX:
 						layer.anchors[anchorName].position = NSPoint( newValue, layer.anchors[anchorName].position.y )
 					else:
 						layer.anchors[anchorName].position = NSPoint( layer.anchors[anchorName].position.x, newValue )
-	
+					break
+
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
@@ -86,9 +87,9 @@ class AnchorsPalette (PalettePlugin):
 	def update( self, sender=None ):
 		if sender:
 			self.font = sender.object()
-		anchorsNumber = {}
 		if not self.font:
 			return
+		anchorsNumber = {}
 		if self.font.selectedLayers:
 			for layer in self.font.selectedLayers:
 				for anchor in layer.anchors:
