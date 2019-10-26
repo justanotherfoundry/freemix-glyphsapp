@@ -87,11 +87,6 @@ layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
 selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
 
-# if all is selected: treat it as if nothing was selected
-not_selected = [ node for path in layer.paths for node in path.nodes if node not in layer.selection ]
-if not not_selected:
-	selection = []
-
 if selection:
 	subpaths = subpaths( selection )
 	# begin undo
