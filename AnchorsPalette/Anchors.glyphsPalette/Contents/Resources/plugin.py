@@ -53,6 +53,7 @@ class AnchorsPalette (PalettePlugin):
 	posy8 = objc.IBOutlet()
 	posy9 = objc.IBOutlet()
 	heightConstrains = objc.IBOutlet()
+	allFieldsHidden = False
 	
 	def settings(self):
 		self.name = Glyphs.localize({'en': u'Anchors'})
@@ -85,22 +86,29 @@ class AnchorsPalette (PalettePlugin):
 		Glyphs.removeCallback(self.update)
 
 	def update( self, sender=None ):
+		collapsed = ( self.dialog.frame().origin.y != 0 )
+		if collapsed and self.allFieldsHidden:
+			return
 		if sender:
 			self.font = sender.object()
 		if not self.font:
 			return
-		anchorsNumber = {}
-		if self.font.selectedLayers:
-			for layer in self.font.selectedLayers:
-				for anchor in layer.anchors:
-					if anchorsNumber.has_key( anchor.name ):
-						anchorsNumber[anchor.name] += 1
-					else:
-						anchorsNumber[anchor.name] = 1
-		anchorsNumber = sorted( anchorsNumber.items(), key=operator.itemgetter(1), reverse=True )
-		# trim to max MAX_NUMBER_OF_LINES elements
-		del anchorsNumber[MAX_NUMBER_OF_LINES:]
-		self.anchorNames = []
+		if not collapsed:
+			anchorsNumber = {}
+			if self.font.selectedLayers:
+				for layer in self.font.selectedLayers:
+					for anchor in layer.anchors:
+						if anchorsNumber.has_key( anchor.name ):
+							anchorsNumber[anchor.name] += 1
+						else:
+							anchorsNumber[anchor.name] = 1
+			anchorsNumber = sorted( anchorsNumber.items(), key=operator.itemgetter(1), reverse=True )
+			# trim to max MAX_NUMBER_OF_LINES elements
+			del anchorsNumber[MAX_NUMBER_OF_LINES:]
+			self.anchorNames = []
+			self.allFieldsHidden = False
+		else:
+			anchorsNumber = []
 		for i in xrange( MAX_NUMBER_OF_LINES ):
 			try:
 				anchorName, number = anchorsNumber[i]
@@ -138,6 +146,11 @@ class AnchorsPalette (PalettePlugin):
 			else:
 				getattr( self, 'posy' + str( i ) ).setIntValue_( y )
 			self.anchorNames.append( anchorName )
+		if collapsed:
+			height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
+			self.heightConstrains.setConstant_( height )
+			self.allFieldsHidden = True
+			return
 		lines = max( MIN_NUMBER_OF_LINES, len( anchorsNumber ) )
 		height = VERTICAL_MARGIN + lines * self.lineheight
 		# we are never reducing the height of the palette
