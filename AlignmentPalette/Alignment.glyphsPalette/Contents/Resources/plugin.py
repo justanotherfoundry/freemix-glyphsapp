@@ -165,6 +165,19 @@ def overshootsOfLayers( layers ):
 	return globalOvershoots
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
+
+GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
+class ArrowEditText (EditText):
+	nsTextFieldClass = GSSteppingTextField
+	def _setCallback(self, callback):
+		super(ArrowEditText, self)._setCallback(callback)
+		if callback is not None and self._continuous:
+			self._nsObject.setContinuous_(True)
+			self._nsObject.setAction_(self._target.action_)
+			self._nsObject.setTarget_(self._target)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 class AlignmentPalette (PalettePlugin):
 
@@ -197,13 +210,13 @@ class AlignmentPalette (PalettePlugin):
 		self.posy_centerX = posy
 		# self.paletteView.group.lockX = ImageButton( ( self.posx_TextField - lockHeight - 5, posy, lockHeight, lockHeight ), imageNamed='GSLockUnlockedTemplate', bordered=False, imagePosition='top', callback=self.lockCallback, sizeStyle='regular' )
 		# self.lockXlocked = False
-		self.paletteView.group.centerX = EditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
+		self.paletteView.group.centerX = ArrowEditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
 		posy += self.lineSpacing
 		self.paletteView.group.centerYLabel = TextBox( ( 10, posy + 3, innerWidth, 18 ), 'center y', sizeStyle='small' )
 		self.posy_centerY = posy
 		# self.paletteView.group.lockY = ImageButton( ( self.posx_TextField - lockHeight - 5, posy, lockHeight, lockHeight ), imageNamed='GSLockUnlockedTemplate', bordered=False, imagePosition='top', callback=self.lockCallback, sizeStyle='regular' )
 		# self.lockYlocked = False
-		self.paletteView.group.centerY = EditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
+		self.paletteView.group.centerY = ArrowEditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
 		posy += self.lineSpacing + self.marginTop
 		# set up fields for overshoot
 		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_( 'Overshoot', { NSFontAttributeName:NSFont.boldSystemFontOfSize_( NSFont.systemFontSizeForControlSize_( smallSize ) ) } )
