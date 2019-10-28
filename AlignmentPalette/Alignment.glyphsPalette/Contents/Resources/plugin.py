@@ -151,7 +151,7 @@ def overshootsOfLayer( layer ):
 def overshootsOfLayers( layers ):
 	globalOvershoots = None
 	for layer in layers:
-		if globalOvershoots is None:
+		if not globalOvershoots:
 			globalOvershoots = overshootsOfLayer( layer )
 		else:
 			overshoots = overshootsOfLayer( layer )
