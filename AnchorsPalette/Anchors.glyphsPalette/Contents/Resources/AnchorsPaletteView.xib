@@ -47,7 +47,7 @@
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
             <rect key="frame" x="0.0" y="0.0" width="164" height="98"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="q2t-JE-Eu5">
+                <textField verticalHuggingPriority="750" id="q2t-JE-Eu5" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="76" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="9gz-pi-C0f">
@@ -59,7 +59,7 @@
                         <action selector="editTextCallback:" target="-2" id="jSh-7n-XyQ"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="t37-ZF-RKq">
+                <textField verticalHuggingPriority="750" id="t37-ZF-RKq" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="76" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="l9g-cC-nUP">
@@ -80,7 +80,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="1" id="RjK-mb-Tt9">
+                <textField verticalHuggingPriority="750" tag="1" id="RjK-mb-Tt9" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="53" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="QXY-9H-5jq">
@@ -92,7 +92,7 @@
                         <action selector="editTextCallback:" target="-2" id="NH1-mm-7ru"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="1" id="R3Y-gf-LCw">
+                <textField verticalHuggingPriority="750" tag="1" id="R3Y-gf-LCw" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="53" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="8df-HT-baT">
@@ -113,7 +113,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="2" id="wr3-nm-J64">
+                <textField verticalHuggingPriority="750" tag="2" id="wr3-nm-J64" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="30" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="E8D-wG-WvQ">
@@ -125,7 +125,7 @@
                         <action selector="editTextCallback:" target="-2" id="SiM-4W-eCx"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="2" id="mp8-6Z-4iV">
+                <textField verticalHuggingPriority="750" tag="2" id="mp8-6Z-4iV" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="30" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="qAf-7C-5v4">
@@ -146,7 +146,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="3" id="OIb-ge-FZh">
+                <textField verticalHuggingPriority="750" tag="3" id="OIb-ge-FZh" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="7" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="TOw-Te-b7j">
@@ -158,7 +158,7 @@
                         <action selector="editTextCallback:" target="-2" id="d1N-WJ-UWM"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="3" id="lOe-WO-r1y">
+                <textField verticalHuggingPriority="750" tag="3" id="lOe-WO-r1y" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="7" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="yfg-wh-44h">
@@ -179,7 +179,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="4" id="Gtb-cC-1xY">
+                <textField verticalHuggingPriority="750" tag="4" id="Gtb-cC-1xY" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-16" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="XX5-9C-IMS">
@@ -191,7 +191,7 @@
                         <action selector="editTextCallback:" target="-2" id="COn-tv-dTA"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="4" id="Uxi-6y-eeU">
+                <textField verticalHuggingPriority="750" tag="4" id="Uxi-6y-eeU" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-16" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="XAM-LT-Z7x">
@@ -212,7 +212,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="5" id="BBY-Fy-VeT">
+                <textField verticalHuggingPriority="750" tag="5" id="BBY-Fy-VeT" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-39" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Ak9-lI-5qb">
@@ -224,7 +224,7 @@
                         <action selector="editTextCallback:" target="-2" id="wAQ-cv-eEe"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="5" id="cL5-fP-Asf">
+                <textField verticalHuggingPriority="750" tag="5" id="cL5-fP-Asf" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-39" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="tUa-WH-ajv">
@@ -245,7 +245,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="6" id="ck2-fP-dUK">
+                <textField verticalHuggingPriority="750" tag="6" id="ck2-fP-dUK" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-62" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="IwJ-Aw-kjA">
@@ -257,7 +257,7 @@
                         <action selector="editTextCallback:" target="-2" id="Zhp-1P-b45"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="6" id="do8-Zb-M0w">
+                <textField verticalHuggingPriority="750" tag="6" id="do8-Zb-M0w" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-62" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="VfU-MB-FL8">
@@ -278,7 +278,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="7" id="5CN-e2-UZ8">
+                <textField verticalHuggingPriority="750" tag="7" id="5CN-e2-UZ8" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-85" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Lno-QU-yC3">
@@ -290,7 +290,7 @@
                         <action selector="editTextCallback:" target="-2" id="2ux-yh-kpl"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="7" id="TBB-8D-2H9">
+                <textField verticalHuggingPriority="750" tag="7" id="TBB-8D-2H9" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-85" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="gRO-nN-h4U">
@@ -311,7 +311,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="8" id="nwd-3Q-jmd">
+                <textField verticalHuggingPriority="750" tag="8" id="nwd-3Q-jmd" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-108" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="UxH-ep-Q8A">
@@ -323,7 +323,7 @@
                         <action selector="editTextCallback:" target="-2" id="L0J-dd-8rw"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="8" id="Cen-qF-4Ga">
+                <textField verticalHuggingPriority="750" tag="8" id="Cen-qF-4Ga" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-108" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="ppT-EN-9Uk">
@@ -344,7 +344,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="9" id="sZG-BV-MWf">
+                <textField verticalHuggingPriority="750" tag="9" id="sZG-BV-MWf" customClass="GSSteppingTextField">
                     <rect key="frame" x="72" y="-131" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="i3z-Mc-f4H">
@@ -356,7 +356,7 @@
                         <action selector="editTextCallback:" target="-2" id="4ZX-za-heY"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="9" id="Sje-hw-Qrm">
+                <textField verticalHuggingPriority="750" tag="9" id="Sje-hw-Qrm" customClass="GSSteppingTextField">
                     <rect key="frame" x="110" y="-131" width="36" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="lQP-YB-UNy">
