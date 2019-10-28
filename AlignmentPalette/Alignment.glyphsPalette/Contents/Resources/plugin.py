@@ -94,14 +94,14 @@ def namedZones( layer ):
 					zones.append( ( name, zone, y ) )
 					break
 			else:
-					zones.append( ( str(zone.position), zone, zone.position ) )
+				zones.append( ( str(zone.position), zone, zone.position ) )
 		elif zone.size < 0:
 			for name, y in bottomHeights:
 				if y <= zone.position and y >= zone.position + zone.size:
 					zones.append( ( name, zone, y ) )
 					break
 			else:
-					zones.append( ( str(zone.position), zone, zone.position ) )
+				zones.append( ( str(zone.position), zone, zone.position ) )
 	# sort by height
 	zones.sort(key=lambda x: x[2], reverse = True )
 	return zones
