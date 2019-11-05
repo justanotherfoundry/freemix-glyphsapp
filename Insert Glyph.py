@@ -70,7 +70,6 @@ class GlyphnameDialog( object):
 			for glyph in font.glyphs:
 				if glyph.name.startswith( glyphname ):
 					other_glyph = glyph
-					print 'Using', glyph.name
 					break
 			else:
 				print 'No matching glyph found.'
