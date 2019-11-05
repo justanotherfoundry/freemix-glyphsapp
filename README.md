@@ -109,6 +109,11 @@ in the Mac OS System Preferences.
 Prints the interpolation coefficients for each master in all instances.
 
 
+### Jump to Alternate
+
+- In the edit view, use this script to “jump” back and forth (or to circle) between alternate glyphs such as one, one.lf and one.tosf.
+
+
 ### Remove Backup Layers
 
 Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
