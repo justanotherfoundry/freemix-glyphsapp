@@ -55,8 +55,8 @@ def centerOfLayer( layer ):
 				right = node.x
 			elif node.x < left:
 				left = node.x
-	centerX = 0.5 * ( left + right )
-	centerY = 0.5 * ( top + bottom )
+	centerX = 0.5 * int( left + right )
+	centerY = 0.5 * int( top + bottom )
 	return centerX, centerY
 
 # returns the center of the layers,
