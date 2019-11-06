@@ -14,19 +14,21 @@ If given a keyboard shortcut, this is very useful for comparing two versions of 
 font = Glyphs.font
 masterId = font.selectedFontMaster.id
 currentTab = font.currentTab
-layers = currentTab.layers.values()
+rawTextLayers = currentTab.layers
+layers = currentTab.composedLayers
 try:
 	backupLayerId
 except NameError:
 	backupLayerId = None
 
 string = NSMutableAttributedString.alloc().init()
-for i in xrange( len( layers ) ):
-	layer = layers[i]
+for i in xrange( len( rawTextLayers ) ):
+	rawTextGlyph = rawTextLayers[i].parent
 	try:
-		char = font.characterForGlyph_( layer.parent )
+		char = font.characterForGlyph_( rawTextGlyph )
 	except:
 		continue
+	layer = layers[i]
 	# initialise single char without attributes
 	# which switches the glyph to the active master
 	singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
