@@ -56,6 +56,8 @@ class SuffixesPalette( PalettePlugin ):
 				else:
 					glyph.name = newName
 					glyph.updateGlyphInfo()
+		if not simulationMode:
+			self.update()
 		return ( None, None )
 
 	# removes the last n characters and appends newSuffix
@@ -65,22 +67,26 @@ class SuffixesPalette( PalettePlugin ):
 			glyph.name = glyph.name[:-n] + newSuffix
 
 	# captures changes to the text fields
-	def editTextCallback( self, editText):
-		for i in xrange( NUMBER_OF_FIELDS ):
-			if editText.getPosSize() == getattr( self.paletteView.group, 'txt' + str( i ) ).getPosSize():
-				# we have found the right text field
-				if editText.get() != self.nameSplit[i]:
-					if self.suffixLength == 0:
-						errorNameBefore, errorNameAfter = self.changeDotSuffix( editText.get(), i, simulationMode = True )
-						if errorNameBefore:
-							editText.enable( False )
-							Message( 'Existing name', 'This would change ' + errorNameBefore + ' to ' + errorNameAfter + ', which already exists.\nNo glyphs were renamed.' )
-							editText.enable( True )
+	def editTextCallback( self, editText ):
+		try:
+			for i in xrange( len( self.nameSplit ) ):
+				if editText.getPosSize() == getattr( self.paletteView.group, 'txt' + str( i ) ).getPosSize():
+					# we have found the right text field
+					if editText.get() != self.nameSplit[i]:
+						# text was changed
+						if self.suffixLength == 0:
+							errorNameBefore, errorNameAfter = self.changeDotSuffix( editText.get(), i, simulationMode = True )
+							if errorNameBefore:
+								editText.enable( False )
+								Message( 'Existing name', 'This would change ' + errorNameBefore + ' to ' + errorNameAfter + ', which already exists.\nNo glyphs were renamed.' )
+								editText.enable( True )
+							else:
+								self.changeDotSuffix( editText.get(), i )
 						else:
-							self.changeDotSuffix( editText.get(), i )
-					else:
-						self.changeNameEnding( editText.get(), self.suffixLength )
-				return
+							self.changeNameEnding( editText.get(), self.suffixLength )
+					return
+		except AttributeError:
+			pass
 
 	# returns a list of dot split for all glyphs, replacing inconsistent suffixes with '.'
 	def determineSharedDotSplit( self, selectedNames ):
