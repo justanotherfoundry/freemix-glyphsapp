@@ -93,7 +93,12 @@ Activates the next/ previous glyph in the tab for editing. Makes most sense if y
 
 ### Jump to Alternate
 
-- In the edit view, use this script to “jump” back and forth (or to circle) between alternate glyphs such as one, one.lf and one.tosf.
+In the edit view, use this script to “jump” back and forth (or to circle) between alternate glyphs such as one, one.lf and one.tosf.
+
+
+### Make Backup Layer
+
+Same as the “Copy” button on the Layers palette but as a script. Because I really want a keyboard shortcut for this. Without a keyboard shortcut this script is completely useless. Sorry.
 
 
 ### Remove Backup Layers
