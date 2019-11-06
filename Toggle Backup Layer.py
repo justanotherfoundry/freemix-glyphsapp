@@ -12,6 +12,7 @@ If given a keyboard shortcut, this is very useful for comparing two versions of 
 """
 
 font = Glyphs.font
+masterId = font.selectedFontMaster.id
 currentTab = font.currentTab
 layers = currentTab.layers.values()
 try:
@@ -31,7 +32,7 @@ for i in xrange( len( layers ) ):
 	singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
 	if i == currentTab.layersCursor:
 		# we are at the currently active glyph
-		if layer.layerId == font.selectedFontMaster.id:
+		if layer.layerId == masterId:
 			# current layer is the selected master layer.
 			foundBackupLayer = False
 			if backupLayerId:
@@ -39,7 +40,7 @@ for i in xrange( len( layers ) ):
 				for glyphLayer in layer.parent.layers:
 					if glyphLayer.layerId == backupLayerId:
 						# do not switch to layers that belong to a different master
-						if glyphLayer.associatedMasterId == font.selectedFontMaster.id:
+						if glyphLayer.associatedMasterId == masterId:
 							singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
 							foundBackupLayer = True
 							break
@@ -47,7 +48,7 @@ for i in xrange( len( layers ) ):
 				backupLayerId = None
 				# switch current glyph to the last associated non-master layer.
 				for glyphLayer in layer.parent.layers:
-					if glyphLayer.associatedMasterId == font.selectedFontMaster.id and glyphLayer.layerId != font.selectedFontMaster.id:
+					if glyphLayer.associatedMasterId == masterId and glyphLayer.layerId != masterId:
 						# this may happen multiple times
 						singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
 						backupLayerId = glyphLayer.layerId
