@@ -17,15 +17,15 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/Alignment.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Support up/down cursor keys to adjust values (like in other Glyphs fields)</string>
+	<string>Fixed an error</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2019</string>
 	<key>NSPrincipalClass</key>
