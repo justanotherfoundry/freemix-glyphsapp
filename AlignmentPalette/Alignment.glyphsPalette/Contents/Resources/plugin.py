@@ -230,6 +230,11 @@ class AlignmentPalette (PalettePlugin):
 			setattr( self.paletteView.group, 'line' + str( i ), HorizontalLine( ( self.marginLeft, posy - 3, innerWidth, 1 ) ) )
 		# set dialog to NSView
 		self.dialog = self.paletteView.group.getNSView()
+		# set self.font
+		self.font = None
+		windowController = self.windowController()
+		if windowController:
+			self.font = windowController.document().font
 
 	def update( self, sender=None ):
 		# do not update in case the palette is collapsed
@@ -315,7 +320,7 @@ class AlignmentPalette (PalettePlugin):
 	# 		print 'is Y!'
 	
 	def editTextCallback(self, editText):
-		if not self.font.selectedLayers:
+		if not self.font or not self.font.selectedLayers:
 			return
 		try:
 			newCenterX = float( self.paletteView.group.centerX.get() )
