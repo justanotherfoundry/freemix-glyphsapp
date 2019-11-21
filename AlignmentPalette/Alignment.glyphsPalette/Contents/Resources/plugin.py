@@ -80,6 +80,8 @@ def centerOfLayers( layers ):
 # sorted by height
 def namedZones( layer ):
 	font = layer.parent.parent
+	if not font:
+		return
 	masters = [m for m in font.masters if m.id == layer.associatedMasterId]
 	if not masters:
 		return []
