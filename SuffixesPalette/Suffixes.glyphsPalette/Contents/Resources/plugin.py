@@ -4,6 +4,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
+from AppKit import NSView
 
 NUMBER_OF_FIELDS = 20
 MINIMUM_NON_DOT_SUFFIX_LENGTH = 4
@@ -30,6 +31,7 @@ class SuffixesPalette( PalettePlugin ):
 		self.dialog = self.paletteView.group.getNSView()
 
 	# splits a glyph nname into its base name and the dot suffixes, retaining the dots
+	@objc.python_method
 	def dotSplit( self, glyphName ):
 		if not glyphName:
 			# this happens when line breaks are selected
@@ -42,6 +44,7 @@ class SuffixesPalette( PalettePlugin ):
 
 	# changes the index'th suffix of all selected glyphs.
 	# in simulationMode this returns ( oldName, newName ) if newName already exists
+	@objc.python_method
 	def changeDotSuffix( self, newSuffix, index, simulationMode = False ):
 		for glyph in self.selectedGlyphs:
 			split = self.dotSplit( glyph.name )
@@ -63,11 +66,13 @@ class SuffixesPalette( PalettePlugin ):
 
 	# removes the last n characters and appends newSuffix
 	# for all selected glyphs
+	@objc.python_method
 	def changeNameEnding( self, newSuffix, n ):
 		for glyph in self.selectedGlyphs:
 			glyph.name = glyph.name[:-n] + newSuffix
 
 	# captures changes to the text fields
+	@objc.python_method
 	def editTextCallback( self, editText ):
 		try:
 			for i in xrange( len( self.nameSplit ) ):
@@ -90,6 +95,7 @@ class SuffixesPalette( PalettePlugin ):
 			pass
 
 	# returns a list of dot split for all glyphs, replacing inconsistent suffixes with '.'
+	@objc.python_method
 	def determineSharedDotSplit( self, selectedNames ):
 		sharedNames = []
 		for selectedName in selectedNames:
@@ -121,6 +127,7 @@ class SuffixesPalette( PalettePlugin ):
 	# tries to find shared string ending, i.e. non-dot suffix
 	# returns the shared ending or ' ' (note: this is a space)
 	# if no sufficiently long suffix was found.
+	@objc.python_method
 	def determineSharedSuffix( self, selectedNames, minimumLength = MINIMUM_NON_DOT_SUFFIX_LENGTH ):
 			self.suffixLength = 0
 			# shortcut if we have only one name
@@ -140,6 +147,7 @@ class SuffixesPalette( PalettePlugin ):
 						break
 			return name0[-self.suffixLength:]
 
+	@objc.python_method
 	def updateTextFields( self ):
 		for i in xrange( ( self.fieldCount ) ):
 			try:
@@ -153,6 +161,7 @@ class SuffixesPalette( PalettePlugin ):
 
 	# re-sizes and re-positions the fields
 	# according to the number of suffixes
+	@objc.python_method
 	def updateLayout( self ):
 		suffixFieldWidth = 1.0 * ( self.width - self.margin - ( self.fieldCount - 1 ) * self.gutter ) / ( self.fieldCount + 1 )
 		x = self.margin

@@ -4,6 +4,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
+from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSView
 
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
@@ -189,8 +190,8 @@ class AlignmentPalette (PalettePlugin):
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
 	def settings(self):
-		width = 150
 		self.name = Glyphs.localize({'en': u'Alignment'})
+		width = 150
 		self.marginTop = 7
 		self.marginLeft = 7
 		self.lineSpacing = 21
@@ -320,11 +321,8 @@ class AlignmentPalette (PalettePlugin):
 	# i.e. auto-update the glyph in a "set up and forget" fashion
 	# def lockCallback(self, button):
 	# 	posX, posY, w, h = button.getPosSize()
-	# 	if posY == self.posy_centerX:
-	# 		print 'is X!'
-	# 	else:
-	# 		print 'is Y!'
-	
+
+	@objc.python_method	
 	def editTextCallback(self, editText):
 		if not self.font or not self.font.selectedLayers:
 			return
@@ -348,7 +346,6 @@ class AlignmentPalette (PalettePlugin):
 			# set the layers' centers
 			for layer in self.font.selectedLayers:
 				if ( len( layer.components ) > 0 ) == hasComponents:
-					print layer.parent.name
 					layer.parent.beginUndo()
 					self.setCenterOfLayer( layer, newCenterX, newCenterY )
 					layer.parent.endUndo()

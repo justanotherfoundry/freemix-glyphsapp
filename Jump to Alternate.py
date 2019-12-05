@@ -12,6 +12,8 @@ between alternate glyphs such as one, one.lf and one.tosf.
 Tip: Give it a keyboard shortcut!
 """
 
+from AppKit import NSAttributedString, NSMutableAttributedString
+
 def jumpToAlternate():
 	font = Glyphs.font
 	currentTab = font.currentTab

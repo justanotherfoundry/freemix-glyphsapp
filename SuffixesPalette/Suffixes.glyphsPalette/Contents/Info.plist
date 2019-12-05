@@ -17,15 +17,15 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.02</string>
+	<string>1.03</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.02</string>
-	<key>productReleaseNotes</key>
-	<string>Fixed an error</string>
+	<string>1.03</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/SuffixesPalette/Suffixes.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
+	<key>productReleaseNotes</key>
+	<string>Move towards Glyphs 3 and Python 3 compatibility</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2019</string>
 	<key>NSPrincipalClass</key>

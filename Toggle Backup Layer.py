@@ -11,6 +11,8 @@ This script toggles between the currently selected layer and the master layer (a
 If given a keyboard shortcut, this is very useful for comparing two versions of a glyph.
 """
 
+from AppKit import NSAttributedString, NSMutableAttributedString
+
 font = Glyphs.font
 masterId = font.selectedFontMaster.id
 currentTab = font.currentTab

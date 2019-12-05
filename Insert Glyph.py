@@ -72,7 +72,6 @@ class GlyphnameDialog( object):
 					other_glyph = glyph
 					break
 			else:
-				print 'No matching glyph found.'
 				self.w.close()
 				return
 		

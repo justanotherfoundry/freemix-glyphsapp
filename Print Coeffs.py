@@ -5,6 +5,8 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
+from __future__ import division, print_function, unicode_literals
+
 __doc__='''
 Prints the interpolation coefficients for each master in all instances.
 '''
@@ -28,16 +30,14 @@ instance_names = [ instance.fullName for instance in Glyphs.font.instances ]
 longest_instance_name = max( instance_names, key = len )
 first_column_width = len( longest_instance_name ) + 5
 
-print ' ', ''.rjust( first_column_width ), ' '.join( [ n.rjust( master_column_width ) for n in master_names] )
+print( ' ', ''.rjust( first_column_width ), ' '.join( [ n.rjust( master_column_width ) for n in master_names] ) )
 
 for instance in Glyphs.font.instances:
-	print ' ' if instance.active else '*',
-	print instance.fullName.ljust( first_column_width ),
+	print( ' ' if instance.active else '*', end='' )
+	print( instance.fullName.ljust( first_column_width ), end='' )
 	for master in  Glyphs.font.masters:
 		try:
-			print ('%10.2f%%' % ( instance.instanceInterpolations[master.id] * 100 ) ).rjust( master_column_width ),
+			print( ('%10.2f%%' % ( instance.instanceInterpolations[master.id] * 100 ) ).rjust( master_column_width ), end='' )
 		except KeyError:
-			print ''.rjust( master_column_width ),
-# 	for ( id, coeff ) in instance.instanceInterpolations.iteritems():
-# 		print '%10.2f%% %s' % ( coeff * 100, master_names[id] )
-	print
+			print( ''.rjust( master_column_width ), end='' )
+	print()

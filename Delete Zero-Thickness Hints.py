@@ -5,12 +5,12 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
+from __future__ import division, print_function, unicode_literals
+
 __doc__='''
 Removes all zero-thickness hints from all glyphs in the font.
 
 '''
-
-from GlyphsApp import *
 
 doc = Glyphs.currentDocument
 font = doc.font
@@ -25,11 +25,11 @@ for glyph in font.glyphs:
 					if hint.originNode.y == hint.targetNode.y:
 						del( layer.hints[indx] )
 						deletions_count += 1
-						print 'deleted zero-width hint from', glyph.name
+						print( 'deleted zero-width hint from', glyph.name )
 				else:
 					if hint.originNode.x == hint.targetNode.x:
 						del( layer.hints[indx] )
 						deletions_count += 1
-						print 'deleted zero-width hint from', glyph.name
+						print( 'deleted zero-width hint from', glyph.name )
 
 Message( 'Delete Zero-Thickness Hints', 'Deleted %i hints.' % deletions_count )

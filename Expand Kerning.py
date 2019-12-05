@@ -9,7 +9,6 @@
 Expand Kerning like we know it from FontLab.
 
 '''
-from GlyphsApp import *
 
 doc = Glyphs.currentDocument
 font = doc.font
@@ -22,7 +21,6 @@ right_sides = right_groups.union( glyph_names )
 
 # expand
 for left_glyph in font.glyphs:
-	print left_glyph
 	if left_glyph.rightKerningGroup:
 		left_name = '@MMK_L_' + left_glyph.rightKerningGroup
 	else:

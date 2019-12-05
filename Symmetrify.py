@@ -17,6 +17,8 @@ H - creates 2-axis symmetry (ie. all the above)
 The buttons are available only as far as the node structure allows.
 '''
 
+from AppKit import NSPoint
+
 doc = Glyphs.currentDocument
 font = doc.font
 layers = doc.selectedLayers()
@@ -322,6 +324,3 @@ for layer in layers:
 	if buttons:
 		dialog = SymmetrifyDialog( buttons )
 		button = dialog.run()
-	else:
-		print 'No symmetrical structures in this glyph.'
-

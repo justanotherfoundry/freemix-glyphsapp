@@ -19,6 +19,7 @@ __doc__= u"""
 """
 
 from vanilla import Window, EditText, Button, CheckBox
+from AppKit import NSPoint, NSTextField, NSButton
 
 LEFT = '<'
 RIGHT = '>'
@@ -113,7 +114,6 @@ class GlyphnameDialog( object):
 					other_glyph = glyph
 					break
 			else:
-				print 'No matching glyph found.'
 				self.w.close()
 				return
 		

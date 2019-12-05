@@ -1,20 +1,10 @@
 # encoding: utf-8
 
-###########################################################################################################
-#
-#
-#	Palette Plugin
-#
-#	Read the docs:
-#	https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/Palette
-#
-#
-###########################################################################################################
-
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 import operator
+from AppKit import NSPoint
 
 MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
@@ -84,6 +74,7 @@ class AnchorsPalette (PalettePlugin):
 
 	@objc.python_method
 	def update( self, sender=None ):
+		# do not update in case the palette is collapsed
 		collapsed = ( self.dialog.frame().origin.y != 0 )
 		if collapsed and self.allFieldsHidden:
 			return
