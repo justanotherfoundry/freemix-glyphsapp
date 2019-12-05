@@ -1,9 +1,9 @@
 # encoding: utf-8
 
+import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
-import operator
-from GlyphsApp import UPDATEINTERFACE
 
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
@@ -185,6 +185,7 @@ class AlignmentPalette (PalettePlugin):
 
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
+	@objc.python_method
 	def settings(self):
 		width = 150
 		self.name = Glyphs.localize({'en': u'Alignment'})
@@ -238,6 +239,7 @@ class AlignmentPalette (PalettePlugin):
 		if windowController:
 			self.font = windowController.document().font
 
+	@objc.python_method
 	def update( self, sender=None ):
 		# do not update in case the palette is collapsed
 		if self.dialog.frame().origin.y != 0:
@@ -353,15 +355,19 @@ class AlignmentPalette (PalettePlugin):
 			self.font.gridSubDivisions /= 2
 		Glyphs.redraw()
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+	# the following methods are adopted from the SDK without any changes
 
+	@objc.python_method
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
 	
+	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
 
+	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
@@ -369,11 +375,14 @@ class AlignmentPalette (PalettePlugin):
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
+	
+	@objc.python_method
 	def sortID(self):
 		return self._sortID
 	

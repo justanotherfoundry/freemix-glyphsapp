@@ -1,9 +1,9 @@
 # encoding: utf-8
 
+import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
-from GlyphsApp import UPDATEINTERFACE
-
 
 NUMBER_OF_FIELDS = 20
 MINIMUM_NON_DOT_SUFFIX_LENGTH = 4
@@ -12,6 +12,7 @@ class SuffixesPalette( PalettePlugin ):
 
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
+	@objc.python_method
 	def settings(self):
 		self.name = Glyphs.localize({'en': u'Suffixes'})
 		# Create Vanilla window and group with controls
@@ -169,7 +170,7 @@ class SuffixesPalette( PalettePlugin ):
 			# set the width to suffixFieldWidth (this only has an effect in the first iteration)
 			w = suffixFieldWidth
 
-	# the main update function called by Glyphs
+	@objc.python_method
 	def update( self, sender=None ):
 		# do not update in case the palette is collapsed
 		if self.dialog.frame().origin.y != 0:
@@ -197,13 +198,19 @@ class SuffixesPalette( PalettePlugin ):
 		self.updateTextFields()
 		self.updateLayout()
 
+	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+	# the following methods are adopted from the SDK without any changes
+
+	@objc.python_method
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
 	
+	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
 
+	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
@@ -211,11 +218,14 @@ class SuffixesPalette( PalettePlugin ):
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
+	
+	@objc.python_method
 	def sortID(self):
 		return self._sortID
 	

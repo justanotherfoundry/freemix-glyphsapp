@@ -11,6 +11,7 @@
 #
 ###########################################################################################################
 
+import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 import operator
@@ -55,6 +56,9 @@ class AnchorsPalette (PalettePlugin):
 	heightConstrains = objc.IBOutlet()
 	allFieldsHidden = False
 	
+	# seems to be called whenever a new font is opened
+	# careful! not called when the user switches to a different, already opened font
+	@objc.python_method
 	def settings(self):
 		self.name = Glyphs.localize({'en': u'Anchors'})
 		self.loadNib( 'AnchorsPaletteView', __file__ )
@@ -78,13 +82,7 @@ class AnchorsPalette (PalettePlugin):
 						layer.anchors[anchorName].position = NSPoint( layer.anchors[anchorName].position.x, newValue )
 					break
 
-	def start(self):
-		# Adding a callback for the 'GSUpdateInterface' event
-		Glyphs.addCallback(self.update, UPDATEINTERFACE)
-	
-	def __del__(self):
-		Glyphs.removeCallback(self.update)
-
+	@objc.python_method
 	def update( self, sender=None ):
 		collapsed = ( self.dialog.frame().origin.y != 0 )
 		if collapsed and self.allFieldsHidden:
@@ -160,6 +158,19 @@ class AnchorsPalette (PalettePlugin):
 		if height > self.heightConstrains.constant():
 			self.heightConstrains.setConstant_( height )
 
+	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+	# the following methods are adopted from the SDK without any changes
+
+	@objc.python_method
+	def start(self):
+		# Adding a callback for the 'GSUpdateInterface' event
+		Glyphs.addCallback(self.update, UPDATEINTERFACE)
+	
+	@objc.python_method
+	def __del__(self):
+		Glyphs.removeCallback(self.update)
+
+	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
@@ -167,10 +178,14 @@ class AnchorsPalette (PalettePlugin):
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
+	
+	@objc.python_method
 	def sortID(self):
 		return self._sortID
+	
