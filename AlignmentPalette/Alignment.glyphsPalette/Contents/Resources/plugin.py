@@ -16,159 +16,11 @@ STICK_TO_GRID = False
 # maximum number of glyphs
 MAX_GLYPHS_COUNT = 100
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 # Glyphs constants
 COUNTERCLOCKWISE = -1
 CLOCKWISE = 1
 
-# sets the center of the bounding box of a layer
-def setCenterOfLayer( layer, newCenterX, newCenterY ):
-	centerX, centerY = centerOfLayer( layer )
-	try:
-		shiftX = newCenterX - centerX
-	except TypeError:
-		shiftX = 0
-	try:
-		shiftY = newCenterY - centerY
-	except TypeError:
-		shiftY = 0
-	layer.applyTransform( [ 1.0, 0.0, 0.0, 1.0, shiftX, shiftY ] )
-	layer.syncMetrics()
-
-# returns the center of the bounding box of a layer
-def centerOfLayer( layer ):
-	decomposedLayer = layer.copyDecomposedLayer()
-	if not decomposedLayer.paths:
-		return None, None
-	# we have to manually determine the bounds since
-	# Glyphs applies the grid when it returns layer.bounds
-	left = right = decomposedLayer.paths[0].nodes[0].x
-	top = bottom = decomposedLayer.paths[0].nodes[0].y
-	for path in decomposedLayer.paths:
-		for node in path.nodes:
-			if node.y > top:
-				top = node.y
-			elif node.y < bottom:
-				bottom = node.y
-			if node.x > right:
-				right = node.x
-			elif node.x < left:
-				left = node.x
-	centerX = 0.5 * int( left + right )
-	centerY = 0.5 * int( top + bottom )
-	return centerX, centerY
-
-# returns the center of the layers,
-# x or y might be '' if they vary between layers
-def centerOfLayers( layers ):
-	globalCenterX = None
-	globalCenterY = None
-	for layer in layers:
-		centerX, centerY = centerOfLayer( layer )
-		if globalCenterX is None:
-			globalCenterX = centerX
-		elif globalCenterX != centerX:
-			globalCenterX = ''
-		if globalCenterY is None:
-			globalCenterY = centerY
-		elif globalCenterY != centerY:
-			globalCenterY = ''
-	return globalCenterX, globalCenterY
-
-# returns a list of tuples with zone name, zone and height,
-# sorted by height
-def namedZones( layer ):
-	font = layer.parent.parent
-	if not font:
-		return
-	masters = [m for m in font.masters if m.id == layer.associatedMasterId]
-	if not masters:
-		return []
-	master = masters[0]
-	topHeights = [ ('cap height', master.capHeight), ('ascender', master.ascender), ('x-height', master.xHeight) ]
-	bottomHeights = [ ('baseline', 0), ('descender', master.descender) ]
-	zones = []
-	for zone in master.alignmentZones:
-		if zone.size > 0:
-			for name, y in topHeights:
-				if y >= zone.position and y <= zone.position + zone.size:
-					zones.append( ( name, zone, y ) )
-					break
-			else:
-				zones.append( ( str(zone.position), zone, zone.position ) )
-		elif zone.size < 0:
-			for name, y in bottomHeights:
-				if y <= zone.position and y >= zone.position + zone.size:
-					zones.append( ( name, zone, y ) )
-					break
-			else:
-				zones.append( ( str(zone.position), zone, zone.position ) )
-	# sort by height
-	zones.sort(key=lambda x: x[2], reverse = True )
-	return zones
-
-# returns a list of tuples (zone name, overshoot) for the layer
-# overshoot may be None
-def overshootsOfLayer( layer ):
-	zones = namedZones( layer )
-	overshoots = [ [ name, None ] for name, zone, height in zones ]
-	for path in layer.copyDecomposedLayer().paths:
-		if path.direction == CLOCKWISE or len( path.nodes ) < 2:
-			continue
-		node2 = path.nodes[-2]
-		node3 = path.nodes[-1]
-		if not node2 or not node3:
-			# this can happen with open paths
-			continue
-		for node in path.nodes:
-			node1 = node2
-			node2 = node3
-			node3 = node
-			# this means we start with
-			# path.nodes[-2], path.nodes[-1] and path.nodes[0]
-			if node2.y == node1.y and node2.y == node3.y:
-				pass
-			# top extremum
-			elif node2.y >= node1.y and node2.y >= node3.y and node1.x > node3.x:
-				for index, ( name, zone, height ) in enumerate( zones ):
-					if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
-						overshoot = node2.y - height
-						existingOvershoot = overshoots[index][1]
-						if overshoot > existingOvershoot:
-							overshoots[index][1] = overshoot
-			# bottom extremum
-			elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
-				for index, ( name, zone, height ) in enumerate( zones ):
-					if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
-						overshoot = height - node2.y
-						existingOvershoot = overshoots[index][1]
-						if overshoot > existingOvershoot:
-							overshoots[index][1] = overshoot
-	return overshoots
-
-# returns the overshoots for top and bottom zones,
-# might be 'multiple' if they vary between layers.
-# layers must not be empty.
-def overshootsOfLayers( layers ):
-	globalOvershoots = None
-	for layer in layers:
-		if not globalOvershoots:
-			globalOvershoots = overshootsOfLayer( layer )
-		else:
-			overshoots = overshootsOfLayer( layer )
-			for index, ( name, overshoot ) in enumerate( overshoots ):
-				assert( name == globalOvershoots[index][0] )
-				if overshoot is not None:
-					if globalOvershoots[index][1] is None:
-						globalOvershoots[index][1] = overshoot
-					elif globalOvershoots[index][1] != overshoot:
-							globalOvershoots[index][1] = 'multiple'
-	return globalOvershoots
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
-
 GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
 class ArrowEditText (EditText):
 	nsTextFieldClass = GSSteppingTextField
@@ -179,9 +31,159 @@ class ArrowEditText (EditText):
 			self._nsObject.setAction_(self._target.action_)
 			self._nsObject.setTarget_(self._target)
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 class AlignmentPalette (PalettePlugin):
+
+	# sets the center of the bounding box of a layer
+	@objc.python_method
+	def setCenterOfLayer( self, layer, newCenterX, newCenterY ):
+		centerX, centerY = self.centerOfLayer( layer )
+		try:
+			shiftX = newCenterX - centerX
+		except TypeError:
+			shiftX = 0
+		try:
+			shiftY = newCenterY - centerY
+		except TypeError:
+			shiftY = 0
+		layer.applyTransform( [ 1.0, 0.0, 0.0, 1.0, shiftX, shiftY ] )
+		layer.syncMetrics()
+
+	# returns the center of the bounding box of a layer
+	@objc.python_method
+	def centerOfLayer( self, layer ):
+		decomposedLayer = layer.copyDecomposedLayer()
+		if not decomposedLayer.paths:
+			return None, None
+		# we have to manually determine the bounds since
+		# Glyphs applies the grid when it returns layer.bounds
+		left = right = decomposedLayer.paths[0].nodes[0].x
+		top = bottom = decomposedLayer.paths[0].nodes[0].y
+		for path in decomposedLayer.paths:
+			for node in path.nodes:
+				if node.y > top:
+					top = node.y
+				elif node.y < bottom:
+					bottom = node.y
+				if node.x > right:
+					right = node.x
+				elif node.x < left:
+					left = node.x
+		centerX = 0.5 * int( left + right )
+		centerY = 0.5 * int( top + bottom )
+		return centerX, centerY
+
+	# returns the center of the layers,
+	# x or y might be '' if they vary between layers
+	@objc.python_method
+	def centerOfLayers( self, layers ):
+		globalCenterX = None
+		globalCenterY = None
+		for layer in layers:
+			centerX, centerY = self.centerOfLayer( layer )
+			if globalCenterX is None:
+				globalCenterX = centerX
+			elif globalCenterX != centerX:
+				globalCenterX = ''
+			if globalCenterY is None:
+				globalCenterY = centerY
+			elif globalCenterY != centerY:
+				globalCenterY = ''
+		return globalCenterX, globalCenterY
+
+	# returns a list of tuples with zone name, zone and height,
+	# sorted by height
+	@objc.python_method
+	def namedZones( self, layer ):
+		font = layer.parent.parent
+		if not font:
+			return
+		masters = [m for m in font.masters if m.id == layer.associatedMasterId]
+		if not masters:
+			return []
+		master = masters[0]
+		topHeights = [ ('cap height', master.capHeight), ('ascender', master.ascender), ('x-height', master.xHeight) ]
+		bottomHeights = [ ('baseline', 0), ('descender', master.descender) ]
+		zones = []
+		for zone in master.alignmentZones:
+			if zone.size > 0:
+				for name, y in topHeights:
+					if y >= zone.position and y <= zone.position + zone.size:
+						zones.append( ( name, zone, y ) )
+						break
+				else:
+					zones.append( ( str(zone.position), zone, zone.position ) )
+			elif zone.size < 0:
+				for name, y in bottomHeights:
+					if y <= zone.position and y >= zone.position + zone.size:
+						zones.append( ( name, zone, y ) )
+						break
+				else:
+					zones.append( ( str(zone.position), zone, zone.position ) )
+		# sort by height
+		zones.sort(key=lambda x: x[2], reverse = True )
+		return zones
+
+	# returns a list of tuples (zone name, overshoot) for the layer
+	# overshoot may be None
+	@objc.python_method
+	def overshootsOfLayer( self, layer ):
+		zones = self.namedZones( layer )
+		overshoots = [ [ name, None ] for name, zone, height in zones ]
+		for path in layer.copyDecomposedLayer().paths:
+			if path.direction == CLOCKWISE or len( path.nodes ) < 2:
+				continue
+			node2 = path.nodes[-2]
+			node3 = path.nodes[-1]
+			if not node2 or not node3:
+				# this can happen with open paths
+				continue
+			for node in path.nodes:
+				node1 = node2
+				node2 = node3
+				node3 = node
+				# this means we start with
+				# path.nodes[-2], path.nodes[-1] and path.nodes[0]
+				if node2.y == node1.y and node2.y == node3.y:
+					pass
+				# top extremum
+				elif node2.y >= node1.y and node2.y >= node3.y and node1.x > node3.x:
+					for index, ( name, zone, height ) in enumerate( zones ):
+						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
+							overshoot = node2.y - height
+							existingOvershoot = overshoots[index][1]
+							if overshoot > existingOvershoot:
+								overshoots[index][1] = overshoot
+				# bottom extremum
+				elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
+					for index, ( name, zone, height ) in enumerate( zones ):
+						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
+							overshoot = height - node2.y
+							existingOvershoot = overshoots[index][1]
+							if overshoot > existingOvershoot:
+								overshoots[index][1] = overshoot
+		return overshoots
+
+	# returns the overshoots for top and bottom zones,
+	# might be 'multiple' if they vary between layers.
+	# layers must not be empty.
+	@objc.python_method
+	def overshootsOfLayers( self, layers ):
+		globalOvershoots = None
+		for layer in layers:
+			if not globalOvershoots:
+				globalOvershoots = self.overshootsOfLayer( layer )
+			else:
+				overshoots = self.overshootsOfLayer( layer )
+				for index, ( name, overshoot ) in enumerate( overshoots ):
+					assert( name == globalOvershoots[index][0] )
+					if overshoot is not None:
+						if globalOvershoots[index][1] is None:
+							globalOvershoots[index][1] = overshoot
+						elif globalOvershoots[index][1] != overshoot:
+								globalOvershoots[index][1] = 'multiple'
+		return globalOvershoots
+
+	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
@@ -260,7 +262,7 @@ class AlignmentPalette (PalettePlugin):
 		# update the center x and y
 		if self.font.selectedLayers:
 			# determine centers
-			globalCenterX, globalCenterY = centerOfLayers( self.font.selectedLayers )
+			globalCenterX, globalCenterY = self.centerOfLayers( self.font.selectedLayers )
 			if globalCenterX is None:
 				globalCenterX = ''
 			else:
@@ -289,7 +291,7 @@ class AlignmentPalette (PalettePlugin):
 		# update the overshoots
 		if self.font.selectedLayers:
 			# determine overshoots
-			globalOvershoots = overshootsOfLayers( self.font.selectedLayers )
+			globalOvershoots = self.overshootsOfLayers( self.font.selectedLayers )
 		else:
 			globalOvershoots = []
 		for i in xrange( MAX_ZONES ):
@@ -348,7 +350,7 @@ class AlignmentPalette (PalettePlugin):
 				if ( len( layer.components ) > 0 ) == hasComponents:
 					print layer.parent.name
 					layer.parent.beginUndo()
-					setCenterOfLayer( layer, newCenterX, newCenterY )
+					self.setCenterOfLayer( layer, newCenterX, newCenterY )
 					layer.parent.endUndo()
 		# restore the number of subdivisions
 		if not STICK_TO_GRID:
