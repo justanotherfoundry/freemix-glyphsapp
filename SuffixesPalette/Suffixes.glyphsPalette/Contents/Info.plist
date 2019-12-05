@@ -17,9 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.01</string>
+	<string>1.02</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.01</string>
+	<string>1.02</string>
+	<key>productReleaseNotes</key>
+	<string>Fixed an error</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/SuffixesPalette/Suffixes.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>

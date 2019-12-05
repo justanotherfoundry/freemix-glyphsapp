@@ -181,10 +181,11 @@ class SuffixesPalette( PalettePlugin ):
 		# represents the last suffixLength characters in the glyph name
 		self.suffixLength = 0
 		if self.font.selectedLayers:
-			self.selectedGlyphs = [ layer.parent for layer in self.font.selectedLayers ]
+			self.selectedGlyphs = [ layer.parent for layer in self.font.selectedLayers if layer.parent ]
 		else:
 			self.selectedGlyphs = []
-		selectedNames = [ selectedGlyph.name for selectedGlyph in self.selectedGlyphs ]
+		selectedNames = [ selectedGlyph.name for selectedGlyph in self.selectedGlyphs if selectedGlyph ]
+		# ^ we ensure that the list does not contain any None
 		self.nameSplit = self.determineSharedDotSplit( selectedNames )
 		self.fieldCount = len( self.nameSplit )
 		if self.fieldCount == 1:
