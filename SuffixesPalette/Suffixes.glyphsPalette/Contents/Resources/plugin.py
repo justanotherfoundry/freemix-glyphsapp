@@ -194,7 +194,7 @@ class SuffixesPalette( PalettePlugin ):
 			self.selectedGlyphs = [ layer.parent for layer in self.font.selectedLayers if layer.parent ]
 		else:
 			self.selectedGlyphs = []
-		selectedNames = [ selectedGlyph.name for selectedGlyph in self.selectedGlyphs if selectedGlyph ]
+		selectedNames = [ selectedGlyph.name for selectedGlyph in self.selectedGlyphs if ( selectedGlyph and selectedGlyph.name ) ]
 		# ^ we ensure that the list does not contain any None
 		self.nameSplit = self.determineSharedDotSplit( selectedNames )
 		self.fieldCount = len( self.nameSplit )

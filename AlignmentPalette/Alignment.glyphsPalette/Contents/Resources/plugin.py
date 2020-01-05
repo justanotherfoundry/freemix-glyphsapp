@@ -97,7 +97,7 @@ class AlignmentPalette (PalettePlugin):
 	def namedZones( self, layer ):
 		font = layer.parent.parent
 		if not font:
-			return
+			return []
 		masters = [m for m in font.masters if m.id == layer.associatedMasterId]
 		if not masters:
 			return []
