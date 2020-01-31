@@ -95,7 +95,10 @@ class AlignmentPalette (PalettePlugin):
 	# sorted by height
 	@objc.python_method
 	def namedZones( self, layer ):
-		font = layer.parent.parent
+		glyph = layer.parent
+		if not glyph:
+			return []
+		font = glyph.parent
 		if not font:
 			return []
 		masters = [m for m in font.masters if m.id == layer.associatedMasterId]
@@ -171,6 +174,8 @@ class AlignmentPalette (PalettePlugin):
 	def overshootsOfLayers( self, layers ):
 		globalOvershoots = None
 		for layer in layers:
+			if not layer:
+				continue
 			if not globalOvershoots:
 				globalOvershoots = self.overshootsOfLayer( layer )
 			else:
