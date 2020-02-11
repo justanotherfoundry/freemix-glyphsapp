@@ -19,6 +19,8 @@ abbreviations = {
 	'Text': 'Tx',
 	'Banner': 'Bn',
 	'Tall': 'Ta',
+	'Condensed': 'Cnd',
+	'Compressed': 'Cmp',
 }
 abbreviations = dict((re.escape(k), v) for k, v in abbreviations.iteritems())
 pattern = re.compile("|".join(abbreviations.keys()))
@@ -30,7 +32,7 @@ instance_names = [ instance.fullName for instance in Glyphs.font.instances ]
 longest_instance_name = max( instance_names, key = len )
 first_column_width = len( longest_instance_name ) + 5
 
-print( ' ', ''.rjust( first_column_width ), ' '.join( [ n.rjust( master_column_width ) for n in master_names] ) )
+print( ''.ljust( first_column_width ), ''.join( [ n.rjust( master_column_width ) for n in master_names] ) )
 
 for instance in Glyphs.font.instances:
 	print( ' ' if instance.active else '*', end='' )
