@@ -53,7 +53,7 @@ class AlignmentPalette (PalettePlugin):
 	@objc.python_method
 	def centerOfLayer( self, layer ):
 		decomposedLayer = layer.copyDecomposedLayer()
-		if not decomposedLayer.paths:
+		if len(decomposedLayer.paths) == 0:
 			return None, None
 		# we have to manually determine the bounds since
 		# Glyphs applies the grid when it returns layer.bounds
