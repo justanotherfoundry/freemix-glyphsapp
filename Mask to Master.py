@@ -20,12 +20,13 @@ transfer parts of the outline between glyphs.
 import sys
 
 def counterparts( selection, background ):
-	background = background.copyDecomposedLayer()
-	len_selection = len( selection )
 	best_point_range = []
 	best_deviation = sys.maxint
+	paths = list( background.paths )
+	for component in background.components:
+		paths.extend( component.componentLayer.paths )
 	# search in each path
-	for bg_path in background.paths:
+	for bg_path in paths:
 		bg_nodes = bg_path.nodes
 		# try each starting point
 		for start in range( len( bg_nodes ) ):
