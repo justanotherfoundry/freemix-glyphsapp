@@ -44,13 +44,17 @@ This is useful for quickly changing the suffix of multiple glyphs at once.
 
 ### Insert Glyph to Background
 
+This is one of the most powerful scripts in this collection. I highly recommend to give it a keyboard shortcut.
+
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.
 
-- With right align selected, the contours will be pasted as if the advance widths were aligned.
-- The keyboard shortcuts for left and right aligned are Enter and Esc.
-- It is sufficient to enter the beginning of the glyph name, e.g. "deg" for "degree".
+- With right align selected, the contours will be pasted as if the advance widths were aligned. For example, inserting the X into the K right-aligned will instantly give you a visual feedback whether the spacing is consistent.
+- The keyboard shortcuts for left and right aligned are Enter and Esc. If you really have to cancel the dialog, use the little button on the dialog’s title bar.
+- It is sufficient to enter the beginning of the glyph name, e.g. "deg" for "degree". Be careful if there are several glyphs in the font starting with your entry. The script will simply enter one it finds.
+– For non-master layers, the script will try to find matching (by name) non-master layers from the interted glyph.
+– For brace layers, if no corresponding brace layer is found in the inserted glyph, an interpolation is generated on-the-fly. A typical use case would be to set up a brace layer for the E, then insert the L so as to determine the standard (not visually corrected) interpolated stems.
 
 
 ### Insert Glyph
