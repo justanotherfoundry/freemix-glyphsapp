@@ -27,11 +27,11 @@ RIGHT = '>'
 font = Glyphs.font
 active_layerId = Glyphs.font.selectedLayers[0].layerId
 
-def insert_paths( to_layer, from_layer, alignment, as_component_is_checked, clear_contents ):
+def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents ):
 	# clear layer
 	if clear_contents:
 		to_layer.background.clear()
-	if as_component_is_checked:
+	if as_component:
 		# insert as component
 		shift = ( to_layer.width - from_layer.width ) if alignment == RIGHT else 0
 		from_glyph_name = from_layer.parent.name
@@ -139,8 +139,7 @@ class GlyphnameDialog( object):
 						# ^ necessary for the re-interpolation
 						other_glyph_copy.layers.append( interpolatedLayer )
 						interpolatedLayer.reinterpolate()
-						as_component_is_checked = False
-						insert_paths( layer, interpolatedLayer, alignment, as_component_is_checked, clear_contents_is_checked )
+						insert_paths( layer, interpolatedLayer, alignment, as_component = False, clear_contents = clear_contents_is_checked )
 					elif active_layerId == layer.layerId:
 						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment, as_component_is_checked, clear_contents_is_checked )
 			glyph.endUndo()
