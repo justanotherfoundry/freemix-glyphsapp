@@ -128,7 +128,20 @@ class GlyphnameDialog( object):
 						insert_paths( layer, other_layer, alignment, as_component_is_checked, clear_contents_is_checked )
 						break
 				else:
-					if active_layerId == layer.layerId:
+					if layer.isBraceLayer:
+						# the corresponding brace layer was not found in other_glyph.
+						# let’s interpolate it on-the-fly:
+						other_glyph_copy = other_glyph.copy()
+						other_glyph_copy.parent = font
+						# ^ Glyphs needs the font’s master coordinates for the re-interpolation
+						interpolatedLayer = GSLayer()
+						interpolatedLayer.name = layer.name
+						# ^ necessary for the re-interpolation
+						other_glyph_copy.layers.append( interpolatedLayer )
+						interpolatedLayer.reinterpolate()
+						as_component_is_checked = False
+						insert_paths( layer, interpolatedLayer, alignment, as_component_is_checked, clear_contents_is_checked )
+					elif active_layerId == layer.layerId:
 						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment, as_component_is_checked, clear_contents_is_checked )
 			glyph.endUndo()
 		Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"] = as_component_is_checked
