@@ -20,13 +20,20 @@ transfer parts of the outline between glyphs.
 import sys
 
 def counterparts( selection, background ):
+	if background.components:
+		# we cannot use background.copyDecomposedLayer() here
+		# as this would also decompose caps and corners.
+		# so, we need to manually create a decomposed copy:
+		foregroundLayer = background.foreground()
+		glyph = foregroundLayer.parent
+		glyph_copy = glyph.copy()
+		glyph_copy.parent = glyph.parent
+		background = glyph_copy.layerForKey_( foregroundLayer.layerId ).background
+		background.decomposeComponents()
 	best_point_range = []
 	best_deviation = sys.maxint
-	paths = list( background.paths )
-	for component in background.components:
-		paths.extend( component.componentLayer.paths )
 	# search in each path
-	for bg_path in paths:
+	for bg_path in background.paths:
 		bg_nodes = bg_path.nodes
 		# try each starting point
 		for start in range( len( bg_nodes ) ):
