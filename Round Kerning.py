@@ -1,35 +1,47 @@
 #MenuTitle: Round Kerning
 # encoding: utf-8
+from __future__ import division
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__="""
-Rounds the kerning values to full integer numbers.
+Rounds the kerning values to a chosen number.
 
 In addition, values smaller than MIN_VALUE are erased.
 """
 
-MIN_VALUE = 1
-
+MIN_VALUE = 4
+QUANTISATION = 1
 from GlyphsApp import *
+from GlyphsApp import MGOrderedDictionary
+import time
 font = Glyphs.font
-master_id = font.selectedFontMaster.id
 
-to_be_removed = []
-for first, seconds in dict( font.kerning[master_id] ).items():
-	if not first.startswith('@'):
-		first = font.glyphForId_( first ).name
-	for second in seconds:
-		if not second.startswith('@'):
-			second = font.glyphForId_( second ).name
-		# round towards zero
-		value = int( font.kerningForPair( master_id, first, second ) )
-		if abs( value ) < MIN_VALUE:
-			to_be_removed.append( ( first, second ) )
-		else:
-			font.setKerningForPair( master_id, first, second, value )
+def filterKern():
+	kerning = font.kerning
+	for master in Font.masters:
+		masterDict = kerning[master.id]
+		newMasterDict = MGOrderedDictionary.new()
+		firstKeys = masterDict.keys()
+		for firstKey in firstKeys:
+			rightDict = masterDict[firstKey]
+			secondKeys = rightDict.keys()
+			newRightDict = MGOrderedDictionary.new()
+			for secondKey in secondKeys:
+				value = rightDict[secondKey]
+				value = round(value / QUANTISATION) * QUANTISATION
+				if abs(value) >= MIN_VALUE:
+					newRightDict[secondKey] = value
+			if len(newRightDict) > 0:
+				newMasterDict[firstKey] = newRightDict
+		kerning[master.id] = newMasterDict
+	font.kerning = kerning
 
-for first, second in to_be_removed:
-	font.removeKerningForPair( master_id, first, second )
+start = time.time()
+
+filterKern()
+
+end = time.time()
+print("time", end - start)
