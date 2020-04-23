@@ -1,4 +1,6 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
+
 
 import objc
 from GlyphsApp import *
@@ -132,7 +134,7 @@ class AlignmentPalette (PalettePlugin):
 	@objc.python_method
 	def overshootsOfLayer( self, layer ):
 		zones = self.namedZones( layer )
-		overshoots = [ [ name, None ] for name, zone, height in zones ]
+		overshoots = [ [ name, 0 ] for name, zone, height in zones ]
 		for path in layer.copyDecomposedLayer().paths:
 			if path.direction == CLOCKWISE or len( path.nodes ) < 2:
 				continue
@@ -155,16 +157,18 @@ class AlignmentPalette (PalettePlugin):
 						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
 							overshoot = node2.y - height
 							existingOvershoot = overshoots[index][1]
-							if overshoot > existingOvershoot:
-								overshoots[index][1] = overshoot
+							if not existingOvershoot is None:
+								if overshoot > existingOvershoot:
+									overshoots[index][1] = overshoot
 				# bottom extremum
 				elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
 					for index, ( name, zone, height ) in enumerate( zones ):
 						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
 							overshoot = height - node2.y
 							existingOvershoot = overshoots[index][1]
-							if overshoot > existingOvershoot:
-								overshoots[index][1] = overshoot
+							if not existingOvershoot is None:
+								if overshoot > existingOvershoot:
+									overshoots[index][1] = overshoot
 		return overshoots
 
 	# returns the overshoots for top and bottom zones,
@@ -195,7 +199,13 @@ class AlignmentPalette (PalettePlugin):
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
 	def settings(self):
-		self.name = Glyphs.localize({'en': u'Alignment'})
+		self.name = Glyphs.localize({
+			'en': 'Alignment',
+			'de': 'Ausrichtung',
+			'es': 'Alineación',
+			'fr': 'Alignement',
+			'pt': 'Alinhamento',
+		})
 		width = 150
 		self.marginTop = 7
 		self.marginLeft = 7
@@ -234,7 +244,7 @@ class AlignmentPalette (PalettePlugin):
 		self.paletteView.group.headlineOvershoot = TextBox( ( 10, posy, innerWidth, 18 ), headlineOvershoot, sizeStyle='small' )
 		posy += self.lineSpacing
 		self.paletteView.group, 'lineAbove', HorizontalLine( ( self.marginLeft, posy - 3, innerWidth, 1 ) )
-		for i in xrange( MAX_ZONES ):
+		for i in range( MAX_ZONES ):
 			setattr( self.paletteView.group, 'name' + str( i ), TextBox( ( 10, posy, innerWidth, 18 ), '', sizeStyle='small' ) )
 			setattr( self.paletteView.group, 'value' + str( i ), TextBox( ( self.posx_TextField, posy, textFieldWidth - 3, textFieldHeight ), '', sizeStyle='small', alignment='right' ) )
 			posy += self.lineSpacing
@@ -260,7 +270,7 @@ class AlignmentPalette (PalettePlugin):
 		if not self.font.selectedLayers or len( self.font.selectedLayers ) > MAX_GLYPHS_COUNT:
 			self.paletteView.group.centerX.show( False )
 			self.paletteView.group.centerY.show( False )
-			for i in xrange( MAX_ZONES ):
+			for i in range( MAX_ZONES ):
 				getattr( self.paletteView.group, 'name' + str( i ) ).set( '' )
 				getattr( self.paletteView.group, 'value' + str( i ) ).show( False )
 				getattr( self.paletteView.group, 'line' + str( i ) ).show( False )
@@ -300,7 +310,7 @@ class AlignmentPalette (PalettePlugin):
 			globalOvershoots = self.overshootsOfLayers( self.font.selectedLayers )
 		else:
 			globalOvershoots = []
-		for i in xrange( MAX_ZONES ):
+		for i in range( MAX_ZONES ):
 			try:
 				zoneName, overshoot = globalOvershoots[i]
 				getattr( self.paletteView.group, 'name' + str( i ) ).set( zoneName )
