@@ -157,18 +157,16 @@ class AlignmentPalette (PalettePlugin):
 						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
 							overshoot = node2.y - height
 							existingOvershoot = overshoots[index][1]
-							if not existingOvershoot is None:
-								if overshoot > existingOvershoot:
-									overshoots[index][1] = overshoot
+							if overshoot > existingOvershoot:
+								overshoots[index][1] = overshoot
 				# bottom extremum
 				elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
 					for index, ( name, zone, height ) in enumerate( zones ):
 						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
 							overshoot = height - node2.y
 							existingOvershoot = overshoots[index][1]
-							if not existingOvershoot is None:
-								if overshoot > existingOvershoot:
-									overshoots[index][1] = overshoot
+							if overshoot > existingOvershoot:
+								overshoots[index][1] = overshoot
 		return overshoots
 
 	# returns the overshoots for top and bottom zones,
