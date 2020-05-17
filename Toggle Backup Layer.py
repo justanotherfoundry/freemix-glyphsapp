@@ -24,17 +24,39 @@ except NameError:
 	backupLayerId = None
 
 string = NSMutableAttributedString.alloc().init()
-for i in xrange( len( rawTextLayers ) ):
-	rawTextGlyph = rawTextLayers[i].parent
+i_composed = -1
+i_raw = -1
+while i_composed < len( layers ) - 1:
+	i_raw += 1
+	i_composed += 1
+	while rawTextLayers[i_raw].parent.name != layers[i_composed].parent.name:
+		i_composed += 1
+		if i_composed >= len( layers ):
+			break
+		for i_raw_candidate in range( i_raw, len( layers ) ):
+			if rawTextLayers[i_raw_candidate].parent.name == layers[i_composed].parent.name:
+				for i_raw_add in range( i_raw, i_raw_candidate ):
+					rawTextGlyph = rawTextLayers[i_raw_add].parent
+					try:
+						char = font.characterForGlyph_( rawTextGlyph )
+					except:
+						continue
+					singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
+					string.appendAttributedString_( singleChar )
+				i_raw = i_raw_candidate
+				break
+	if i_composed >= len( layers ):
+		break
+	rawTextGlyph = rawTextLayers[i_raw].parent
 	try:
 		char = font.characterForGlyph_( rawTextGlyph )
 	except:
 		continue
-	layer = layers[i]
 	# initialise single char without attributes
 	# which switches the glyph to the active master
 	singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
-	if i == currentTab.layersCursor:
+	layer = rawTextLayers[i_raw]
+	if i_composed == currentTab.layersCursor:
 		# we are at the currently active glyph
 		if layer.layerId == masterId:
 			# current layer is the selected master layer.
