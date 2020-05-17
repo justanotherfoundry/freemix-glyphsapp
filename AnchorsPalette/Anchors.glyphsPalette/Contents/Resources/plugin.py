@@ -87,7 +87,7 @@ class AnchorsPalette (PalettePlugin):
 			if self.font.selectedLayers:
 				for layer in self.font.selectedLayers:
 					for anchor in layer.anchors:
-						if anchorsNumber.has_key( anchor.name ):
+						if anchor.name in anchorsNumber:
 							anchorsNumber[anchor.name] += 1
 						else:
 							anchorsNumber[anchor.name] = 1
