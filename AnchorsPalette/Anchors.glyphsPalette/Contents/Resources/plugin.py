@@ -98,7 +98,7 @@ class AnchorsPalette (PalettePlugin):
 			self.allFieldsHidden = False
 		else:
 			anchorsNumber = []
-		for i in xrange( MAX_NUMBER_OF_LINES ):
+		for i in range( MAX_NUMBER_OF_LINES ):
 			try:
 				anchorName, number = anchorsNumber[i]
 			except IndexError:
