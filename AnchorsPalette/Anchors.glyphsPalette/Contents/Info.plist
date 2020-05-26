@@ -13,9 +13,9 @@
 	<key>CFBundleName</key>
 	<string>Anchors Palette</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.07</string>
+	<string>1.08</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
