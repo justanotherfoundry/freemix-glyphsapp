@@ -25,7 +25,7 @@ class SuffixesPalette( PalettePlugin ):
 		self.paletteView = Window( (self.width, self.height), minSize=(self.width, self.height - 10), maxSize=(self.width, self.height + 200 ) )
 		self.paletteView.group = Group( (0, 0, self.width, self.height ) )
 		posx = self.margin
-		for i in xrange( NUMBER_OF_FIELDS ):
+		for i in range( NUMBER_OF_FIELDS ):
 			setattr( self.paletteView.group, 'txt' + str( i ), EditText( ( 10+28*i, self.margin, 25, self.textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='mini' ) )
 		# Set dialog to NSView
 		self.dialog = self.paletteView.group.getNSView()
@@ -75,7 +75,7 @@ class SuffixesPalette( PalettePlugin ):
 	@objc.python_method
 	def editTextCallback( self, editText ):
 		try:
-			for i in xrange( len( self.nameSplit ) ):
+			for i in range( len( self.nameSplit ) ):
 				if editText.getPosSize() == getattr( self.paletteView.group, 'txt' + str( i ) ).getPosSize():
 					# we have found the right text field
 					if editText.get() != self.nameSplit[i]:
@@ -107,19 +107,19 @@ class SuffixesPalette( PalettePlugin ):
 			lengthDiff = len( glyphNameSplit ) - len( sharedNames )
 			# glyph longer than shared: compare then pad
 			if lengthDiff > 0:
-				for i in xrange( ( len( sharedNames ) ) ):
+				for i in range( ( len( sharedNames ) ) ):
 					if sharedNames[i] != glyphNameSplit[i]:
 						sharedNames[i] = '.'
 				sharedNames += ['.'] * lengthDiff
 			# shared longer than glyph: compare then set rest to '.'
 			if lengthDiff < 0:
-				for i in xrange( ( len( glyphNameSplit ) ) ):
+				for i in range( ( len( glyphNameSplit ) ) ):
 					if sharedNames[i] != glyphNameSplit[i]:
 						sharedNames[i] = '.'
 				sharedNames[lengthDiff:] = ['.'] * (-lengthDiff)
 			# same length: compare
 			else:
-				for i in xrange( ( len( glyphNameSplit ) ) ):
+				for i in range( ( len( glyphNameSplit ) ) ):
 					if sharedNames[i] != glyphNameSplit[i]:
 						sharedNames[i] = '.'
 		return sharedNames
@@ -138,7 +138,7 @@ class SuffixesPalette( PalettePlugin ):
 			for selectedName in selectedNames[1:]:
 				if self.suffixLength > len( selectedName ):
 					self.suffixLength = len( selectedName )
-				for i in xrange( self.suffixLength ):
+				for i in range( self.suffixLength ):
 					if name0[-i-1] != selectedName[-i-1]:
 						if i < minimumLength:
 							self.suffixLength = 0
@@ -149,7 +149,7 @@ class SuffixesPalette( PalettePlugin ):
 
 	@objc.python_method
 	def updateTextFields( self ):
-		for i in xrange( ( self.fieldCount ) ):
+		for i in range( ( self.fieldCount ) ):
 			try:
 				editText = getattr( self.paletteView.group, 'txt' + str( i ) )
 			except IndexError:
@@ -168,7 +168,7 @@ class SuffixesPalette( PalettePlugin ):
 		if self.fieldCount == 0:
 			x = self.width + 1
 		w = round( suffixFieldWidth * 2 + self.gutter )
-		for i in xrange( NUMBER_OF_FIELDS ):
+		for i in range( NUMBER_OF_FIELDS ):
 			editText = getattr( self.paletteView.group, 'txt' + str( i ) )
 			if x > self.width:
 				editText.show( False )
