@@ -21,7 +21,7 @@
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Fix crash</string>
+	<string>Python 3 compatibility</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2019</string>
 	<key>NSPrincipalClass</key>
