@@ -13,9 +13,9 @@
 	<key>CFBundleName</key>
 	<string>Suffixes Palette</string>
 	<key>CFBundleVersion</key>
-	<string>1.05</string>
+	<string>1.06</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.05</string>
+	<string>1.06</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/SuffixesPalette/Suffixes.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
