@@ -185,7 +185,13 @@ class SuffixesPalette( PalettePlugin ):
 		if self.dialog.frame().origin.y != 0:
 			return
 		if sender:
-			self.font = sender.object()
+			if Glyphs.buildNumber >= 3004:
+				editView = sender.object()
+				if editView.windowController() != self.windowController():
+					return
+				self.font = editView.representedObject()
+			else:
+				self.font = sender.object()
 		sharedNames = []
 		# self.suffixLength is used to store whether the second field
 		# represents the last suffixLength characters in the glyph name
