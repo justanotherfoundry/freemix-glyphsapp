@@ -13,15 +13,15 @@
 	<key>CFBundleName</key>
 	<string>Suffixes Palette</string>
 	<key>CFBundleVersion</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/SuffixesPalette/Suffixes.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Python 3 compatibility</string>
+	<string>This update fixes a crash.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2019</string>
 	<key>NSPrincipalClass</key>

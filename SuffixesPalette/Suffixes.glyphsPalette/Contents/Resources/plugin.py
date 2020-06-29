@@ -192,6 +192,8 @@ class SuffixesPalette( PalettePlugin ):
 				self.font = editView.representedObject()
 			else:
 				self.font = sender.object()
+		if not self.font:
+			return
 		sharedNames = []
 		# self.suffixLength is used to store whether the second field
 		# represents the last suffixLength characters in the glyph name
