@@ -84,10 +84,10 @@ for layer in layers:
 	structures = [ [ node_types[node.type] for node in contour ] for contour in contours ]
 
 	# center x and y
-	max_x = max( [ node.position.x for node in contour for contour in contours ] )
-	min_x = min( [ node.position.x for node in contour for contour in contours ] )
-	max_y = max( [ node.position.y for node in contour for contour in contours ] )
-	min_y = min( [ node.position.y for node in contour for contour in contours ] )
+	max_x = max( [ node.position.x for contour in contours for node in contour ] )
+	min_x = min( [ node.position.x for contour in contours for node in contour ] )
+	max_y = max( [ node.position.y for contour in contours for node in contour ] )
+	min_y = min( [ node.position.y for contour in contours for node in contour ] )
 	cx = 0.5 * ( max_x + min_x )
 	cy = 0.5 * ( max_y + min_y )
 
