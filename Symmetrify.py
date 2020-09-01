@@ -5,6 +5,8 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
+from __future__ import division
+
 __doc__='''
 Symmetrifies the glyph shape.
 
@@ -18,7 +20,6 @@ The buttons are available only as far as the node structure allows.
 '''
 
 from AppKit import NSPoint
-from __future__ import division
 
 doc = Glyphs.currentDocument
 font = doc.font
