@@ -18,6 +18,7 @@ The buttons are available only as far as the node structure allows.
 '''
 
 from AppKit import NSPoint
+from __future__ import division
 
 doc = Glyphs.currentDocument
 font = doc.font
@@ -97,7 +98,7 @@ for layer in layers:
 		if len( contours[c] ) % 2 == 1:
 			break
 		else:
-			rotated_structure = structures[c][len(structures[c])/2:] + structures[c][:len(structures[c])/2]
+			rotated_structure = structures[c][len(structures[c])//2:] + structures[c][:len(structures[c])//2]
 			if structures[c] != rotated_structure:
 				break
 	else:
@@ -109,10 +110,10 @@ for layer in layers:
 		if len( contours[c] ) % 5 == 1:
 			break
 		else:
-			rotated_structure = structures[c][len(structures[c])/5:] + structures[c][:len(structures[c])/5]
+			rotated_structure = structures[c][len(structures[c])//5:] + structures[c][:len(structures[c])//5]
 			if structures[c] != rotated_structure:
 				break
-			rotated_structure2 = structures[c][2*len(structures[c])/5:] + structures[c][:2*len(structures[c])/5]
+			rotated_structure2 = structures[c][2*len(structures[c])//5:] + structures[c][:2*len(structures[c])//5]
 			if structures[c] != rotated_structure2:
 				break
 	else:
@@ -221,7 +222,7 @@ for layer in layers:
 				cx = round(cx)
 		for c in range(len(contours)):
 			partner_hflip  = get_horipartner(c)
-			partner_rotate = len(contours[c])/2
+			partner_rotate = len(contours[c])//2
 			partner_vflip  = partner_hflip + partner_rotate
 			if partner_vflip >= len(contours[c]):
 				partner_vflip -= len(contours[c])
@@ -257,7 +258,7 @@ for layer in layers:
 	def rotate():
 		global cx, cy
 		for contour in contours:
-			partner = len(contours[c])/2
+			partner = len(contours[c])//2
 			for n in range(partner):
 				contour[n].x	 = 0.50001*contour[n].x - 0.50001*contour[partner].x + cx
 				contour[partner].x = 2.0*cx - contour[n].x
@@ -289,7 +290,7 @@ for layer in layers:
 		cgy = sum_y / num_p
 		cg = NSPoint( cgx, cgy )
 		for contour in contours:
-			partner1 = len(contour)/5
+			partner1 = len(contour)//5
 			partner2 = 2 * partner1
 			partner3 = 3 * partner1
 			partner4 = 4 * partner1
