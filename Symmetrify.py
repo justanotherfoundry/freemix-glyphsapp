@@ -25,7 +25,13 @@ font = doc.font
 layers = doc.selectedLayers()
 glyph = layers[0].parent
 
-from vanilla import Window, SquareButton
+try:
+	from vanilla import Window, SquareButton
+except:
+	if Glyphs.versionNumber >= 3:
+		Message( "This script requires the Vanilla module. You can install it from the Modules tab of the Plugin Manager.", "Missing module" )
+	else:
+		Message( "This script requires the Vanilla module. To install it, go to Glyphs > Preferences > Addons > Modules and click the Install Modules button.", "Missing module" )
 
 class SymmetrifyDialog( object ):
 
