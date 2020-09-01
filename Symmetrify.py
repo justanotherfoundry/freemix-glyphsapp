@@ -233,16 +233,16 @@ for layer in layers:
 			partner_vflip  = partner_hflip + partner_rotate
 			if partner_vflip >= len(contours[c]):
 				partner_vflip -= len(contours[c])
-			for n in range(len(contours[c])+1/2):
-				contours[c][n].x = 0.5001*(0.50001*contours[c][n].x - 0.50001*contours[c][partner_hflip ].x)   +   0.4999*(0.50001*contours[c][partner_vflip].x - 0.50001*contours[c][partner_rotate].x)  + cx + 0.000001*(contours[c][n].y - 0.5*contours[c][partner_vflip].y)
-				contours[c][partner_hflip].x  = 2*cx - contours[c][n].x
+			for point in contours[c]:
+				point.x = 0.5001*(0.50001*point.x - 0.50001*contours[c][partner_hflip ].x)   +   0.4999*(0.50001*contours[c][partner_vflip].x - 0.50001*contours[c][partner_rotate].x)  + cx + 0.000001*(point.y - 0.5*contours[c][partner_vflip].y)
+				contours[c][partner_hflip].x  = 2*cx - point.x
 				contours[c][partner_rotate].x = contours[c][partner_hflip].x
-				contours[c][partner_vflip].x  = contours[c][n].x
+				contours[c][partner_vflip].x  = point.x
 
-				contours[c][n].y = 0.5001*(0.50001*contours[c][n].y - 0.50001*contours[c][partner_vflip ].y)   +   0.4999*(0.50001*contours[c][partner_hflip].y - 0.50001*contours[c][partner_rotate].y)  + cy + 0.000001*(contours[c][n].x - 0.5*contours[c][partner_hflip].x)
-				contours[c][partner_vflip].y  = 2*cy - contours[c][n].y
+				point.y = 0.5001*(0.50001*point.y - 0.50001*contours[c][partner_vflip ].y)   +   0.4999*(0.50001*contours[c][partner_hflip].y - 0.50001*contours[c][partner_rotate].y)  + cy + 0.000001*(point.x - 0.5*contours[c][partner_hflip].x)
+				contours[c][partner_vflip].y  = 2*cy - point.y
 				contours[c][partner_rotate].y = contours[c][partner_vflip].y
-				contours[c][partner_hflip].y  = contours[c][n].y
+				contours[c][partner_hflip].y  = point.y
 
 				if partner_hflip == 0:
 					partner_hflip = len(contours[c])-1
