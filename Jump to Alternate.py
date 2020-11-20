@@ -12,6 +12,7 @@ between alternate glyphs such as one, one.lf and one.tosf.
 Tip: Give it a keyboard shortcut!
 """
 
+from builtins import chr
 from AppKit import NSAttributedString, NSMutableAttributedString
 
 def jumpToAlternate():
@@ -21,7 +22,7 @@ def jumpToAlternate():
 
 	string = NSMutableAttributedString.alloc().init()
 
-	for i in xrange( len( layers ) ):
+	for i in range( len( layers ) ):
 		layer = layers[i]
 		try:
 			char = font.characterForGlyph_( layer.parent )
@@ -43,20 +44,20 @@ def jumpToAlternate():
 			if len( alternates ) == 1:
 				# no others found
 				return
-			for a in xrange( len( alternates ) ):
+			for a in range( len( alternates ) ):
 				if alternates[a].name == currGlyphName:
 					try:
 						nextGlyph = alternates[a+1]
 					except IndexError:
 						nextGlyph = alternates[0]
 			char = font.characterForGlyph_( nextGlyph )
-			singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
+			singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
 		else:
 			if layer.layerId == layer.associatedMasterId:
-				singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
+				singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
 			else:
 				# user-selected layer
-				singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : layer.layerId } )
+				singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : layer.layerId } )
 		string.appendAttributedString_( singleChar )
 	currentTab.layers._owner.graphicView().textStorage().setText_( string )
 

@@ -11,6 +11,7 @@ This script toggles between the currently selected layer and the master layer (a
 If given a keyboard shortcut, this is very useful for comparing two versions of a glyph.
 """
 
+from builtins import chr
 from AppKit import NSAttributedString, NSMutableAttributedString
 
 font = Glyphs.font
@@ -41,7 +42,7 @@ while i_composed < len( layers ) - 1:
 						char = font.characterForGlyph_( rawTextGlyph )
 					except:
 						continue
-					singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
+					singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
 					string.appendAttributedString_( singleChar )
 				i_raw = i_raw_candidate
 				break
@@ -54,7 +55,7 @@ while i_composed < len( layers ) - 1:
 		continue
 	# initialise single char without attributes
 	# which switches the glyph to the active master
-	singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), {} )
+	singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
 	layer = rawTextLayers[i_raw]
 	if i_composed == currentTab.layersCursor:
 		# we are at the currently active glyph
@@ -67,7 +68,7 @@ while i_composed < len( layers ) - 1:
 					if glyphLayer.layerId == backupLayerId:
 						# do not switch to layers that belong to a different master
 						if glyphLayer.associatedMasterId == masterId:
-							singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
+							singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
 							foundBackupLayer = True
 							break
 			if not foundBackupLayer:
@@ -76,7 +77,7 @@ while i_composed < len( layers ) - 1:
 				for glyphLayer in layer.parent.layers:
 					if glyphLayer.associatedMasterId == masterId and glyphLayer.layerId != masterId:
 						# this may happen multiple times
-						singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
+						singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
 						backupLayerId = glyphLayer.layerId
 		else:
 			# current layer is a backup layer
@@ -84,6 +85,6 @@ while i_composed < len( layers ) - 1:
 	else:
 		if layer.layerId != layer.associatedMasterId:
 			# user-selected layer
-			singleChar = NSAttributedString.alloc().initWithString_attributes_( unichr(char), { "GSLayerIdAttrib" : layer.layerId } )
+			singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : layer.layerId } )
 	string.appendAttributedString_( singleChar )
 currentTab.layers._owner.graphicView().textStorage().setText_(string)
