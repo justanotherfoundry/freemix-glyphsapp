@@ -31,7 +31,7 @@ def counterparts( selection, background ):
 		background = glyph_copy.layerForKey_( foregroundLayer.layerId ).background
 		background.decomposeComponents()
 	best_point_range = []
-	best_deviation = sys.maxint
+	best_deviation = sys.maxsize
 	# search in each path
 	for bg_path in background.paths:
 		bg_nodes = bg_path.nodes
