@@ -97,6 +97,17 @@ class AlignmentPalette (PalettePlugin):
 	# sorted by height
 	@objc.python_method
 	def namedZones( self, layer ):
+		metrics = None
+		try:
+			metrics = layer.metrics
+		except:
+			pass
+		if metrics is not None:
+			zones = []
+			for metric in metrics:
+				zones.append((metric.name, metric, metric.position))
+			return zones
+		
 		glyph = layer.parent
 		if not glyph:
 			return []
@@ -262,6 +273,11 @@ class AlignmentPalette (PalettePlugin):
 			return
 		if sender:
 			self.font = sender.object()
+			if isinstance(self.font, GSEditViewController): # it is GSEditViewController in Glyphs3
+				try:
+					self.font = self.font.representedObject()
+				except:
+					pass
 		if not self.font:
 			return
 		# do not update when too may glyphs are selected
