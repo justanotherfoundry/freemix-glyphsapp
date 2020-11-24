@@ -13,18 +13,22 @@
 	<key>CFBundleName</key>
 	<string>Suffixes Palette</string>
 	<key>CFBundleVersion</key>
-	<string>1.07</string>
+	<string>1.08</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.07</string>
+	<string>1.08</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/SuffixesPalette/Suffixes.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>This update fixes a crash.</string>
+	<string>Update Python binary for M1 and macOS Big Sur compatibility</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Tim Ahrens, 2019</string>
+	<string>Copyright, Tim Ahrens, 2020</string>
 	<key>NSPrincipalClass</key>
 	<string>SuffixesPalette</string>
+	<key>PyMainFileNames</key>
+	<array>
+		<string>plugin.py</string>
+	</array>
 </dict>
 </plist>

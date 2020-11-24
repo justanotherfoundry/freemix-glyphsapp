@@ -15,15 +15,15 @@
 	<key>CFBundleVersion</key>
 	<string>8</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.08</string>
+	<string>1.09</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Move towards Glyphs 3 and Python 3 compatibility</string>
+	<string>Update Python binary for M1 and macOS Big Sur compatibility</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Tim Ahrens, 2019</string>
+	<string>Copyright, Tim Ahrens, 2020</string>
 	<key>NSPrincipalClass</key>
 	<string>AnchorsPalette</string>
 	<key>PyMainFileNames</key>
