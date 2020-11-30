@@ -100,13 +100,19 @@ class AlignmentPalette (PalettePlugin):
 		metrics = None
 		try:
 			metrics = layer.metrics
+			# ^ this is a new Glyphs 3 thing.
+			#   not sure how to use it but sometimes it seems to return
+			#   an objc.native_selector object rather than something iterable.
+			#   maybe we need try calling layer.metrics() in addition?
+			#
+			#   so let’s better keep this inside the try block as well:
+			if metrics is not None:
+				zones = []
+				for metric in metrics:
+					zones.append((metric.name, metric, metric.position))
+				return zones
 		except:
 			pass
-		if metrics is not None:
-			zones = []
-			for metric in metrics:
-				zones.append((metric.name, metric, metric.position))
-			return zones
 		
 		glyph = layer.parent
 		if not glyph:
