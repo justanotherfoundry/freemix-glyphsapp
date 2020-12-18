@@ -102,9 +102,9 @@ GSSelectGlyphsDialogController = objc.lookUpClass("GSSelectGlyphsDialogControlle
 selectGlyphPanel = GSSelectGlyphsDialogController.alloc().init()
 selectGlyphPanel.setTitle_("Find Glyphs")
 
-master = Font.masters[0] # Pick with master you are interested in, e.g., currentTab.masterIndex
+master = font.masters[0] # Pick with master you are interested in, e.g., currentTab.masterIndex
 selectGlyphPanel.setMasterID_(master.id)
-selectGlyphPanel.setContent_(list(Font.glyphs))
+selectGlyphPanel.setContent_(list(font.glyphs))
 PreviousSearch = Glyphs.defaults["PickGlyphsSearch"]
 if PreviousSearch and len(PreviousSearch) > 0:
 	selectGlyphPanel.setSearch_(PreviousSearch)
