@@ -22,7 +22,7 @@ abbreviations = {
 	'Condensed': 'Cnd',
 	'Compressed': 'Cmp',
 }
-abbreviations = dict((re.escape(k), v) for k, v in abbreviations.iteritems())
+abbreviations = dict((re.escape(k), v) for k, v in abbreviations.items())
 pattern = re.compile("|".join(abbreviations.keys()))
 master_names = [ pattern.sub(lambda m: abbreviations[re.escape(m.group(0))], master.name).replace(' ','') for master in  Glyphs.font.masters ]
 longest_master_name = max( master_names, key = len )
