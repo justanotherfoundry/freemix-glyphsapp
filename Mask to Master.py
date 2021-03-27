@@ -12,7 +12,7 @@ Simulates the good ol' Mask to Master function we know from FontLab
 You can give it the familiar Cmd+J shortcut via App Shortcuts
 in the Mac OS System Preferences.
 
-The main improvement is that it is appplied only to the selection.
+The main improvement is that it is applied only to the selection.
 In combination with Insert Glyph to Background, you can easily
 transfer parts of the outline between glyphs.
 '''
@@ -28,7 +28,7 @@ def counterparts( selection, background ):
 		glyph = foregroundLayer.parent
 		glyph_copy = glyph.copy()
 		glyph_copy.parent = glyph.parent
-		background = glyph_copy.layerForKey_( foregroundLayer.layerId ).background
+		background = glyph_copy.layers[foregroundLayer.layerId].background
 		background.decomposeComponents()
 	best_point_range = []
 	best_deviation = sys.maxsize
