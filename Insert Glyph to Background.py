@@ -37,8 +37,13 @@ def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents 
 		from_glyph_name = from_layer.parent.name
 		to_layer.background.components.append( GSComponent( from_glyph_name, NSPoint( shift, 0 ) ) )
 		# select component (makes is quicker to move around the shape later)
-		if to_layer.background.components:
-			to_layer.background.components[-1].selected = True
+		try:
+			# Glyphs 3
+			to_layer.background.shapes[-1].selected = True
+		except:
+			# Glyphs 2
+			if to_layer.background.components:
+				to_layer.background.components[-1].selected = True
 	else:
 		# insert all paths
 		for path in from_layer.copyDecomposedLayer().paths:

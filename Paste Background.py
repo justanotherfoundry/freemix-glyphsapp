@@ -30,7 +30,13 @@ for layer in layers:
 	for path in layer.background.copyDecomposedLayer().paths:
 		layer.paths.append( path.copy() )
 		# select path
-		for node in layer.paths[-1].nodes:
-			layer.addSelection_( node )
+		try:
+			# Glyphs 2
+			for node in layer.paths[-1].nodes:
+				layer.addSelection_( node )
+		except:
+			# Glyphs 3
+			for node in layer.shapes[-1].nodes:
+				layer.addSelection_( node )
 
 glyph.endUndo()
