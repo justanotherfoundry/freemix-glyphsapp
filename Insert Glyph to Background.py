@@ -51,9 +51,14 @@ def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents 
 				shift = to_layer.width - from_layer.width
 				for node in path.nodes:
 					node.x = node.x + shift
-			to_layer.background.paths.append( path )
-			# select path (makes is quicker to move around the shape later)
-			to_layer.background.paths[-1].selected = True
+			try:
+				# Glyphs 3
+				to_layer.background.shapes.append( path )
+				to_layer.background.shapes[-1].selected = True
+			except:
+				# Glyphs 2
+				to_layer.background.paths.append( path )
+				to_layer.background.paths[-1].selected = True
 
 class GlyphnameDialog( object):
 
@@ -139,7 +144,8 @@ class GlyphnameDialog( object):
 						other_glyph_copy = other_glyph.copy()
 						other_glyph_copy.parent = font
 						# ^ Glyphs needs the font’s master coordinates for the re-interpolation
-						interpolatedLayer = GSLayer()
+						interpolatedLayer = layer.copy()
+						# ^ in Glyphs 3, it seems starting with a blank GSLayer() does not work.
 						interpolatedLayer.name = layer.name
 						# ^ necessary for the re-interpolation
 						other_glyph_copy.layers.append( interpolatedLayer )
