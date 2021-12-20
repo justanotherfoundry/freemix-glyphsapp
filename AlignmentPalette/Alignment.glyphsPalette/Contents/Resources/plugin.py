@@ -55,12 +55,13 @@ class AlignmentPalette (PalettePlugin):
 	@objc.python_method
 	def centerOfLayer( self, layer ):
 		decomposedLayer = layer.copyDecomposedLayer()
-		if len(decomposedLayer.paths) == 0:
+		try:
+			# we have to manually determine the bounds since
+			# Glyphs applies the grid when it returns layer.bounds
+			left = right = decomposedLayer.paths[0].nodes[0].x
+			top = bottom = decomposedLayer.paths[0].nodes[0].y
+		except IndexError:
 			return None, None
-		# we have to manually determine the bounds since
-		# Glyphs applies the grid when it returns layer.bounds
-		left = right = decomposedLayer.paths[0].nodes[0].x
-		top = bottom = decomposedLayer.paths[0].nodes[0].y
 		for path in decomposedLayer.paths:
 			for node in path.nodes:
 				if node.y > top:
@@ -150,6 +151,8 @@ class AlignmentPalette (PalettePlugin):
 	# overshoot may be None
 	@objc.python_method
 	def overshootsOfLayer( self, layer ):
+		# TODO: distinguich between “zero” (exactly on the zone edge)
+		# and “not touching”, i.e. not displaying anything in the palette
 		zones = self.namedZones( layer )
 		overshoots = [ [ name, 0 ] for name, zone, height in zones ]
 		for path in layer.copyDecomposedLayer().paths:
