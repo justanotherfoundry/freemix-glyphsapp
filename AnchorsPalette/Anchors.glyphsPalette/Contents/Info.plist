@@ -13,17 +13,17 @@
 	<key>CFBundleName</key>
 	<string>Anchors Palette</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>11</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.09</string>
+	<string>1.10</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/Anchors.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Update Python binary for M1 and macOS Big Sur compatibility</string>
+	<string>Sort display order by y position</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Tim Ahrens, 2020</string>
+	<string>Copyright, Tim Ahrens, 2022</string>
 	<key>NSPrincipalClass</key>
 	<string>AnchorsPalette</string>
 	<key>PyMainFileNames</key>

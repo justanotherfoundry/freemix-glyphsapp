@@ -74,33 +74,36 @@ class AnchorsPalette (PalettePlugin):
 
 	@objc.python_method
 	def update( self, sender=None ):
-		# do not update in case the palette is collapsed
 		collapsed = ( self.dialog.frame().origin.y != 0 )
 		if collapsed and self.allFieldsHidden:
+			# do not update in case the palette is collapsed:
 			return
 		if sender:
 			self.font = sender.object()
 		if not self.font:
 			return
 		if not collapsed:
-			anchorsNumber = {}
+			anchorStats = {}
 			if self.font.selectedLayers:
 				for layer in self.font.selectedLayers:
 					for anchor in layer.anchors:
-						if anchor.name in anchorsNumber:
-							anchorsNumber[anchor.name] += 1
-						else:
-							anchorsNumber[anchor.name] = 1
-			anchorsNumber = sorted( anchorsNumber.items(), key=operator.itemgetter(1), reverse=True )
-			# trim to max MAX_NUMBER_OF_LINES elements
-			del anchorsNumber[MAX_NUMBER_OF_LINES:]
+						if anchor.name not in anchorStats:
+							anchorStats[anchor.name] = [0, 0]
+						anchorStats[anchor.name][0] += 1
+						anchorStats[anchor.name][1] += anchor.position.y
+			# convert to a list, sorted by number of anchors:
+			anchorStats = sorted( anchorStats.items(), key=operator.itemgetter(1), reverse=True )
+			# trim to max MAX_NUMBER_OF_LINES elements:
+			del anchorStats[MAX_NUMBER_OF_LINES:]
+			# sort by average y position:
+			anchorStats = sorted( [(name, stat[1]/stat[0]) for name, stat in anchorStats], key=operator.itemgetter(1), reverse=True )
 			self.anchorNames = []
 			self.allFieldsHidden = False
 		else:
-			anchorsNumber = []
+			anchorStats = []
 		for i in range( MAX_NUMBER_OF_LINES ):
 			try:
-				anchorName, number = anchorsNumber[i]
+				anchorName = anchorStats[i][0]
 			except IndexError:
 				getattr( self, 'label' + str( i ) ).setStringValue_( '' )
 				getattr( self, 'posx' + str( i ) ).setHidden_( True )
@@ -140,7 +143,7 @@ class AnchorsPalette (PalettePlugin):
 			self.heightConstrains.setConstant_( height )
 			self.allFieldsHidden = True
 			return
-		lines = max( MIN_NUMBER_OF_LINES, len( anchorsNumber ) )
+		lines = max( MIN_NUMBER_OF_LINES, len( anchorStats ) )
 		height = VERTICAL_MARGIN + lines * self.lineheight
 		# we are never reducing the height of the palette
 		# so as to minimize the changes (frequent height change
