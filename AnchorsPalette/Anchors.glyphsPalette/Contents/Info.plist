@@ -21,7 +21,7 @@
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Sort display order by y position</string>
+	<string>The display order is now sorted by y position</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2022</string>
 	<key>NSPrincipalClass</key>
