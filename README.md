@@ -167,6 +167,7 @@ Expand Kerning like we know it from FontLab.
 ### Delete All Hints
 
 Removes all hints from the selected glyphs.
+(Note: In Glyphs 3, this functionality is built in: In the Font View select the glyphs, right-click and hold ⌥.)
 
 
 ### Delete Zero-Thickness Hints
