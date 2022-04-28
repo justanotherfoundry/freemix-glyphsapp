@@ -72,7 +72,7 @@ class CapsAndCorners(GeneralPlugin):
 				setattr(self.w, 'widt' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, formatter=formatter, placeholder='multiple'))
 				posx += width + gutter * 2
 				width = self.textFieldHeight - 2
-				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
+				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), bordered=False, callback=self.lockWidthDepthCallback))
 				posx += width + gutter * 2
 				width = 64
 				formatter = AppKit.NSNumberFormatter.new()
