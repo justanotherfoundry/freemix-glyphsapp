@@ -65,13 +65,21 @@ class CapsAndCorners(GeneralPlugin):
 				setattr(self.w, 'fit_'+str(i), vanilla.CheckBox((posx, posy, width, self.textFieldHeight), callback=self.fitCallback, title = '', sizeStyle='small'))
 				posx += width
 				width = 64
-				setattr(self.w, 'widt' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
+				formatter = AppKit.NSNumberFormatter.new()
+				formatter.setNumberStyle_(AppKit.NSNumberFormatterPercentStyle)
+				formatter.setLocalizesFormat_(True)
+				formatter.setLenient_(True)
+				setattr(self.w, 'widt' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, formatter=formatter, placeholder='multiple'))
 				posx += width + gutter * 2
 				width = self.textFieldHeight - 2
 				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
 				posx += width + gutter * 2
 				width = 64
-				setattr(self.w, 'dept' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
+				formatter = AppKit.NSNumberFormatter.new()
+				formatter.setNumberStyle_(AppKit.NSNumberFormatterPercentStyle)
+				formatter.setLocalizesFormat_(True)
+				formatter.setLenient_(True)
+				setattr(self.w, 'dept' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, formatter=formatter, placeholder='multiple'))
 				posy += self.lineToLine
 			self.updateDocument(None)
 			self.w.open()
@@ -168,9 +176,9 @@ class CapsAndCorners(GeneralPlugin):
 					scaleField = getattr(self.w, dimension+str(i))
 					if anyDetails:
 						if self.details[cname][dimension] == MULTIPLE_VALUES:
-							scaleField.set('multiple')
+							scaleField.set('')
 						else:
-							scaleField.set('{0:g}'.format(self.details[cname][dimension] * 100.0))
+							scaleField._nsObject.setFloatValue_(self.details[cname][dimension])
 					scaleField.show(anyDetails)
 				lockButton = getattr(self.w, 'lock'+str(i))
 				if anyDetails:
