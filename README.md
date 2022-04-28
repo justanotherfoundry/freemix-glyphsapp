@@ -12,7 +12,7 @@ To install Freemix in Glyphs,
 * in Glyphs, open Preferences (Cmd+,) / Addons / Modules and press “Install Modules”
 * restart Glyphs
 
-See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Just Another Foundry](http://justanotherfoundry.com/)
+See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Kern On for Glyphs](http://kern-on.com), [Just Another Foundry](http://justanotherfoundry.com/)
 
 ### Alignment Palette
 
@@ -32,6 +32,10 @@ The palette shows the four most frequently used anchors. Setting the x or y posi
 
 <img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AnchorsPalette/AnchorsPalette.png" width="240" />
 
+
+### Caps and Corners Window
+
+To show this window, use Window -> Caps and Corners.
 
 ### Suffixes Palette
 
