@@ -37,6 +37,8 @@ The palette shows the four most frequently used anchors. Setting the x or y posi
 
 To show this window, use Window -> Caps and Corners.
 
+<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.png" width="240" />
+
 ### Suffixes Palette
 
 The palette shows the name(s) of the selected glyph(s), split by suffix. The fields are editable.
