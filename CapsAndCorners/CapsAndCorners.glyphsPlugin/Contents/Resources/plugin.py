@@ -232,7 +232,7 @@ class CapsAndCorners(GeneralPlugin):
 			i = 0
 			for cname, ctype in self.cc:
 				for dimension in ['widt','dept']:
-					if editText.getPosSize() == getattr(self.w, dimension+str(i)).getPosSize():
+					if editText == getattr(self.w, dimension+str(i)):
 						try:
 							newValue = float(editText.get())
 						except:
