@@ -106,7 +106,7 @@ class CapsAndCorners(GeneralPlugin):
 						if hint.type == CORNER:
 							corners.add(hint.name)
 						else:
-							assert( hint.type == CAP)
+							assert(hint.type == CAP)
 							caps.add(hint.name)
 		caps = sorted(list(caps))
 		corners = sorted(list(corners))
@@ -204,12 +204,12 @@ class CapsAndCorners(GeneralPlugin):
 				if hint.type == ctype and hint.name == cname:
 					scale = hint.pyobjc_instanceMethods.scale()
 					if dimension == 'widt':
-						if abs( scale.x - newValue ) < 0.00001:
+						if abs(scale.x - newValue) < 0.00001:
 							# no change. let’s skip this hint in order to avoid “empty” undo steps
 							continue
 						scale.x = newValue
 					else:
-						if abs( scale.y - newValue ) < 0.00001:
+						if abs(scale.y - newValue) < 0.00001:
 							continue
 						scale.y = newValue
 					if not undoHasBegun:
