@@ -35,7 +35,7 @@ The palette shows the four most frequently used anchors. Setting the x or y posi
 
 ### Caps and Corners Window
 
-To show this window, use Window -> Caps and Corners.
+To show this, use Window -> Caps and Corners. This window shows the cap and corner components in the selected glyphs. This helps you check for consistency: just select multiple glyphs. Note that the fields are editable, so you can adjust the scaling of caps and corners for multiple glyphs at once.
 
 <img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.png" width="320" />
 
