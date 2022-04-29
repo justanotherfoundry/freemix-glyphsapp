@@ -171,7 +171,7 @@ class CapsAndCorners(GeneralPlugin):
 					scaleField = getattr(self.w, dimension+str(i))
 					if anyDetails:
 						if self.details[cname][dimension] == MULTIPLE_VALUES:
-							scaleField.set('multiple')
+							scaleField.set('')
 						else:
 							scaleField.set('{0:g}'.format(self.details[cname][dimension] * 100.0))
 					scaleField.show(anyDetails)
