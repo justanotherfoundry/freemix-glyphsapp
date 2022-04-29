@@ -33,33 +33,33 @@ class CapsAndCorners(GeneralPlugin):
 
 	def showWindow_(self, sender):
 		try:
-			dialogWidth = 354
-			self.margin = 20
+			dialogWidth = 372
+			self.margin = 14
 			gutter = 8
 			self.textFieldHeight = 22
-			self.lineToLine = self.textFieldHeight + 4
-			dialogHeight = NUMBER_OF_FIELDS * self.lineToLine + self.margin * 2
+			self.lineToLine = self.textFieldHeight + 8
+			dialogHeight = self.lineToLine + NUMBER_OF_FIELDS * self.lineToLine + 2 * self.margin + self.textFieldHeight
 			self.w = vanilla.HUDFloatingWindow((dialogWidth, dialogHeight), title = self.name, autosaveName = 'FMXCapsAndCorners')
-			posy = self.margin / 2
+			posy = self.margin
 			posx = self.margin
 			width = 120
 			posx += width + gutter
 			width = 20
 			i = -1
-			self.w.headerFit = vanilla.TextBox((posx - 2, posy, width, self.textFieldHeight), text = 'fit')
+			self.w.headerFit = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'fit')
 			posx += width
 			width = 64
 			self.w.headerWidth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'width')
-			posx += width + gutter
+			posx += width + gutter * 2
 			width = self.textFieldHeight
-			posx += width + gutter
+			posx += width + gutter * 2
 			width = 64
 			self.w.headerDepth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'depth')
-			posy += self.textFieldHeight
+			posy += self.lineToLine
 			for i in range(NUMBER_OF_FIELDS):
 				posx = self.margin
 				width = 120
-				setattr(self.w, 'name'+str(i), vanilla.TextBox((posx, posy + 2, width, self.textFieldHeight), text = '_cap.something'))
+				setattr(self.w, 'name'+str(i), vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = '_cap.something'))
 				posx += width + gutter
 				width = 20
 				setattr(self.w, 'fit_'+str(i), vanilla.CheckBox((posx, posy, width, self.textFieldHeight), callback=self.fitCallback, title = '', sizeStyle='small'))
@@ -70,10 +70,10 @@ class CapsAndCorners(GeneralPlugin):
 				formatter.setLocalizesFormat_(True)
 				formatter.setLenient_(True)
 				setattr(self.w, 'widt' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, formatter=formatter, placeholder='multiple'))
-				posx += width + gutter
+				posx += width + gutter * 2
 				width = self.textFieldHeight - 2
 				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), bordered=False, callback=self.lockWidthDepthCallback))
-				posx += width + gutter
+				posx += width + gutter * 2
 				width = 64
 				formatter = AppKit.NSNumberFormatter.new()
 				formatter.setNumberStyle_(AppKit.NSNumberFormatterPercentStyle)
@@ -131,7 +131,7 @@ class CapsAndCorners(GeneralPlugin):
 			if i == NUMBER_OF_FIELDS:
 				break
 		posSize = self.w.getPosSize()
-		posSize = ( posSize[0], posSize[1], posSize[2], len(self.cc) * self.lineToLine + self.margin * 2)
+		posSize = ( posSize[0], posSize[1], posSize[2], self.lineToLine + len( self.cc ) * self.lineToLine + 2 * self.margin )
 		self.w.setPosSize(posSize)
 		self.isLocked = [False] * NUMBER_OF_FIELDS
 		self.update(None)
