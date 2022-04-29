@@ -33,46 +33,49 @@ class CapsAndCorners(GeneralPlugin):
 
 	def showWindow_(self, sender):
 		try:
-			dialogWidth = 372
-			self.margin = 14
-			gutter = 8
-			self.textFieldHeight = 20
-			self.lineToLine = self.textFieldHeight + 8
-			dialogHeight = self.lineToLine + NUMBER_OF_FIELDS * self.lineToLine + 2 * self.margin + self.textFieldHeight
-			self.w = vanilla.HUDFloatingWindow((dialogWidth, dialogHeight), title = self.name, autosaveName = 'FMXCapsAndCorners')
+			self.margin = 13
+			gutter = 6
+			widthName = 128
+			widthFitBox = 20
+			widthDimensionBox = 58
+			self.textFieldHeight = 23
+			self.lineToLine = self.textFieldHeight + 5
+			self.w = vanilla.HUDFloatingWindow((100, 100), title = self.name, autosaveName = 'FMXCapsAndCorners')
 			posy = self.margin
 			posx = self.margin
-			width = 120
-			posx += width + gutter
-			width = 20
-			i = -1
+			posx += widthName 
+			width = widthFitBox
 			self.w.headerFit = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'fit')
 			posx += width
-			width = 64
+			width = widthDimensionBox
 			self.w.headerWidth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'width')
-			posx += width + gutter * 2
+			posx += width + gutter
 			width = self.textFieldHeight
-			posx += width + gutter * 2
-			width = 64
+			posx += width + gutter
+			width = widthDimensionBox
 			self.w.headerDepth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'depth')
+			posx += width
+			dialogWidth = posx + self.margin
 			posy += self.lineToLine
 			for i in range(NUMBER_OF_FIELDS):
 				posx = self.margin
-				width = 120
+				width = widthName
 				setattr(self.w, 'name'+str(i), vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = '_cap.something'))
-				posx += width + gutter
-				width = 20
+				posx += width 
+				width = widthFitBox
 				setattr(self.w, 'fit_'+str(i), vanilla.CheckBox((posx, posy, width, self.textFieldHeight), callback=self.fitCallback, title = '', sizeStyle='small'))
 				posx += width
-				width = 64
+				width = widthDimensionBox
 				setattr(self.w, 'widt' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
-				posx += width + gutter * 2
+				posx += width + gutter
 				width = self.textFieldHeight - 2
 				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
-				posx += width + gutter * 2
-				width = 64
+				posx += width + gutter
+				width = widthDimensionBox
 				setattr(self.w, 'dept' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
 				posy += self.lineToLine
+			posSize = self.w.getPosSize()
+			self.w.setPosSize((posSize[0], posSize[1], dialogWidth, posSize[3]))
 			self.updateDocument(None)
 			self.w.open()
 			self.w.bind('close', self.windowClose_)
@@ -122,9 +125,9 @@ class CapsAndCorners(GeneralPlugin):
 			i += 1
 			if i == NUMBER_OF_FIELDS:
 				break
+		newHeight = self.lineToLine + len(self.cc) * self.lineToLine + 2 * self.margin - 4
 		posSize = self.w.getPosSize()
-		posSize = ( posSize[0], posSize[1], posSize[2], self.lineToLine + len( self.cc ) * self.lineToLine + 2 * self.margin )
-		self.w.setPosSize(posSize)
+		self.w.setPosSize((posSize[0], posSize[1], posSize[2], newHeight))
 		self.isLocked = [False] * NUMBER_OF_FIELDS
 		self.update(None)
 
