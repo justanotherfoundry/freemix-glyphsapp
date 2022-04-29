@@ -36,7 +36,7 @@ class CapsAndCorners(GeneralPlugin):
 			dialogWidth = 372
 			self.margin = 14
 			gutter = 8
-			self.textFieldHeight = 22
+			self.textFieldHeight = 20
 			self.lineToLine = self.textFieldHeight + 8
 			dialogHeight = self.lineToLine + NUMBER_OF_FIELDS * self.lineToLine + 2 * self.margin + self.textFieldHeight
 			self.w = vanilla.HUDFloatingWindow((dialogWidth, dialogHeight), title = self.name, autosaveName = 'FMXCapsAndCorners')
