@@ -234,7 +234,7 @@ class CapsAndCorners(GeneralPlugin):
 				for dimension in ['widt','dept']:
 					if editText.getPosSize() == getattr(self.w, dimension+str(i)).getPosSize():
 						try:
-							newValue = 0.01 * float(editText.get().strip('%'))
+							newValue = float(editText.get())
 						except:
 							return
 						if self.isLocked[i]:
