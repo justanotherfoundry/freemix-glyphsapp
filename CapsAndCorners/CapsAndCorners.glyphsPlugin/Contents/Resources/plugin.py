@@ -154,8 +154,8 @@ class CapsAndCorners(GeneralPlugin):
 				for hint in layer.hints:
 					if hint.isCorner:
 						scale = hint.pyobjc_instanceMethods.scale()
-						depth = scale.y
-						width = scale.x
+						depth = abs(scale.y)
+						width = abs(scale.x)
 						isFit = hint.options & 8
 						if hint.name in self.details:
 							if self.details[hint.name]['widt'] != width:
@@ -209,12 +209,16 @@ class CapsAndCorners(GeneralPlugin):
 				if hint.type == ctype and hint.name == cname:
 					scale = hint.pyobjc_instanceMethods.scale()
 					if dimension == 'widt':
-						if abs( scale.x - newValue ) < 0.00001:
+						if scale.x < 0:
+							newValue = -newValue
+						if abs(scale.x - newValue) < 0.00001:
 							# no change. let’s skip this hint in order to avoid “empty” undo steps
 							continue
 						scale.x = newValue
 					else:
-						if abs( scale.y - newValue ) < 0.00001:
+						if scale.y < 0:
+							newValue = -newValue
+						if abs(scale.y - newValue) < 0.00001:
 							continue
 						scale.y = newValue
 					if not undoHasBegun:
