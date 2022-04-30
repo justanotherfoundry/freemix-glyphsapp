@@ -265,7 +265,7 @@ for layer in layers:
 	def rotate():
 		global cx, cy
 		for contour in contours:
-			partner = len(contours[c])//2
+			partner = len(contour)//2
 			for n in range(partner):
 				contour[n].x	 = 0.50001*contour[n].x - 0.50001*contour[partner].x + cx
 				contour[partner].x = 2.0*cx - contour[n].x
