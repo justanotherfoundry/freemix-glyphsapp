@@ -263,6 +263,7 @@ for layer in layers:
 	####################################################################################################
 
 	def rotate():
+		layer.beginChanges()
 		global cx, cy
 		for contour in contours:
 			partner = len(contour)//2
@@ -273,6 +274,7 @@ for layer in layers:
 				contour[partner].y = 2.0*cy - contour[n].y
 				partner = ( partner + 1 ) % len(contour)
 		layer.syncMetrics()
+		layer.endChanges()
 	
 	####################################################################################################
 
