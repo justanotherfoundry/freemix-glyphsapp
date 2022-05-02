@@ -227,7 +227,7 @@ class CapsAndCorners(GeneralPlugin):
 			i = 0
 			for cname, ctype in self.cc:
 				for dimension in ['widt','dept']:
-					if editText.getPosSize() == getattr(self.w, dimension+str(i)).getPosSize():
+					if editText == getattr(self.w, dimension+str(i)):
 						try:
 							newValue = 0.01 * float(editText.get().strip('%'))
 						except:
@@ -249,7 +249,7 @@ class CapsAndCorners(GeneralPlugin):
 		try:
 			i = 0
 			for cname, ctype in self.cc:
-				if fitBox.getPosSize() == getattr(self.w, 'fit_'+str(i)).getPosSize():
+				if fitBox == getattr(self.w, 'fit_'+str(i)):
 					for layer in self.font.selectedLayers:
 						for hint in layer.hints:
 							if hint.type == ctype and hint.name == cname:
@@ -266,7 +266,7 @@ class CapsAndCorners(GeneralPlugin):
 		try:
 			i = 0
 			for cname, ctype in self.cc:
-				if lockButton.getPosSize() == getattr(self.w, 'lock'+str(i)).getPosSize():
+				if lockButton == getattr(self.w, 'lock'+str(i)):
 					self.isLocked[i] = not self.isLocked[i]
 					lockButton = getattr(self.w, 'lock'+str(i))
 					self.updateLockButtonImage(lockButton, i)
