@@ -201,30 +201,28 @@ class CapsAndCorners(GeneralPlugin):
 			print(traceback.format_exc())
 
 	@objc.python_method
-	def updateHint(self, cname, ctype, dimension, newValue):
+	def updateHint(self, cname, ctype, dimension, value):
 		self.font.disableUpdateInterface()
 		for layer in self.font.selectedLayers:
 			undoHasBegun = False
 			for hint in layer.hints:
 				if hint.type == ctype and hint.name == cname:
-					scale = hint.pyobjc_instanceMethods.scale()
+					scale = hint.scale
 					if dimension == 'widt':
-						if scale.x < 0:
-							newValue = -newValue
+						newValue = -value if scale.x < 0 else value
 						if abs(scale.x - newValue) < 0.00001:
 							# no change. let’s skip this hint in order to avoid “empty” undo steps
 							continue
 						scale.x = newValue
 					else:
-						if scale.y < 0:
-							newValue = -newValue
+						newValue = -value if scale.y < 0 else value
 						if abs(scale.y - newValue) < 0.00001:
 							continue
 						scale.y = newValue
 					if not undoHasBegun:
 						layer.parent.beginUndo()
 						undoHasBegun = True
-					hint.setScale_(scale)
+					hint.scale = scale
 			if undoHasBegun:
 				layer.parent.endUndo()
 		self.font.enableUpdateInterface()
