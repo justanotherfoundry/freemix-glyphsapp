@@ -158,9 +158,9 @@ class CapsAndCorners(GeneralPlugin):
 						width = abs(scale.x)
 						isFit = hint.options & 8
 						if hint.name in self.details:
-							if self.details[hint.name]['widt'] != width:
+							if abs(self.details[hint.name]['widt'] - width) > 0.00001:
 								self.details[hint.name]['widt'] = MULTIPLE_VALUES
-							if self.details[hint.name]['dept'] != depth:
+							if abs(self.details[hint.name]['dept'] - depth) > 0.00001:
 								self.details[hint.name]['dept'] = MULTIPLE_VALUES
 							if hint.type == CAP and self.details[hint.name]['fit'] != isFit:
 								self.details[hint.name]['fit'] = MULTIPLE_VALUES
@@ -282,7 +282,7 @@ class CapsAndCorners(GeneralPlugin):
 					if self.isLocked[i]:
 						cname, ctype = self.cc[i]
 						details = self.details[cname]
-						if details['widt'] != details['dept']:
+						if abs(details['widt'] - details['dept']) > 0.00001:
 							details['widt'] = (details['widt'] + details['dept']) / 2
 							details['dept'] = details['widt']
 							self.updateHint(cname, ctype, 'widt', details['widt'])
