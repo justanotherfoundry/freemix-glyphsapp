@@ -38,8 +38,12 @@ for instance in Glyphs.font.instances:
 	print( ' ' if instance.active else '*', end='' )
 	print( instance.fullName.ljust( first_column_width ), end='' )
 	for master in  Glyphs.font.masters:
+		coeff_str = ''
 		try:
-			print( ('%10.2f%%' % ( instance.instanceInterpolations[master.id] * 100 ) ).rjust( master_column_width ), end='' )
+			coeff = instance.instanceInterpolations[master.id]
+			if coeff:
+				coeff_str = '%10.2f%%' % ( coeff * 100 )
 		except KeyError:
-			print( ''.rjust( master_column_width ), end='' )
+			pass
+		print( coeff_str.rjust( master_column_width ), end='' )
 	print()
