@@ -97,10 +97,12 @@ if selection:
 		for node, bg_node in counterparts( subpath, layer.background ):
 			node.position = bg_node.position
 else:
-	# delete all paths
-	while layer.paths:
-		del(layer.paths[0])
-	# insert background
+	try:
+		while layer.shapes:
+			del(layer.shapes[0])
+	except:
+		while layer.paths:
+			del(layer.paths[0])
 	for path in layer.background.copyDecomposedLayer().paths:
 		layer.paths.append( path.copy() )
 layer.syncMetrics()
