@@ -89,23 +89,20 @@ layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
 selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
 
+glyph.beginUndo()
+layer.beginChanges()
 if selection:
 	subpaths = subpaths( selection )
-	# begin undo
-	glyph.beginUndo()
-	# move nodes
 	for subpath in subpaths:
 		for node, bg_node in counterparts( subpath, layer.background ):
 			node.position = bg_node.position
 else:
-	# begin undo
-	glyph.beginUndo()
 	# delete all paths
 	while layer.paths:
 		del(layer.paths[0])
 	# insert background
 	for path in layer.background.copyDecomposedLayer().paths:
 		layer.paths.append( path.copy() )
-
 layer.syncMetrics()
+layer.endChanges()
 glyph.endUndo()
