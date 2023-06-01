@@ -6,15 +6,9 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__='''
-Simulates the good ol' Mask to Master function we know from FontLab
-(i.e. replaces the current outline with the background).
-
-You can give it the familiar Cmd+J shortcut via App Shortcuts
-in the Mac OS System Preferences.
-
-The main improvement is that it is applied only to the selection.
+The selected nodes will adopt the position of the corresponding nodes in the mask.
 In combination with Insert Glyph to Background, you can easily
-transfer parts of the outline between glyphs.
+transfer parts of the outlines between glyphs.
 '''
 
 import sys
