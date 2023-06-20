@@ -1,18 +1,23 @@
 # Show Handle Relations
 
-This add-on for Glyphs displays the relative handle lengths for:
-* Smooth nodes that connect two curve elements
-* Nodes that connect a straight line and a curve (so-called tangent points)
+Interpolations can have unintentional kinks in smooth connenctions between curves,
+or nodes that connect a straight line and a curve (so-called tangent points).
 
-Note:
+There is no risk of kinks if the angle is the same in all masters
+(which is always given for horizontal or vertical extrema). However, the design often makes this impossible.
+In that case, kinks can be avoided if the relative length of the handles is the same in all masters.
+
+This add-on for Glyphs helps you achieve this by showing the relative handle lengths
+for connections that may develop kinks after interpolation.
+
+Furthermore, the label give you a quick overview of the nodes that need to be fixed:
 * Red labels mean that the handle relation is wrong, and you should correct them as necessary.
 * Black labels are close enough to the other masters.
 * Light grey labels mean the position is perfect.
 
-If any nodes are selected then only these will be shown.
-Horizontal and vertical connections (extrema) are ignored, as they are safe from interpolation kinks.
-
 https://github.com/justanotherfoundry/freemix-glyphsapp/assets/1331354/38b19f29-538a-4533-9d61-2e14bd39421e
+
+Note: If any nodes are selected then only these will be shown.
 
 To do:
 * Calculate and display the intra-curve coefficients. For shallow curves, this may be non-trivial.
@@ -22,5 +27,5 @@ To do:
 * Detect if all masters have the same (or similar enough) angle.
 What if some masters have the same angle, and some have the same relative handle lengths?
 Need to think about that carefully, and respect the interpolated exports.
-
-* Auto-fix the problems (oh wait, that’s a case from [RMX](https://remix-tools.com) 2.0)
+* Auto-fix the problems (oh wait, that will be a nice feature for [RMX](https://remix-tools.com) 2.0 some day)
+* How about intermediate special layers? 
