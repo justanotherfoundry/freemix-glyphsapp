@@ -10,6 +10,8 @@ Note:
 If any nodes are selected then only these will be shown.
 Horizontal and vertical connections (extrema) are ignored, as they are safe from interpolation kinks.
 
+https://github.com/justanotherfoundry/freemix-glyphsapp/assets/1331354/38b19f29-538a-4533-9d61-2e14bd39421e
+
 To do:
 * Calculate and display the intra-curve coefficients. For shallow curves, this may be non-trivial.
 * Refine the definition of “close enough”.
