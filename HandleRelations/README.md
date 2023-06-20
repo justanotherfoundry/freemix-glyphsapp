@@ -1,3 +1,5 @@
+# Show Handle Relations
+
 This add-on for Glyphs displays the relative handle lengths for:
 * Smooth nodes that connect two curve elements
 * Nodes that connect a straight line and a curve (so-called tangent points)
