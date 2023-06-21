@@ -40,6 +40,17 @@ class HandleRelations(ReporterPlugin):
 	def settings(self):
 		self.menuName = "Handle Relations"
 
+	def conditionsAreMetForDrawing(self):
+		# copied from https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/Reporter
+		currentController = self.controller.view().window().windowController()
+		if currentController:
+			tool = currentController.toolDrawDelegate()
+			textToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolText") )
+			handToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolHand") )
+			if not textToolIsActive and not handToolIsActive: 
+				return True
+		return False
+
 	@objc.python_method
 	def drawTextNearNode(self, prevNode, node, nextNode, text, fontColor, fontSize):
 		textAlignment = 'center'
@@ -58,6 +69,8 @@ class HandleRelations(ReporterPlugin):
 
 	@objc.python_method
 	def foreground(self, layer):
+		if not self.conditionsAreMetForDrawing():
+			return
 		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
 		pathIndex = 0
 		for path in layer.paths:
