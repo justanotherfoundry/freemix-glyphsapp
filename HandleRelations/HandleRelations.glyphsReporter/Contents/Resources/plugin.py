@@ -82,7 +82,7 @@ class HandleRelations(ReporterPlugin):
 						relPositions.append(otherRelPosition)
 					medianRelPos = statistics.median(relPositions)
 					if medianRelPos == relPosition:
-						deviationRel = 0.0
+						deviation = 0.0
 					else:
 						try:
 							deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition) )
