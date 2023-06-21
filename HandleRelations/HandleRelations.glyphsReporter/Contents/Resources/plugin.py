@@ -76,8 +76,11 @@ class HandleRelations(ReporterPlugin):
 				if otherLayers:
 					relPositions = [relPosition]
 					for otherLayer in otherLayers:
-						otherPath = otherLayer.paths[pathIndex]
-						otherNode = otherPath.nodes[node.index]
+						try:
+							otherPath = otherLayer.paths[pathIndex]
+							otherNode = otherPath.nodes[node.index]
+						except IndexError:
+							continue
 						otherRelPosition = relativePosition(otherNode.prevNode, otherNode, otherNode.nextNode)
 						relPositions.append(otherRelPosition)
 					medianRelPos = statistics.median(relPositions)
