@@ -58,7 +58,7 @@ class HandleRelations(ReporterPlugin):
 
 	@objc.python_method
 	def foreground(self, layer):
-		otherLayers = [layr for layr in layer.parent.layers if not layr is layer]
+		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
 		pathIndex = 0
 		for path in layer.paths:
 			for node in path.nodes:
