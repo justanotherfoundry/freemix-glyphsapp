@@ -1,6 +1,6 @@
 # Show Handle Relations
 
-Interpolations can have unintentional kinks in smooth connenctions between curves,
+Interpolations can have unintentional kinks in smooth connections between curves,
 or nodes that connect a straight line and a curve (so-called tangent points).
 
 There is no risk of kinks if the angle is the same in all masters
