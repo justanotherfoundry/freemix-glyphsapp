@@ -10,8 +10,8 @@ import math, statistics
 TEXT_OFFSET = 15
 TEXT_HUE = 0.0
 DEVIATION_STRICTNESS = 2.2
-DEVIATION_ALPHA_FACTOR = 25.0
-DEVIATION_ALPHA_MIN = 0.05
+DEVIATION_GREEN_MAX = 0.85
+DEVIATION_GREEN_FACTOR = 16.0
 HORIZONTAL_OFFSET_FACTOR = 0.4
 TEXT_SIZE_SMALL = 10.0
 TEXT_SIZE_DEVIATION_FACTOR = 8.0
@@ -93,9 +93,10 @@ class HandleRelations(ReporterPlugin):
 							deviation = min(1.0, deviation)
 						except ZeroDivisionError:
 							deviation = 1.0
-					alpha = DEVIATION_ALPHA_MIN + deviation * DEVIATION_ALPHA_FACTOR
-					alpha = min(1.0, alpha)
-					textColor = NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(TEXT_HUE, 1.0, deviation, alpha)
+					red = deviation
+					green = DEVIATION_GREEN_MAX - deviation * DEVIATION_GREEN_FACTOR
+					green = max(0.0, green)
+					textColor = NSColor.colorWithRed_green_blue_alpha_(red, green, 0.0, 1.0)
 					textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR;
 				self.drawTextNearNode(node.prevNode, node, node.nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
 			pathIndex += 1
