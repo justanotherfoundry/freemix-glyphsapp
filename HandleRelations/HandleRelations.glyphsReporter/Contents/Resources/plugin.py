@@ -9,6 +9,7 @@ import math, statistics
 
 TEXT_OFFSET = 15
 TEXT_HUE = 0.0
+DEVIATION_STRICTNESS = 2.2
 DEVIATION_ALPHA_FACTOR = 25.0
 DEVIATION_ALPHA_MIN = 0.05
 HORIZONTAL_OFFSET_FACTOR = 0.4
@@ -85,7 +86,7 @@ class HandleRelations(ReporterPlugin):
 					else:
 						try:
 							deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition) )
-							deviation = 1.5 * (deviationRel - 1.0)
+							deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0)
 							deviation = min(1.0, deviation)
 						except ZeroDivisionError:
 							deviation = 1.0
