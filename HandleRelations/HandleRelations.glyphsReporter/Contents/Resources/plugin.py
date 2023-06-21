@@ -29,7 +29,7 @@ def dist(node1, node2):
 	dx, dy = pointDiff(node1, node2)
 	return vectorLength(dx, dy)
 
-def relativePosition( node1, node2, node3 ):
+def relativePosition(node1, node2, node3):
 	outerLength = dist(node3, node1)
 	firstLength = dist(node2, node1)
 	return firstLength / outerLength
@@ -85,7 +85,7 @@ class HandleRelations(ReporterPlugin):
 						deviation = 0.0
 					else:
 						try:
-							deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition) )
+							deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition))
 							deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0)
 							deviation = min(1.0, deviation)
 						except ZeroDivisionError:
