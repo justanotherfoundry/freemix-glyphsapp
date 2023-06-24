@@ -34,6 +34,27 @@ def relativePosition(node1, node2, node3):
 	firstLength = dist(node2, node1)
 	return firstLength / outerLength
 
+def relPositionDeviation( node, pathIndex, relPosition, layer, otherLayers ):
+	relPositions = [relPosition]
+	for otherLayer in otherLayers:
+		try:
+			otherPath = otherLayer.paths[pathIndex]
+			otherNode = otherPath.nodes[node.index]
+		except IndexError:
+			continue
+		otherRelPosition = relativePosition(otherNode.prevNode, otherNode, otherNode.nextNode)
+		relPositions.append(otherRelPosition)
+	medianRelPos = statistics.median(relPositions)
+	if medianRelPos == relPosition:
+		return 0.0
+	else:
+		try:
+			deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition))
+			deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0)
+			return min(1.0, deviation)
+		except ZeroDivisionError:
+			return 1.0
+
 class HandleRelations(ReporterPlugin):
 
 	@objc.python_method
@@ -87,25 +108,7 @@ class HandleRelations(ReporterPlugin):
 				textColor = NSColor.blackColor()
 				textSize = TEXT_SIZE_SMALL
 				if otherLayers:
-					relPositions = [relPosition]
-					for otherLayer in otherLayers:
-						try:
-							otherPath = otherLayer.paths[pathIndex]
-							otherNode = otherPath.nodes[node.index]
-						except IndexError:
-							continue
-						otherRelPosition = relativePosition(otherNode.prevNode, otherNode, otherNode.nextNode)
-						relPositions.append(otherRelPosition)
-					medianRelPos = statistics.median(relPositions)
-					if medianRelPos == relPosition:
-						deviation = 0.0
-					else:
-						try:
-							deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition))
-							deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0)
-							deviation = min(1.0, deviation)
-						except ZeroDivisionError:
-							deviation = 1.0
+					deviation = relPositionDeviation( node, pathIndex, relPosition, layer, otherLayers )
 					red = deviation
 					green = DEVIATION_GREEN_MAX - deviation * DEVIATION_GREEN_FACTOR
 					green = max(0.0, green)
