@@ -13,15 +13,15 @@
 	<key>CFBundleName</key>
 	<string>HandleRelations</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.01</string>
+	<string>1.02</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/HandleRelations/HandleRelations.glyphsReporter/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Several improvements and fixes</string>
+	<string>Show the angles of other masters</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2023</string>
 	<key>NSPrincipalClass</key>
