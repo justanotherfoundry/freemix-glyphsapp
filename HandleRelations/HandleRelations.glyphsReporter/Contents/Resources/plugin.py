@@ -34,7 +34,7 @@ def relativePosition(node1, node2, node3):
 	firstLength = dist(node2, node1)
 	return firstLength / outerLength
 
-def relPositionDeviation( node, pathIndex, relPosition, layer, otherLayers ):
+def relPositionDeviation(node, pathIndex, relPosition, layer, otherLayers):
 	relPositions = [relPosition]
 	for otherLayer in otherLayers:
 		try:
@@ -66,8 +66,8 @@ class HandleRelations(ReporterPlugin):
 		currentController = self.controller.view().window().windowController()
 		if currentController:
 			tool = currentController.toolDrawDelegate()
-			textToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolText") )
-			handToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolHand") )
+			textToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolText"))
+			handToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolHand"))
 			if not textToolIsActive and not handToolIsActive: 
 				return True
 		return False
