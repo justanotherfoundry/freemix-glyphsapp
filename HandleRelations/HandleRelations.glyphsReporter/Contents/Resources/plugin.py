@@ -114,7 +114,7 @@ class HandleRelations(ReporterPlugin):
 					continue
 				if node.prevNode.type != OFFCURVE and node.nextNode.type != OFFCURVE:
 					continue
-				if layer.selection and not node.selected and not node.prevNode.selected and not node.nextNode.selected:
+				if layer.selection and not node.selected and (node.prevNode.type != OFFCURVE or not node.prevNode.selected) and (node.nextNode.type != OFFCURVE or not node.nextNode.selected):
 					continue
 				if isHoriVerti(node.prevNode, node.nextNode):
 					continue
