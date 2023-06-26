@@ -88,46 +88,22 @@ def subpaths( selection ):
 
 layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent
-selection = [ node for path in layer.paths for node in path.nodes if node in layer.selection ]
-
-any_changes = False
-if selection:
-	subpaths = subpaths( selection )
-	for subpath in subpaths:
-		for node, bg_node in counterparts( subpath, layer.background ):
-			if not any_changes:
-				if node.position == bg_node.position:
-					continue
-				else:
-					any_changes = True
-					glyph.beginUndo()
-					layer.beginChanges()
-			node.position = bg_node.position
+if layer.selection:
+	selection = [node for path in layer.paths for node in path.nodes if node in layer.selection]
 else:
-	decomposed_bg = layer.background.copyDecomposedLayer()
-	if len( layer.paths ) != len( decomposed_bg.paths ):
-		any_changes = True
-	else:
-		for path, bg_path in zip(layer.paths, decomposed_bg.paths):
-			if len( path.nodes ) != len( bg_path.nodes ):
-				any_changes = True
-				break
+	selection = [node for path in layer.paths for node in path.nodes]
+any_changes = False
+subpaths = subpaths( selection )
+for subpath in subpaths:
+	for node, bg_node in counterparts( subpath, layer.background ):
+		if not any_changes:
+			if node.position == bg_node.position:
+				continue
 			else:
-				for node, bg_node in zip(path.nodes, bg_path.nodes):
-					if node.position != bg_node.position:
-						any_changes = True
-						break
-	if any_changes:
-		glyph.beginUndo()
-		layer.beginChanges()
-		try:
-			while layer.shapes:
-				del(layer.shapes[0])
-		except:
-			while layer.paths:
-				del(layer.paths[0])
-		for path in decomposed_bg.paths:
-			layer.paths.append( path.copy() )
+				any_changes = True
+				glyph.beginUndo()
+				layer.beginChanges()
+		node.position = bg_node.position
 if any_changes:
 	layer.syncMetrics()
 	layer.endChanges()
