@@ -107,7 +107,15 @@ class HandleRelations(ReporterPlugin):
 		self.drawTextNearNode(node.prevNode, node, node.nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
 
 	@objc.python_method
-	def drawLineWithDirection(self, node, handleLengthSq, otherNode, otherBCP):
+	def drawLineFromNodeToPoint(self, node, line):
+		myPath = NSBezierPath.alloc().init()
+		myPath.moveToPoint_((node.position.x, node.position.y))
+		myPath.relativeLineToPoint_(line)
+		myPath.setLineWidth_(0.375 * self.getScale()**-0.9)
+		myPath.stroke()
+
+	@objc.python_method
+	def lineWithDirection(self, node, handleLengthSq, otherNode, otherBCP):
 		dx, dy = pointDiff(otherBCP, otherNode)
 		otherHandleLengthSq = dx * dx + dy * dy
 		if (otherHandleLengthSq == 0):
@@ -115,25 +123,26 @@ class HandleRelations(ReporterPlugin):
 		handleFactor = math.sqrt(handleLengthSq / otherHandleLengthSq) * 0.75
 		dx *= handleFactor
 		dy *= handleFactor
-		myPath = NSBezierPath.alloc().init()
-		myPath.moveToPoint_((node.position.x, node.position.y))
-		myPath.relativeLineToPoint_((dx, dy))
-		myPath.setLineWidth_(0.375 * self.getScale()**-0.9)
-		myPath.stroke()
+		return dx, dy
 
 	@objc.python_method
 	def drawOtherDirections(self, node, pathIndex, layer, otherLayers):
 		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set() 
 		inHandleLengthSq = distSq(node.prevNode, node)
 		outHandleLengthSq = distSq(node.nextNode, node)
+		endpoints = []
 		for otherLayer in otherLayers:
 			try:
 				otherPath = otherLayer.paths[pathIndex]
 				otherNode = otherPath.nodes[node.index]
 			except IndexError:
 				continue
-			self.drawLineWithDirection(node, inHandleLengthSq, otherNode, otherNode.prevNode)
-			self.drawLineWithDirection(node, outHandleLengthSq, otherNode, otherNode.nextNode)
+			lineX, lineY = self.lineWithDirection(node, inHandleLengthSq, otherNode, otherNode.prevNode)
+			endpoints.append((lineX, lineY))
+			lineX, lineY = self.lineWithDirection(node, outHandleLengthSq, otherNode, otherNode.nextNode)
+			endpoints.append((lineX, lineY))
+		for endpoint in endpoints:
+			self.drawLineFromNodeToPoint(node, endpoint)
 
 	@objc.python_method
 	def foreground(self, layer):
