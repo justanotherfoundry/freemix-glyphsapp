@@ -21,7 +21,7 @@
 	<key>productPageURL</key>
 	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
 	<key>productReleaseNotes</key>
-	<string>Show the angles of other masters</string><!-- update -->
+	<string>Omit nodes where all masters are parallel</string><!-- update -->
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Tim Ahrens, 2023</string>
 	<key>NSPrincipalClass</key>
