@@ -154,7 +154,7 @@ class HandleRelations(ReporterPlugin):
 			deviationSq = (outHandleX - lineX)**2 + (outHandleY - lineY)**2
 			if deviationSq > outHandleParallelityToleranceSq:
 				allParallel = False
-		if allParallel and not node.selected:
+		if allParallel and not node.selected and not node.prevNode.selected and not node.nextNode.selected:
 			return True
 		for endpoint in endpoints:
 			self.drawLineFromNodeToPoint(node, endpoint)
