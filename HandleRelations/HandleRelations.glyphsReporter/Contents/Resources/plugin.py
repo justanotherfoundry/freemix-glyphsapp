@@ -15,6 +15,7 @@ DEVIATION_GREEN_FACTOR = 16.0
 HORIZONTAL_OFFSET_FACTOR = 0.4
 TEXT_SIZE_SMALL = 10.0
 TEXT_SIZE_DEVIATION_FACTOR = 8.0
+OTHER_DIRECTION_DISPLAY_LENGTH = 0.75
 
 def isHoriVerti(node1, node2):
 	return node1.position.x == node2.position.x or node1.position.y == node2.position.y
@@ -120,7 +121,7 @@ class HandleRelations(ReporterPlugin):
 		otherHandleLengthSq = dx * dx + dy * dy
 		if (otherHandleLengthSq == 0):
 			return
-		handleFactor = math.sqrt(handleLengthSq / otherHandleLengthSq) * 0.75
+		handleFactor = math.sqrt(handleLengthSq / otherHandleLengthSq)
 		dx *= handleFactor
 		dy *= handleFactor
 		return dx, dy
@@ -138,9 +139,9 @@ class HandleRelations(ReporterPlugin):
 			except IndexError:
 				continue
 			lineX, lineY = self.lineWithDirection(node, inHandleLengthSq, otherNode, otherNode.prevNode)
-			endpoints.append((lineX, lineY))
+			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
 			lineX, lineY = self.lineWithDirection(node, outHandleLengthSq, otherNode, otherNode.nextNode)
-			endpoints.append((lineX, lineY))
+			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
 		for endpoint in endpoints:
 			self.drawLineFromNodeToPoint(node, endpoint)
 
