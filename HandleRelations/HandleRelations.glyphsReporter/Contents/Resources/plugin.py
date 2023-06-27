@@ -15,6 +15,8 @@ DEVIATION_GREEN_FACTOR = 16.0
 HORIZONTAL_OFFSET_FACTOR = 0.4
 TEXT_SIZE_SMALL = 10.0
 TEXT_SIZE_DEVIATION_FACTOR = 8.0
+OTHER_DIRECTION_PARALLELITY_TOLERANCE = 0.5
+OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR = 1.0 / 64
 OTHER_DIRECTION_DISPLAY_LENGTH = 0.75
 
 def isHoriVerti(node1, node2):
@@ -122,6 +124,7 @@ class HandleRelations(ReporterPlugin):
 		dy *= handleFactor
 		return dx, dy
 
+	# returns True if the node is to be ignored
 	@objc.python_method
 	def drawOtherDirections(self, node, pathIndex, layer, otherLayers):
 		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set() 
@@ -129,7 +132,10 @@ class HandleRelations(ReporterPlugin):
 		outHandleX, outHandleY = pointDiff(node.nextNode, node)
 		inHandleLengthSq = inHandleX**2 + inHandleY**2
 		outHandleLengthSq = outHandleX**2 + outHandleY**2
+		inHandleParallelityToleranceSq = (OTHER_DIRECTION_PARALLELITY_TOLERANCE + math.sqrt(inHandleLengthSq) * OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR)**2
+		outHandleParallelityToleranceSq = (OTHER_DIRECTION_PARALLELITY_TOLERANCE + math.sqrt(outHandleLengthSq) * OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR)**2
 		endpoints = []
+		allParallel = True
 		for otherLayer in otherLayers:
 			try:
 				otherPath = otherLayer.paths[pathIndex]
@@ -139,9 +145,17 @@ class HandleRelations(ReporterPlugin):
 			# inhandle
 			lineX, lineY = self.lineWithDirection(node, inHandleLengthSq, otherNode, otherNode.prevNode)
 			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
+			deviationSq = (inHandleX - lineX)**2 + (inHandleY - lineY)**2
+			if deviationSq > inHandleParallelityToleranceSq:
+				allParallel = False
 			# outhandle
 			lineX, lineY = self.lineWithDirection(node, outHandleLengthSq, otherNode, otherNode.nextNode)
 			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
+			deviationSq = (outHandleX - lineX)**2 + (outHandleY - lineY)**2
+			if deviationSq > outHandleParallelityToleranceSq:
+				allParallel = False
+		if allParallel and not node.selected:
+			return True
 		for endpoint in endpoints:
 			self.drawLineFromNodeToPoint(node, endpoint)
 
@@ -161,7 +175,9 @@ class HandleRelations(ReporterPlugin):
 					continue
 				if isHoriVerti(node.prevNode, node.nextNode):
 					continue
-				self.drawOtherDirections(node, pathIndex, layer, otherLayers)
+				ignoreNode = self.drawOtherDirections(node, pathIndex, layer, otherLayers)
+				if ignoreNode:
+					continue
 				self.drawRelativePosition(node, pathIndex, layer, otherLayers)
 			pathIndex += 1
 
