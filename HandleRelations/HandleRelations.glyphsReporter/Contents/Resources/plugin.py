@@ -30,10 +30,6 @@ def dist(node1, node2):
 	dx, dy = pointDiff(node1, node2)
 	return vectorLength(dx, dy)
 
-def distSq(node1, node2):
-	dx, dy = pointDiff(node1, node2)
-	return dx * dx + dy * dy
-
 def relativePosition(node1, node2, node3):
 	outerLength = dist(node3, node1)
 	firstLength = dist(node2, node1)
@@ -129,8 +125,10 @@ class HandleRelations(ReporterPlugin):
 	@objc.python_method
 	def drawOtherDirections(self, node, pathIndex, layer, otherLayers):
 		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set() 
-		inHandleLengthSq = distSq(node.prevNode, node)
-		outHandleLengthSq = distSq(node.nextNode, node)
+		inHandleX, inHandleY = pointDiff(node.prevNode, node)
+		outHandleX, outHandleY = pointDiff(node.nextNode, node)
+		inHandleLengthSq = inHandleX**2 + inHandleY**2
+		outHandleLengthSq = outHandleX**2 + outHandleY**2
 		endpoints = []
 		for otherLayer in otherLayers:
 			try:
@@ -138,8 +136,10 @@ class HandleRelations(ReporterPlugin):
 				otherNode = otherPath.nodes[node.index]
 			except IndexError:
 				continue
+			# inhandle
 			lineX, lineY = self.lineWithDirection(node, inHandleLengthSq, otherNode, otherNode.prevNode)
 			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
+			# outhandle
 			lineX, lineY = self.lineWithDirection(node, outHandleLengthSq, otherNode, otherNode.nextNode)
 			endpoints.append((lineX * OTHER_DIRECTION_DISPLAY_LENGTH, lineY * OTHER_DIRECTION_DISPLAY_LENGTH))
 		for endpoint in endpoints:
