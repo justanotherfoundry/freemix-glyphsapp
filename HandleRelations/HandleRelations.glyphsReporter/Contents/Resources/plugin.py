@@ -18,6 +18,11 @@ TEXT_SIZE_DEVIATION_FACTOR = 8.0
 OTHER_DIRECTION_PARALLELITY_TOLERANCE = 0.5
 OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR = 1.0 / 64
 OTHER_DIRECTION_DISPLAY_LENGTH = 0.75
+SHALLOW_CURVE_THRESHOLD = 0.4
+# ^ in radians
+
+def samePosition(node1, node2):
+	return node1.position.x == node2.position.x and node1.position.y == node2.position.y
 
 def isHoriVerti(node1, node2):
 	return node1.position.x == node2.position.x or node1.position.y == node2.position.y
@@ -59,6 +64,14 @@ def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer
 			return min(1.0, deviation)
 		except ZeroDivisionError:
 			return 1.0
+
+# p1 is the vertex (return value is positive or negative)
+def angle(p0, p1, p2):
+	v1x, v1y = pointDiff(p0, p1)
+	v2x, v2y = pointDiff(p2, p1)
+	determinant = v1x * v2y - v1y * v2x
+	dot_product = v1x * v2x + v1y * v2y
+	return math.atan2(determinant, dot_product)
 
 class HandleRelations(ReporterPlugin):
 
@@ -170,6 +183,7 @@ class HandleRelations(ReporterPlugin):
 		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
 		pathIndex = 0
 		for path in layer.paths:
+			# smooth nodes:
 			for node in path.nodes:
 				if not node.smooth:
 					continue
@@ -183,6 +197,46 @@ class HandleRelations(ReporterPlugin):
 				if ignoreNode:
 					continue
 				self.drawRelativePosition(node.prevNode, node, node.nextNode, pathIndex, layer, otherLayers)
+			# shallow curves:
+			for bcp1 in path.nodes:
+				bcp2 = bcp1.nextNode
+				if bcp1.type != OFFCURVE or bcp2.type != OFFCURVE:
+					continue
+				node1 = bcp1.prevNode
+				node2 = bcp2.nextNode
+				if layer.selection and not bcp1.selected and not bcp2.selected and not node1.selected and not node2.selected:
+					continue
+				angle1 = angle(node1, bcp1, node2)
+				angle2 = angle(node1, bcp2, node2)
+				threshold1 = SHALLOW_CURVE_THRESHOLD
+				threshold2 = SHALLOW_CURVE_THRESHOLD
+				if angle1 * angle2 < 0:
+					# the curve has an s-shape so the BCPs are less likely to have redundancy
+					threshold1 *= 0.5
+					threshold2 *= 0.5
+					if isHoriVerti(node1, bcp1):
+						threshold1 = 0
+					if isHoriVerti(node2, bcp2):
+						threshold2 = 0
+				if node1.smooth:
+					# bcp1 is likely to be restricted
+					threshold1 *= 0.5
+					if isHoriVerti(node1, bcp1):
+						threshold1 *= 0.25
+				if node2.smooth:
+					# bcp2 is likely to be restricted
+					threshold2 *= 0.5
+					if isHoriVerti(node2, bcp2):
+						threshold2 *= 0.25
+				if bcp1.selected:
+					threshold1 += 1.0
+					# this almost guarantees that the relation is displayed
+				if bcp2.selected:
+					threshold2 += 1.0
+				if abs(angle1) > math.pi - threshold1 and not samePosition(bcp1, node1):
+					self.drawRelativePosition(node1, bcp1, node2, pathIndex, layer, otherLayers)
+				if abs(angle2) > math.pi - threshold2 and not samePosition(bcp2, node2) and not samePosition(bcp1, bcp2):
+					self.drawRelativePosition(node2, bcp2, node1, pathIndex, layer, otherLayers)
 			pathIndex += 1
 
 	@objc.python_method
