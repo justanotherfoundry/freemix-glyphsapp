@@ -37,15 +37,17 @@ def relativePosition(node1, node2, node3):
 	firstLength = dist(node2, node1)
 	return firstLength / outerLength
 
-def relPositionDeviation(node, pathIndex, relPosition, layer, otherLayers):
+def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer, otherLayers):
 	relPositions = [relPosition]
 	for otherLayer in otherLayers:
 		try:
 			otherPath = otherLayer.paths[pathIndex]
 			otherNode = otherPath.nodes[node.index]
+			otherPrevNode = otherPath.nodes[prevNode.index]
+			otherNextNode = otherPath.nodes[nextNode.index]
 		except IndexError:
 			continue
-		otherRelPosition = relativePosition(otherNode.prevNode, otherNode, otherNode.nextNode)
+		otherRelPosition = relativePosition(otherPrevNode, otherNode, otherNextNode)
 		relPositions.append(otherRelPosition)
 	medianRelPos = statistics.median(relPositions)
 	if medianRelPos == relPosition:
@@ -97,7 +99,7 @@ class HandleRelations(ReporterPlugin):
 		textColor = NSColor.blackColor()
 		textSize = TEXT_SIZE_SMALL
 		if otherLayers:
-			deviation = relPositionDeviation(node, pathIndex, relPosition, layer, otherLayers)
+			deviation = relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer, otherLayers)
 			red = deviation
 			green = DEVIATION_GREEN_MAX - deviation * DEVIATION_GREEN_FACTOR
 			green = max(0.0, green)
