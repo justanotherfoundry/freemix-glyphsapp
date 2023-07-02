@@ -158,8 +158,10 @@ class HandleRelations(ReporterPlugin):
 				allParallel = False
 		if allParallel and not node.selected and not node.prevNode.selected and not node.nextNode.selected:
 			return True
-		for endpoint in endpoints:
-			self.drawLineFromNodeToPoint(node, endpoint)
+		# draw the directions (but only for curve-curve connections):
+		if node.prevNode.type == OFFCURVE and node.nextNode.type == OFFCURVE:
+			for endpoint in endpoints:
+				self.drawLineFromNodeToPoint(node, endpoint)
 
 	@objc.python_method
 	def foreground(self, layer):
