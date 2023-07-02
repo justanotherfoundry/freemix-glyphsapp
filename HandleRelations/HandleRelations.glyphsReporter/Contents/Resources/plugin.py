@@ -92,8 +92,8 @@ class HandleRelations(ReporterPlugin):
 		self.drawTextAtPoint(text, NSPoint(node.position.x + offsetX, node.position.y + offsetY), align = textAlignment, fontColor = fontColor, fontSize = fontSize)
 
 	@objc.python_method
-	def drawRelativePosition(self, node, pathIndex, layer, otherLayers):
-		relPosition = relativePosition(node.prevNode, node, node.nextNode)
+	def drawRelativePosition(self, prevNode, node, nextNode, pathIndex, layer, otherLayers):
+		relPosition = relativePosition(prevNode, node, nextNode)
 		textColor = NSColor.blackColor()
 		textSize = TEXT_SIZE_SMALL
 		if otherLayers:
@@ -103,7 +103,7 @@ class HandleRelations(ReporterPlugin):
 			green = max(0.0, green)
 			textColor = NSColor.colorWithRed_green_blue_alpha_(red, green, 0.0, 1.0)
 			textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR;
-		self.drawTextNearNode(node.prevNode, node, node.nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
+		self.drawTextNearNode(prevNode, node, nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
 
 	@objc.python_method
 	def drawLineFromNodeToPoint(self, node, line):
@@ -178,7 +178,7 @@ class HandleRelations(ReporterPlugin):
 				ignoreNode = self.drawOtherDirections(node, pathIndex, layer, otherLayers)
 				if ignoreNode:
 					continue
-				self.drawRelativePosition(node, pathIndex, layer, otherLayers)
+				self.drawRelativePosition(node.prevNode, node, node.nextNode, pathIndex, layer, otherLayers)
 			pathIndex += 1
 
 	@objc.python_method
