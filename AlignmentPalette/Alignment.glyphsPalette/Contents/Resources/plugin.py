@@ -6,8 +6,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
-from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSView
-
+from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSView, NSMinX, NSMidX, NSMidY, NSWidth
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
 MAX_ZONES = 10
@@ -54,26 +53,14 @@ class AlignmentPalette (PalettePlugin):
 	# returns the center of the bounding box of a layer
 	@objc.python_method
 	def centerOfLayer( self, layer ):
-		decomposedLayer = layer.copyDecomposedLayer()
-		try:
-			# we have to manually determine the bounds since
-			# Glyphs applies the grid when it returns layer.bounds
-			left = right = decomposedLayer.paths[0].nodes[0].x
-			top = bottom = decomposedLayer.paths[0].nodes[0].y
-		except IndexError:
+		if len(layer.shapes) == 0:
 			return None, None
-		for path in decomposedLayer.paths:
-			for node in path.nodes:
-				if node.y > top:
-					top = node.y
-				elif node.y < bottom:
-					bottom = node.y
-				if node.x > right:
-					right = node.x
-				elif node.x < left:
-					left = node.x
-		centerX = 0.5 * int( left + right )
-		centerY = 0.5 * int( top + bottom )
+		try:
+			bounds = layer.bounds
+		except:
+			return None, None
+		centerX = NSMidX( bounds )
+		centerY = NSMidY( bounds )
 		return centerX, centerY
 
 	# returns the center of the layers,
