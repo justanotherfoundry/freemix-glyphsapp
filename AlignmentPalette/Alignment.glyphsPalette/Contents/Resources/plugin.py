@@ -6,7 +6,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
-from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSView, NSMinX, NSMidX, NSMidY, NSWidth
+from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
 MAX_ZONES = 10
@@ -55,10 +55,7 @@ class AlignmentPalette (PalettePlugin):
 	def centerOfLayer( self, layer ):
 		if len(layer.shapes) == 0:
 			return None, None
-		try:
-			bounds = layer.bounds
-		except:
-			return None, None
+		bounds = layer.bounds
 		centerX = NSMidX( bounds )
 		centerY = NSMidY( bounds )
 		return centerX, centerY
