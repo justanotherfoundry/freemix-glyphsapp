@@ -63,6 +63,7 @@ def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents 
 class GlyphnameDialog( object):
 
 	def __init__( self ):
+		self.selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
 		hori_margin = 10
 		verti_margin = hori_margin
 		button_width = 30
@@ -127,10 +128,7 @@ class GlyphnameDialog( object):
 				NSBeep()
 				self.w.close()
 				return
-		
-		selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
-		
-		for glyph in selected_glyphs:
+		for glyph in self.selected_glyphs:
 			glyph.beginUndo()
 			for layer in glyph.layers:
 				# find other layer
