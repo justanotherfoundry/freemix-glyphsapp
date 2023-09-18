@@ -88,6 +88,17 @@ class GlyphnameDialog( object):
 		self.w.alignright.getNSButton().setToolTip_( 'Insert the other glyph right-aligned with respect to the advance widths. Keyboard shortcut: Esc' )
 		self.w.setDefaultButton( self.w.alignleft )
 		self.w.alignright.bind( "\x1b", [] )
+		# quick-insert
+		self.find_metrics_keys()
+		if self.lmk or self.rmk:
+			y += line_height + gap
+			quick_button_width = dialog_width / 2 - hori_margin / 2
+			if self.lmk:
+				x = hori_margin
+				self.w.quickleft = Button( ( x, y, quick_button_width, line_height ), LEFT + ' ' + self.lmk, callback = self.buttonCallback )
+			if self.rmk:
+				x = hori_margin + ( dialog_width + hori_margin ) / 2
+				self.w.quickright = Button( ( x, y, quick_button_width, line_height ), self.rmk + ' ' + RIGHT, callback = self.buttonCallback )
 		# insert as component
 		as_component_is_checked = True
 		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"]  is not None:
@@ -105,9 +116,35 @@ class GlyphnameDialog( object):
 		self.w.clear_contents.getNSButton().setToolTip_( 'Check this to clear the background before inserting the other glyph. Uncheck to keep the current contents of the background.' )
 		self.w.open()
 
+	def find_metrics_keys( self ):
+		self.lmk = None
+		self.rmk = None
+		for glyph in self.selected_glyphs:
+			try:
+				if font.glyphs[glyph.leftMetricsKey]:
+					self.lmk = glyph.leftMetricsKey
+			except TypeError:
+				pass
+			try:
+				if font.glyphs[glyph.rightMetricsKey]:
+					self.rmk = glyph.rightMetricsKey
+			except TypeError:
+				pass
+	
 	def buttonCallback( self, sender ):
 		alignment = sender.getTitle()
 		glyphname = self.w.glyphname.get()
+		if len( alignment ) != 1:
+			# this implies that a quick-insert button was pressed
+			title_split = alignment.split()
+			assert len( title_split ) == 2
+			if title_split[0] == LEFT:
+				alignment = LEFT
+				glyphname = title_split[1]
+			else:
+				assert title_split[1] == RIGHT
+				alignment = RIGHT
+				glyphname = title_split[0]
 		as_component_is_checked = self.w.as_component.get()
 		clear_contents_is_checked = self.w.clear_contents.get()
 		if not glyphname:
