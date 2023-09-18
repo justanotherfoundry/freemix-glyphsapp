@@ -135,10 +135,8 @@ class AlignmentPalette (PalettePlugin):
 	# overshoot may be None
 	@objc.python_method
 	def overshootsOfLayer( self, layer ):
-		# TODO: distinguich between “zero” (exactly on the zone edge)
-		# and “not touching”, i.e. not displaying anything in the palette
 		zones = self.namedZones( layer )
-		overshoots = [ [ name, 0 ] for name, zone, height in zones ]
+		overshoots = [ [ name, -1 ] for name, zone, height in zones ]
 		for path in layer.copyDecomposedLayer().paths:
 			if path.direction == CLOCKWISE or len( path.nodes ) < 2:
 				continue
@@ -325,12 +323,16 @@ class AlignmentPalette (PalettePlugin):
 				getattr( self.paletteView.group, 'name' + str( i ) ).set( zoneName )
 				getattr( self.paletteView.group, 'line' + str( i ) ).show( True )
 				if overshoot is not None:
-					# display as integers if the numbers are whole numbers
-					try:
-						if overshoot == int( overshoot ):
-							overshoot = int( overshoot )
-					except ValueError:
-						pass
+					if overshoot == -1:
+						# nothing in the zone
+						overshoot = ''
+					else:
+						# display as integers if the numbers are whole numbers
+						try:
+							if overshoot == int( overshoot ):
+								overshoot = int( overshoot )
+						except ValueError:
+							pass
 					getattr( self.paletteView.group, 'value' + str( i ) ).show( True )
 					getattr( self.paletteView.group, 'value' + str( i ) ).set( overshoot )
 				else:
