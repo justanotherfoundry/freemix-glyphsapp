@@ -11,80 +11,38 @@ This script toggles between the currently selected layer and the master layer (a
 If given a keyboard shortcut, this is very useful for comparing two versions of a glyph.
 """
 
-from builtins import chr
-from AppKit import NSAttributedString, NSMutableAttributedString
-
 font = Glyphs.font
-masterId = font.selectedFontMaster.id
 currentTab = font.currentTab
-rawTextLayers = currentTab.layers
-layers = currentTab.composedLayers
-try:
-	backupLayerId
-except NameError:
-	backupLayerId = None
 
-string = NSMutableAttributedString.alloc().init()
-i_composed = -1
-i_raw = -1
-while i_composed < len( layers ) - 1:
-	i_raw += 1
-	i_composed += 1
-	while rawTextLayers[i_raw].parent.name != layers[i_composed].parent.name:
-		i_composed += 1
-		if i_composed >= len( layers ):
-			break
-		for i_raw_candidate in range( i_raw, len( layers ) ):
-			if rawTextLayers[i_raw_candidate].parent.name == layers[i_composed].parent.name:
-				for i_raw_add in range( i_raw, i_raw_candidate ):
-					rawTextGlyph = rawTextLayers[i_raw_add].parent
-					try:
-						char = font.characterForGlyph_( rawTextGlyph )
-					except:
-						continue
-					singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
-					string.appendAttributedString_( singleChar )
-				i_raw = i_raw_candidate
-				break
-	if i_composed >= len( layers ):
-		break
-	rawTextGlyph = rawTextLayers[i_raw].parent
+text = currentTab.graphicView().textStorage().text()
+selectedRange = currentTab.graphicView().selectedRange()
+selectedRange.length = 1
+try:
+	layerIdAttribute = text.attributesAtIndex_effectiveRange_( selectedRange.location, None )[0]['GSLayerIdAttrib']
+except KeyError:
+	layerIdAttribute = None
+
+currentLayer = font.selectedLayers[0]
+if layerIdAttribute == currentLayer.layerId:
+	# ^ it’s not sufficient to only check layerIdAttribute 
+	#   because Glyphs may use an invalid GSLayerIdAttrib
+	
+	# currently on backup layer. switch to master layer:
+	text.setAttributes_range_( { "GSLayerIdAttrib": None }, selectedRange )
+	backupLayerId = layerIdAttribute
+else:
+	# currently on master layer.
+	currentGlyph = currentLayer.parent
 	try:
-		char = font.characterForGlyph_( rawTextGlyph )
-	except:
-		continue
-	# initialise single char without attributes
-	# which switches the glyph to the active master
-	singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
-	layer = rawTextLayers[i_raw]
-	if i_composed == currentTab.layersCursor:
-		# we are at the currently active glyph
-		if layer.layerId == masterId:
-			# current layer is the selected master layer.
-			foundBackupLayer = False
-			if backupLayerId:
-				# try to switch current glyph to the stored backupLayerId
-				for glyphLayer in layer.parent.layers:
-					if glyphLayer.layerId == backupLayerId:
-						# do not switch to layers that belong to a different master
-						if glyphLayer.associatedMasterId == masterId:
-							singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
-							foundBackupLayer = True
-							break
-			if not foundBackupLayer:
-				backupLayerId = None
-				# switch current glyph to the last associated non-master layer.
-				for glyphLayer in layer.parent.layers:
-					if glyphLayer.associatedMasterId == masterId and glyphLayer.layerId != masterId:
-						# this may happen multiple times
-						singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : glyphLayer.layerId } )
-						backupLayerId = glyphLayer.layerId
-		else:
-			# current layer is a backup layer
-			backupLayerId = layer.layerId
-	else:
-		if layer.layerId != layer.associatedMasterId:
-			# user-selected layer
-			singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : layer.layerId } )
-	string.appendAttributedString_( singleChar )
-currentTab.layers._owner.graphicView().textStorage().setText_(string)
+		backupLayer = currentGlyph.layers[backupLayerId]
+	except NameError:
+		# uninitialized backupLayerId
+		backupLayer = None
+	if not backupLayer:
+		# backup layer not specified (remembered). use the last layer:
+		backupLayer = currentGlyph.layers[-1]
+		backupLayerId = backupLayer.layerId
+	text.setAttributes_range_( { "GSLayerIdAttrib": backupLayerId }, selectedRange )
+
+currentTab.textCursor = currentTab.textCursor
+# ^ this makes Glyphs update the UI (couldn’t find a more elegant way of triggering this)
