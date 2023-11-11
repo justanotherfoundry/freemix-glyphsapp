@@ -14,21 +14,27 @@ If given a keyboard shortcut, this is very useful for comparing two versions of 
 font = Glyphs.font
 currentTab = font.currentTab
 
-text = currentTab.graphicView().textStorage().text()
+textStorage = currentTab.graphicView().textStorage()
+text = textStorage.text()
+
 selectedRange = currentTab.graphicView().selectedRange()
 selectedRange.length = 1
 try:
-	layerIdAttribute = text.attributesAtIndex_effectiveRange_( selectedRange.location, None )[0]['GSLayerIdAttrib']
+	layerIdAttribute = text.attribute_atIndex_effectiveRange_("GSLayerIdAttrib", selectedRange.location, None)[0]
 except KeyError:
 	layerIdAttribute = None
-
+print("__layerIdAttribute", layerIdAttribute)
 currentLayer = font.selectedLayers[0]
+
+print("__currentLayer", currentLayer.layerId)
+
+textStorage.willChangeValueForKey_("text")
 if layerIdAttribute == currentLayer.layerId:
 	# ^ it’s not sufficient to only check layerIdAttribute 
 	#   because Glyphs may use an invalid GSLayerIdAttrib
 	
 	# currently on backup layer. switch to master layer:
-	text.setAttributes_range_( { "GSLayerIdAttrib": None }, selectedRange )
+	text.removeAttribute_range_("GSLayerIdAttrib", selectedRange)
 	backupLayerId = layerIdAttribute
 else:
 	# currently on master layer.
@@ -38,11 +44,10 @@ else:
 	except NameError:
 		# uninitialized backupLayerId
 		backupLayer = None
+	print("__backupLayer", backupLayer)
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
 		backupLayer = currentGlyph.layers[-1]
 		backupLayerId = backupLayer.layerId
-	text.setAttributes_range_( { "GSLayerIdAttrib": backupLayerId }, selectedRange )
-
-currentTab.textCursor = currentTab.textCursor
-# ^ this makes Glyphs update the UI (couldn’t find a more elegant way of triggering this)
+	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
+textStorage.didChangeValueForKey_("text")
