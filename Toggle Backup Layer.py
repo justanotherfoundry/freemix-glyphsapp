@@ -23,10 +23,7 @@ try:
 	layerIdAttribute = text.attribute_atIndex_effectiveRange_("GSLayerIdAttrib", selectedRange.location, None)[0]
 except KeyError:
 	layerIdAttribute = None
-print("__layerIdAttribute", layerIdAttribute)
 currentLayer = font.selectedLayers[0]
-
-print("__currentLayer", currentLayer.layerId)
 
 textStorage.willChangeValueForKey_("text")
 if layerIdAttribute == currentLayer.layerId:
@@ -44,10 +41,11 @@ else:
 	except NameError:
 		# uninitialized backupLayerId
 		backupLayer = None
-	print("__backupLayer", backupLayer)
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
 		backupLayer = currentGlyph.layers[-1]
 		backupLayerId = backupLayer.layerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
+
+# trigger UI update:
 textStorage.didChangeValueForKey_("text")
