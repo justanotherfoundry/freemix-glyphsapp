@@ -13,52 +13,49 @@ Tip: Give it a keyboard shortcut!
 """
 
 from builtins import chr
-from AppKit import NSAttributedString, NSMutableAttributedString
 
 def jumpToAlternate():
 	font = Glyphs.font
-	currentTab = font.currentTab
-	layers = currentTab.layers.values()
-
-	string = NSMutableAttributedString.alloc().init()
-
-	for i in range( len( layers ) ):
-		layer = layers[i]
-		try:
-			char = font.characterForGlyph_( layer.parent )
-		except:
-			continue
-		if i == currentTab.layersCursor:
-			# the currently active glyph
-			currGlyphName = layer.parent.name
-			currBaseName = currGlyphName.split( '.', 1 )[0]
-			if not currBaseName:
-				# for example .notdef
-				return
-			alternates = []
-			for glyph in font.glyphs:
-				baseName = glyph.name.split( '.', 1 )[0]
-				if currBaseName == baseName and not glyph.name.endswith( '.sc' ):
-					alternates.append( glyph )
-			assert( len( alternates ) >= 1 )
-			if len( alternates ) == 1:
-				# no others found
-				return
-			for a in range( len( alternates ) ):
-				if alternates[a].name == currGlyphName:
-					try:
-						nextGlyph = alternates[a+1]
-					except IndexError:
-						nextGlyph = alternates[0]
-			char = font.characterForGlyph_( nextGlyph )
-			singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
-		else:
-			if layer.layerId == layer.associatedMasterId:
-				singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), {} )
-			else:
-				# user-selected layer
-				singleChar = NSAttributedString.alloc().initWithString_attributes_( chr(char), { "GSLayerIdAttrib" : layer.layerId } )
-		string.appendAttributedString_( singleChar )
-	currentTab.layers._owner.graphicView().textStorage().setText_( string )
+	tab = font.currentTab
+	# find new glyph:
+	currentLayer = font.selectedLayers[0]
+	currentGlyphName = currentLayer.parent.name
+	currentBaseName = currentGlyphName.split( '.', 1 )[0]
+	if not currentBaseName:
+		# for example .notdef
+		return
+	alternates = []
+	for glyph in font.glyphs:
+		baseName = glyph.name.split( '.', 1 )[0]
+		if currentBaseName == baseName and not glyph.name.endswith( '.sc' ):
+			alternates.append( glyph )
+	if len( alternates ) == 1:
+		# no others found
+		return
+	for a in range( len( alternates ) ):
+		if alternates[a].name == currentGlyphName:
+			try:
+				nextGlyph = alternates[a+1]
+			except IndexError:
+				nextGlyph = alternates[0]
+	nextChar = chr( font.characterForGlyph( nextGlyph ) )
+	# replace in display string:
+	graphicView = tab.graphicView()
+	textStorage = graphicView.textStorage()
+	text = textStorage.text()
+	selectedRange = graphicView.selectedRange()
+	selectedRange.length = 1
+	while 1:
+		selectedRange.length += 1
+		subString = text.attributedSubstringFromRange_( selectedRange )
+		if ( len( subString.string() ) != 1 ):
+			selectedRange.length -= 1
+			break
+	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
+	#       (which is always the case for unencoded glyphs)
+	
+	textStorage.willChangeValueForKey_('text')
+	text.replaceCharactersInRange_withString_( selectedRange, nextChar )
+	textStorage.didChangeValueForKey_('text')
 
 jumpToAlternate()
