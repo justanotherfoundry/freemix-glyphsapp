@@ -48,7 +48,7 @@ def jumpToAlternate():
 	while 1:
 		selectedRange.length += 1
 		subString = text.attributedSubstringFromRange_( selectedRange )
-		if ( len( subString.string() ) != 1 ):
+		if len( subString.string() ) != 1:
 			selectedRange.length -= 1
 			break
 	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
