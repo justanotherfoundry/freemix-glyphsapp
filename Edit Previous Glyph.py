@@ -10,22 +10,22 @@ Activates the previous glyph in the tab for editing. You can give it a keyboard 
 """
 
 font = Glyphs.font
-initialCursor = font.currentTab.textCursor
-while 1:
-	font.currentTab.textCursor = (font.currentTab.textCursor - 1) % len(font.currentTab.layers)
-	# in case there are no real glyphs in the tab, we need to prevent an infinite loop
-	if font.currentTab.textCursor == initialCursor:
-		break
-	try:
-		if Glyphs.font.selectedLayers[0].parent.name:
-			break
-	except:
-		# this happens when the cursor reaches a line break
-		pass
-
-layer = Glyphs.font.selectedLayers[0]
-tab = Glyphs.font.currentTab
-if tab.viewPort.origin.x > tab.bounds.origin.x:
-	vp = tab.viewPort
-	vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
-	tab.viewPort = vp
+if font:
+	tab = font.currentTab
+	if tab:
+		view = tab.graphicView()
+		selectedLayerRange = view.selectedLayerRange()
+		# note: if several glyphs are selected then this will move the whole selection.
+		#       not sure whether this is useful but at least it is not an unexpected behaviour.
+		if selectedLayerRange.location == 0:
+			# the current glyph is the very first. let’s move to the very last:
+			selectedLayerRange.location = len( tab.layers ) - 1
+		else:
+			# move one glyph left:
+			selectedLayerRange.location -= 1
+		view.setSelectedLayerRange_(selectedLayerRange)
+		# re-center glyph:
+		vp = tab.viewPort
+		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
+		tab.viewPort = vp
+		# TODO: in case the new glyph is on a different line, also adjust y 

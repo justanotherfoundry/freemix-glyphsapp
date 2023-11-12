@@ -13,20 +13,19 @@ font = Glyphs.font
 if font:
 	tab = font.currentTab
 	if tab:
-		initialCursor = tab.textCursor
-		while 1:
-			tab.textCursor = (tab.textCursor + 1) % len(tab.layers)
-			# in case there are no real glyphs in the tab, we need to prevent an infinite loop
-			if tab.textCursor == initialCursor:
-				break
-			try:
-				if font.selectedLayers[0].parent.name:
-					break
-			except:
-				# this happens when the cursor reaches a line break
-				pass
-		layer = font.selectedLayers[0]
-		if tab.viewPort.origin.x + tab.viewPort.size.width < tab.bounds.origin.x + tab.bounds.size.width:
-			vp = tab.viewPort
-			vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
-			tab.viewPort = vp
+		view = tab.graphicView()
+		selectedLayerRange = view.selectedLayerRange()
+		# note: if several glyphs are selected then this will move the whole selection.
+		#       not sure whether this is useful but at least it is not an unexpected behaviour.
+		if selectedLayerRange.location == len( tab.layers ) - 1:
+			# the current glyph is the very last. let’s move to the very first:
+			selectedLayerRange.location = 0
+		else:
+			# move one glyph right:
+			selectedLayerRange.location += 1
+		view.setSelectedLayerRange_(selectedLayerRange)
+		# re-center glyph:
+		vp = tab.viewPort
+		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
+		tab.viewPort = vp
+		# TODO: in case the new glyph is on a different line, also adjust y 
