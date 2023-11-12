@@ -10,21 +10,23 @@ Activates the next glyph in the tab for editing. You can give it a keyboard shor
 """
 
 font = Glyphs.font
-tab = font.currentTab
-initialCursor = tab.textCursor
-while 1:
-	tab.textCursor = (tab.textCursor + 1) % len(tab.layers)
-	# in case there are no real glyphs in the tab, we need to prevent an infinite loop
-	if tab.textCursor == initialCursor:
-		break
-	try:
-		if font.selectedLayers[0].parent.name:
-			break
-	except:
-		# this happens when the cursor reaches a line break
-		pass
-layer = font.selectedLayers[0]
-if tab.viewPort.origin.x + tab.viewPort.size.width < tab.bounds.origin.x + tab.bounds.size.width:
-	vp = tab.viewPort
-	vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
-	tab.viewPort = vp
+if font:
+	tab = font.currentTab
+	if tab:
+		initialCursor = tab.textCursor
+		while 1:
+			tab.textCursor = (tab.textCursor + 1) % len(tab.layers)
+			# in case there are no real glyphs in the tab, we need to prevent an infinite loop
+			if tab.textCursor == initialCursor:
+				break
+			try:
+				if font.selectedLayers[0].parent.name:
+					break
+			except:
+				# this happens when the cursor reaches a line break
+				pass
+		layer = font.selectedLayers[0]
+		if tab.viewPort.origin.x + tab.viewPort.size.width < tab.bounds.origin.x + tab.bounds.size.width:
+			vp = tab.viewPort
+			vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
+			tab.viewPort = vp
