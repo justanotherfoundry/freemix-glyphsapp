@@ -49,3 +49,4 @@ else:
 
 # trigger UI update:
 textStorage.didChangeValueForKey_("text")
+currentTab.textCursor = currentTab.textCursor
