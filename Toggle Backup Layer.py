@@ -43,8 +43,10 @@ else:
 		backupLayer = None
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
-		backupLayer = currentGlyph.layers[-1]
-		backupLayerId = backupLayer.layerId
+		for layer in currentGlyph.layers:
+			if layer.associatedMasterId == currentLayer.associatedMasterId:
+				backupLayer = layer
+				backupLayerId = backupLayer.layerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
 
 # trigger UI update:
