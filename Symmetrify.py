@@ -6,6 +6,7 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 from __future__ import division
+import math
 
 __doc__='''
 Symmetrifies the glyph shape.
@@ -23,314 +24,245 @@ from AppKit import NSPoint
 
 doc = Glyphs.currentDocument
 font = doc.font
-layers = doc.selectedLayers()
-glyph = layers[0].parent
 
 try:
 	from vanilla import Window, SquareButton
 except:
 	if Glyphs.versionNumber >= 3:
-		Message( "This script requires the Vanilla module. You can install it from the Modules tab of the Plugin Manager.", "Missing module" )
+		Message("This script requires the Vanilla module. You can install it from the Modules tab of the Plugin Manager.", "Missing module")
 	else:
-		Message( "This script requires the Vanilla module. To install it, go to Glyphs > Preferences > Addons > Modules and click the Install Modules button.", "Missing module" )
+		Message("This script requires the Vanilla module. To install it, go to Glyphs > Preferences > Addons > Modules and click the Install Modules button.", "Missing module")
 
-class SymmetrifyDialog( object ):
 
-	def buttonCallback( self, sender ):
-		button = sender.getTitle()
-		
-		font.disableUpdateInterface()
-		glyph.beginUndo()
-		if button == 'S':
-			rotate()
-		if button == 'T':
-			horiflip()
-		if button == 'C':
-			vertiflip()
-		if button == 'H':
-			bothflip()
-		if button == '*':
-			rotate5()
-			horiflip()
-			rotate5()
-			horiflip()
-			rotate5()
-			horiflip()
-			rotate5()
-			horiflip()
-		glyph.endUndo()
-		font.enableUpdateInterface()
-		
-		self.w.close()
+class SymmetrifyDialog(object):
 
-	def __init__( self, titles ):
-		self.button = ''
+	def __init__(self):
+		try:
+			self.layer = doc.selectedLayers()[0]
+		except TypeError:
+			self.layer = None
+			return
+		self.init_contours()
+		self.init_center()
+		# determine the buttons (i.e. possible symmetry types):
+		button_titles = []
+		if self.can_rotate():
+			button_titles.append('S')
+		if self.can_rotate5():
+			button_titles.append('*')
+		if all(self.get_flip_partner(contour, is_horizontal=False) is not None for contour in self.contours):
+			# ^ note: here, it does not matter whether we is_horizontal is Ture or False
+			button_titles.extend(['T', 'C', 'H'])
+		if not button_titles:
+			self.layer = None
+			return
+		# dialog layout:
 		margin = 10
 		size = 40
-		self.w = Window( ( len( titles ) * ( margin + size ) + margin, 2 * margin + size ), "Symmetrify" )
+		self.w = Window((len(button_titles) * (margin + size) + margin, 2 * margin + size), "Symmetrify")
 		top = margin
 		left = margin
-
-		for title in titles:
-			button = SquareButton( ( left, top, size, size ), title, callback = self.buttonCallback )
-			setattr( self.w, title, button )
+		for title in button_titles:
+			button = SquareButton((left, top, size, size), title, callback = self.buttonCallback)
+			setattr(self.w, title, button)
 			left += size + margin
 
-	def run( self ):
+	def init_contours(self):
+		self.contours = [[node for node in path.nodes if node.selected] for path in self.layer.paths]
+		self.contours = [contour for contour in self.contours if len(contour) >= 2]
+		if not self.contours:
+			self.contours = [[node for node in path.nodes] for path in self.layer.paths]
+
+	def init_center(self):
+		max_x = max([node.position.x for contour in self.contours for node in contour])
+		min_x = min([node.position.x for contour in self.contours for node in contour])
+		max_y = max([node.position.y for contour in self.contours for node in contour])
+		min_y = min([node.position.y for contour in self.contours for node in contour])
+		self.cx = 0.5 * (max_x + min_x)
+		self.cy = 0.5 * (max_y + min_y)
+
+	def run(self):
 		self.w.open()
 
-node_types = { 	GSLINE: 'o', GSCURVE: 'o', GSOFFCURVE: '.' }
-
-for layer in layers:
-
-	# all the nodes, sorted by contour
-	contours = [ [ node for node in path.nodes if node.selected ] for path in layer.paths ]
-	contours = [ contour for contour in contours if contour ]
-	if not contours:
-		contours = [ [ node for node in path.nodes ] for path in layer.paths ]
-	# node structures of the contours
-	structures = [ [ node_types[node.type] for node in contour ] for contour in contours ]
-
-	# center x and y
-	max_x = max( [ node.position.x for contour in contours for node in contour ] )
-	min_x = min( [ node.position.x for contour in contours for node in contour ] )
-	max_y = max( [ node.position.y for contour in contours for node in contour ] )
-	min_y = min( [ node.position.y for contour in contours for node in contour ] )
-	cx = 0.5 * ( max_x + min_x )
-	cy = 0.5 * ( max_y + min_y )
-
-	# can it be rotated?
-	allow_rotate = 0
-	for c in range( len( contours ) ):
-		if len( contours[c] ) % 2 == 1:
-			break
-		else:
-			rotated_structure = structures[c][len(structures[c])//2:] + structures[c][:len(structures[c])//2]
-			if structures[c] != rotated_structure:
-				break
-	else:
-		allow_rotate = 1
-
-	# can it be 5-fold?
-	allow_rotate5 = 0
-	for c in range( len( contours ) ):
-		if len( contours[c] ) % 5 == 1:
-			break
-		else:
-			rotated_structure = structures[c][len(structures[c])//5:] + structures[c][:len(structures[c])//5]
-			if structures[c] != rotated_structure:
-				break
-			rotated_structure2 = structures[c][2*len(structures[c])//5:] + structures[c][:2*len(structures[c])//5]
-			if structures[c] != rotated_structure2:
-				break
-	else:
-		allow_rotate5 = 1
-
-	# can it be flipped?
-	allow_flip = 0
-	for c in range( len( contours ) ):
-		allow_flip_temp = 0
-		reversed_temp = structures[c][:]
-		reversed_temp.reverse()
-		for centre in range( len( contours[c] ) ):
-			flipped_structure = reversed_temp[centre:] + reversed_temp[:centre]
-			if structures[c] == flipped_structure:
-				break
-		else:
-			break
-	else:
-		allow_flip = 1
-
-	####################################################################################################
-
-	def get_horipartner(c):
-		for test in range(len(contours[c])):
-			sum_temp = 0
-			testpartner = test
-			for n in range(len(contours[c])):
-				sum_temp += abs(contours[c][n].x + contours[c][testpartner].x - 2*cx)
-				sum_temp += abs(contours[c][n].y - contours[c][testpartner].y)*2
-				if testpartner == 0:
-					testpartner = len(contours[c])-1
+	# returns the best partner index for point 0
+	def get_flip_partner(self, contour, is_horizontal):
+		min_sum = float('inf')
+		best_partner_index_for_0 = None
+		for tested_partner_index_for_0 in range(len(contour)):
+			current_sum = 0
+			point_index = tested_partner_index_for_0
+			for other_point_index in range(len(contour)):
+				point = contour[point_index]
+				other_point = contour[other_point_index]
+				if (point.type == OFFCURVE) != (other_point.type == OFFCURVE):
+					break
+				if is_horizontal:
+					current_sum += abs(other_point.x + point.x - 2 * self.cx)
+					current_sum += abs(other_point.y - point.y) * 2
 				else:
-					testpartner -= 1
-			if test==0 or sum_temp < c_sum:
-				c_sum = sum_temp
-				result = test
-		return result
-	
-	####################################################################################################
-
-	def get_vertipartner(c):
-		for test in range(len(contours[c])):
-			sum_temp = 0
-			testpartner = test
-			for n in range(len(contours[c])):
-				sum_temp += abs(contours[c][n].y + contours[c][testpartner].y - 2*cy)
-				sum_temp += abs(contours[c][n].x - contours[c][testpartner].x)*2
-				if testpartner == 0:
-					testpartner = len(contours[c])-1
+					current_sum += abs(other_point.y + point.y - 2 * self.cy)
+					current_sum += abs(other_point.x - point.x) * 2
+				if point_index == 0:
+					point_index = len(contour) - 1
 				else:
-					testpartner -= 1
-			if test==0 or sum_temp < c_sum:
-				c_sum = sum_temp
-				partner = test
-				result = test
-		return result
+					point_index -= 1
+			else:
+				# all compared points have the same type
+				if current_sum < min_sum:
+					min_sum = current_sum
+					best_partner_index_for_0 = tested_partner_index_for_0
+		return best_partner_index_for_0
+
+	def flip(self, flip_horizontal, flip_vertical):
+		flips = [flip_horizontal] + [False] * flip_vertical
+		for contour in self.contours:
+			if self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
+				self.cy = round(self.cy)
+			if self.get_flip_partner(contour, is_horizontal=True) % 2 == 0:
+				self.cx = round(self.cx)
+		for contour in self.contours:
+			xy = [(p.x, p.y) for p in contour]
+			for current_is_horizontal in flips:
+				partner_index = self.get_flip_partner(contour, current_is_horizontal)
+				assert partner_index is not None
+				for point_index in range(len(contour)):
+					if point_index <= partner_index:
+						# ^ this check is for performance only,
+						#   to avoid treating point pairs twice
+						x, y = xy[point_index]
+						partner_x, partner_y = xy[partner_index]
+						if current_is_horizontal:
+							x = 0.50001 * x - 0.50001 * partner_x + self.cx
+							y = 0.5 * y + 0.5 * partner_y + 0.00001 * (x - 0.5 * partner_x)
+							xy[partner_index] = (2 * self.cx - x, y)
+						else:
+							x = 0.5 * x + 0.5 * partner_x + 0.00001 * (y - 0.5 * partner_y)
+							y = 0.50001 * y - 0.50001 * partner_y + self.cy
+							xy[partner_index] = (x, 2 * self.cy - y)
+						xy[point_index] = (x, y)
+					if partner_index == 0:
+						partner_index = len(contour) - 1
+					else:
+						partner_index -= 1
+			for point_index in range(len(contour)):
+				point = contour[point_index]
+				point.x, point.y = xy[point_index]
+
+	def can_rotate(self):
+		for contour in self.contours:
+			if len(contour) % 2 != 0:
+				return False
+			other_point_index = len(contour)//2
+			for point_index in range(other_point_index):
+				point = contour[point_index]
+				other_point = contour[other_point_index]
+				if (point.type == OFFCURVE) != (other_point.type == OFFCURVE):
+					return False
+				other_point_index = (other_point_index + 1) % len(contour)
+		return True
+
+	def rotate(self):
+		for contour in self.contours:
+			other_point_index = len(contour)//2
+			for point_index in range(other_point_index):
+				point = contour[point_index]
+				other_point = contour[other_point_index]
+				point.x	 = 0.50001*point.x - 0.50001*other_point.x + self.cx
+				other_point.x = 2.0*self.cx - point.x
+				point.y	 = 0.50001*point.y - 0.50001*other_point.y + self.cy
+				other_point.y = 2.0*self.cy - point.y
+				other_point_index = (other_point_index + 1) % len(contour)
+
+	def blend_points(p0, p1, p2, p3, p4):
+		return NSPoint(0.2 * (p0.x + p1.x + p2.x + p3.x + p4.x), 0.2 * (p0.y + p1.y + p2.y + p3.y + p4.y))
 	
-	####################################################################################################
-
-	def horiflip():
-		global cx, cy
-		for c in range(len(contours)):
-			if get_horipartner(c) % 2 == 0:
-				cx = round(cx)
-		for c in range(len(contours)):
-			partner = get_horipartner(c)
-			for n in range(len(contours[c])):
-				contours[c][n].x	 = 0.50001*contours[c][n].x - 0.50001*contours[c][partner].x + cx
-				contours[c][partner].x = 2*cx - contours[c][n].x
-				contours[c][n].y	 = 0.5*contours[c][n].y + 0.5*contours[c][partner].y + 0.00001*(contours[c][n].x - 0.5*contours[c][partner].x)
-				contours[c][partner].y = contours[c][n].y
-				if partner == 0:
-					partner = len(contours[c])-1
-				else:
-					partner -= 1
-		layer.syncMetrics()
-	
-	####################################################################################################
-	
-	def vertiflip():
-		global cx, cy
-		for c in range(len(contours)):
-			if get_vertipartner(c) % 2 == 0:
-				cy = round(cy)
-		for c in range(len(contours)):
-			partner = get_vertipartner(c)
-			for n in range(len(contours[c])):
-				contours[c][n].x	 = 0.5*contours[c][n].x + 0.5*contours[c][partner].x + 0.00001*(contours[c][n].y - 0.5*contours[c][partner].y)
-				contours[c][partner].x = contours[c][n].x
-				contours[c][n].y	 = 0.50001*contours[c][n].y - 0.50001*contours[c][partner].y + cy
-				contours[c][partner].y = 2*cy - contours[c][n].y
-				if partner == 0:
-					partner = len(contours[c])-1
-				else:
-					partner -= 1
-		layer.syncMetrics()
-	
-	####################################################################################################
-
-	def bothflip():
-		global cx, cy
-		for c in range(len(contours)):
-			if get_vertipartner(c) % 2 == 0:
-				cy = round(cy)
-			if get_horipartner(c) % 2 == 0:
-				cx = round(cx)
-		for c in range(len(contours)):
-			partner_hflip  = get_horipartner(c)
-			partner_rotate = len(contours[c])//2
-			partner_vflip  = partner_hflip + partner_rotate
-			if partner_vflip >= len(contours[c]):
-				partner_vflip -= len(contours[c])
-			for point in contours[c]:
-				point.x = 0.5001*(0.50001*point.x - 0.50001*contours[c][partner_hflip ].x)   +   0.4999*(0.50001*contours[c][partner_vflip].x - 0.50001*contours[c][partner_rotate].x)  + cx + 0.000001*(point.y - 0.5*contours[c][partner_vflip].y)
-				contours[c][partner_hflip].x  = 2*cx - point.x
-				contours[c][partner_rotate].x = contours[c][partner_hflip].x
-				contours[c][partner_vflip].x  = point.x
-
-				point.y = 0.5001*(0.50001*point.y - 0.50001*contours[c][partner_vflip ].y)   +   0.4999*(0.50001*contours[c][partner_hflip].y - 0.50001*contours[c][partner_rotate].y)  + cy + 0.000001*(point.x - 0.5*contours[c][partner_hflip].x)
-				contours[c][partner_vflip].y  = 2*cy - point.y
-				contours[c][partner_rotate].y = contours[c][partner_vflip].y
-				contours[c][partner_hflip].y  = point.y
-
-				if partner_hflip == 0:
-					partner_hflip = len(contours[c])-1
-				else:
-					partner_hflip -= 1
-
-				if partner_vflip == 0:
-					partner_vflip = len(contours[c])-1
-				else:
-					partner_vflip -= 1
-
-				if partner_rotate == len(contours[c])-1:
-					partner_rotate = 0
-				else:
-					partner_rotate += 1
-		layer.syncMetrics()
-	
-	####################################################################################################
-
-	def rotate():
-		layer.beginChanges()
-		global cx, cy
-		for contour in contours:
-			partner = len(contour)//2
-			for n in range(partner):
-				contour[n].x	 = 0.50001*contour[n].x - 0.50001*contour[partner].x + cx
-				contour[partner].x = 2.0*cx - contour[n].x
-				contour[n].y	 = 0.50001*contour[n].y - 0.50001*contour[partner].y + cy
-				contour[partner].y = 2.0*cy - contour[n].y
-				partner = ( partner + 1 ) % len(contour)
-		layer.syncMetrics()
-		layer.endChanges()
-	
-	####################################################################################################
-
-	def blend_points( p0, p1, p2, p3, p4 ):
-		return NSPoint( 0.2 * ( p0.x + p1.x + p2.x + p3.x + p4.x ), 0.2 * ( p0.y + p1.y + p2.y + p3.y + p4.y ) )
-	
-	import math
 	# returns the vector p-center, rotated around center by angle (given in radians)
-	def rotated_vector( p, angle, center = NSPoint( 0, 0 ) ):
-		v = NSPoint( p.x - center.x, p.y - center.y )
+	def rotated_vector(p, angle, center = NSPoint(0, 0)):
+		v = NSPoint(p.x - center.x, p.y - center.y)
 		result = NSPoint()
-		result.x += v.x * math.cos( angle ) - v.y * math.sin( angle )
-		result.y += v.x * math.sin( angle ) + v.y * math.cos( angle )
+		result.x += v.x * math.cos(angle) - v.y * math.sin(angle)
+		result.y += v.x * math.sin(angle) + v.y * math.cos(angle)
 		return result
 
-	def rotate5():
+	def can_rotate5(self):
+		for contour in self.contours:
+			if len(contour) % 5 != 0:
+				return False
+			i1 = len(contour)//5
+			i2 = 2 * i1
+			i3 = 3 * i1
+			i4 = 4 * i1
+			for i0 in range(i1):
+				if (contour[i0].type == OFFCURVE) != (contour[i1].type == OFFCURVE):
+					return False
+				if (contour[i0].type == OFFCURVE) != (contour[i2].type == OFFCURVE):
+					return False
+				if (contour[i0].type == OFFCURVE) != (contour[i3].type == OFFCURVE):
+					return False
+				if (contour[i0].type == OFFCURVE) != (contour[i4].type == OFFCURVE):
+					return False
+				i1 = (i1 + 1) % len(contour)
+				i2 = (i2 + 1) % len(contour)
+				i3 = (i3 + 1) % len(contour)
+				i4 = (i4 + 1) % len(contour)
+
+	def rotate5(self):
 		fifth_circle = - math.pi * 2 / 5;
-		sum_x = sum( [ p.x for c in contours for p in c ] )
-		sum_y = sum( [ p.y for c in contours for p in c ] )
-		num_p = sum( [ len( c ) for c in contours ] )
+		sum_x = sum([p.x for c in self.contours for p in c])
+		sum_y = sum([p.y for c in self.contours for p in c])
+		num_p = sum([len(c) for c in self.contours])
 		cgx = sum_x / num_p
 		cgy = sum_y / num_p
-		cg = NSPoint( cgx, cgy )
-		for contour in contours:
-			partner1 = len(contour)//5
-			partner2 = 2 * partner1
-			partner3 = 3 * partner1
-			partner4 = 4 * partner1
-			for n in range(partner1):
-				vector = blend_points( subtractPoints( contour[n].position, cg ),
-					rotated_vector( contour[partner1].position, fifth_circle, cg ),
-					rotated_vector( contour[partner2].position, fifth_circle * 2, cg ),
-					rotated_vector( contour[partner3].position, fifth_circle * 3, cg ),
-					rotated_vector( contour[partner4].position, fifth_circle * 4, cg ) )
-				contour[n].position = addPoints( cg, vector )
-				contour[partner1].position = addPoints( cg, rotated_vector( vector, -fifth_circle ) )
-				contour[partner2].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 2 ) )
-				contour[partner3].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 3 ) )
-				contour[partner4].position = addPoints( cg, rotated_vector( vector, -fifth_circle * 4 ) )
-				partner1 = ( partner1 + 1 ) % len(contour)
-				partner2 = ( partner2 + 1 ) % len(contour)
-				partner3 = ( partner3 + 1 ) % len(contour)
-				partner4 = ( partner4 + 1 ) % len(contour)
-	
-	####################################################################################################
+		cg = NSPoint(cgx, cgy)
+		for contour in self.contours:
+			i1 = len(contour)//5
+			i2 = 2 * i1
+			i3 = 3 * i1
+			i4 = 4 * i1
+			for i0 in range(i1):
+				vector = blend_points(subtractPoints(contour[i0].position, cg),
+					rotated_vector(contour[i1].position, fifth_circle, cg),
+					rotated_vector(contour[i2].position, fifth_circle * 2, cg),
+					rotated_vector(contour[i3].position, fifth_circle * 3, cg),
+					rotated_vector(contour[i4].position, fifth_circle * 4, cg))
+				contour[i0].position = addPoints(cg, vector)
+				contour[i1].position = addPoints(cg, rotated_vector(vector, -fifth_circle))
+				contour[i2].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 2))
+				contour[i3].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 3))
+				contour[i4].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 4))
+				i1 = (i1 + 1) % len(contour)
+				i2 = (i2 + 1) % len(contour)
+				i3 = (i3 + 1) % len(contour)
+				i4 = (i4 + 1) % len(contour)
 
-	buttons = []
+	def buttonCallback(self, sender):
+		button = sender.getTitle()
+		font.disableUpdateInterface()
+		glyph = self.layer.parent
+		glyph.beginUndo()
+		if button == 'S':
+			self.rotate()
+		if button == 'T':
+			self.flip(flip_horizontal=True, flip_vertical=False)
+		if button == 'C':
+			self.flip(flip_horizontal=False, flip_vertical=True)
+		if button == 'H':
+			self.flip(flip_horizontal=True, flip_vertical=True)
+		if button == '*':
+			self.rotate5()
+			self.flip(flip_horizontal=True, flip_vertical=False)
+			self.rotate5()
+			self.flip(flip_horizontal=True, flip_vertical=False)
+			self.rotate5()
+			self.flip(flip_horizontal=True, flip_vertical=False)
+			self.rotate5()
+			self.flip(flip_horizontal=True, flip_vertical=False)
+		self.layer.syncMetrics()
+		glyph.endUndo()
+		font.enableUpdateInterface()
+		self.w.close()
+
 	
-	if allow_rotate:
-		buttons += [ 'S' ]
-	if allow_flip:
-		buttons += [ 'T', 'C' ]
-		if 'S' in buttons:
-			buttons += [ 'H' ]
-	if allow_rotate5:
-		buttons += [ '*' ]
-	if buttons:
-		dialog = SymmetrifyDialog( buttons )
-		button = dialog.run()
+dialog = SymmetrifyDialog()
+if dialog.layer is not None:
+	dialog.run()
