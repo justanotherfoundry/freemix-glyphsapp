@@ -45,9 +45,13 @@ def jumpToAlternate():
 	text = textStorage.text()
 	selectedRange = graphicView.selectedRange()
 	selectedRange.length = 1
-	while selectedRange.length < text.length():
+	while 1:
 		selectedRange.length += 1
-		subString = text.attributedSubstringFromRange_( selectedRange )
+		try:
+			subString = text.attributedSubstringFromRange_( selectedRange )
+		except IndexError:
+			selectedRange.length -= 1
+			break
 		if len( subString.string() ) != 1:
 			selectedRange.length -= 1
 			break
