@@ -44,6 +44,8 @@ else:
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
 		for layer in currentGlyph.layers:
+			if layer.layerId == currentLayer.layerId:
+				continue
 			if layer.associatedMasterId == currentLayer.associatedMasterId:
 				backupLayerId = layer.layerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
