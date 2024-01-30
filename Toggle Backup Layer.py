@@ -27,9 +27,6 @@ currentLayer = font.selectedLayers[0]
 
 textStorage.willChangeValueForKey_("text")
 if layerIdAttribute == currentLayer.layerId:
-	# ^ it’s not sufficient to only check layerIdAttribute 
-	#   because Glyphs may use an invalid GSLayerIdAttrib
-	
 	# currently on backup layer. switch to master layer:
 	text.removeAttribute_range_("GSLayerIdAttrib", selectedRange)
 	backupLayerId = layerIdAttribute
@@ -45,8 +42,7 @@ else:
 		# backup layer not specified (remembered). use the last layer:
 		for layer in currentGlyph.layers:
 			if layer.associatedMasterId == currentLayer.associatedMasterId:
-				backupLayer = layer
-				backupLayerId = backupLayer.layerId
+				backupLayerId = layer.layerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
 
 # trigger UI update:
