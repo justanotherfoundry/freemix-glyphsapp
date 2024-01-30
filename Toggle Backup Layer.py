@@ -38,6 +38,9 @@ else:
 	except NameError:
 		# uninitialized backupLayerId
 		backupLayer = None
+	if backupLayer and backupLayer.associatedMasterId != currentLayer.layerId:
+		# remembered layer is from a different master. let’s not switch to that one.
+		backupLayer = None
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
 		for layer in currentGlyph.layers:
