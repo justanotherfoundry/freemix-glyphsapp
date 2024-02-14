@@ -67,9 +67,9 @@ class AnchorsPalette (PalettePlugin):
 			for anchor in layer.anchors:
 				if anchor.name == anchorName:
 					if textField.frame().origin.x == self.posxFieldsOriginX:
-						layer.anchors[anchorName].position = NSPoint( newValue, layer.anchors[anchorName].position.y )
+						anchor.position = NSPoint( newValue, anchor.position.y )
 					else:
-						layer.anchors[anchorName].position = NSPoint( layer.anchors[anchorName].position.x, newValue )
+						anchor.position = NSPoint( anchor.position.x, newValue )
 					break
 
 	@objc.python_method
