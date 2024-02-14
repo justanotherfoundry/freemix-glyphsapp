@@ -26,6 +26,6 @@ if font:
 		view.setSelectedLayerRange_(selectedLayerRange)
 		# re-center glyph:
 		vp = tab.viewPort
-		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( layer.width * tab.scale - vp.size.width )
+		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( font.selectedLayers[0].width * tab.scale - vp.size.width )
 		tab.viewPort = vp
 		# TODO: in case the new glyph is on a different line, also adjust y 
