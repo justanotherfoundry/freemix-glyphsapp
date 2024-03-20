@@ -31,15 +31,15 @@ for left_glyph in font.glyphs:
 		else:
 			right_name = right_glyph.name
 		value = font.kerningForPair( master_id, left_name, right_name )
-		if value < 77000:
+		if value is not None and value < 77000:
 			existing_value = font.kerningForPair( master_id, left_glyph.name, right_glyph.name )
-			if existing_value < 77000:
+			if existing_value is not None and existing_value < 77000:
 				continue
 			exception_value = font.kerningForPair( master_id, left_glyph.name, right_name )
-			if exception_value < 77000:
+			if exception_value is not None and exception_value < 77000:
 				value = exception_value
 			exception_value = font.kerningForPair( master_id, left_name, right_glyph.name )
-			if exception_value < 77000:
+			if exception_value is not None and exception_value < 77000:
 				value = exception_value
 			font.setKerningForPair( master_id, left_glyph.name, right_glyph.name, value )
 
