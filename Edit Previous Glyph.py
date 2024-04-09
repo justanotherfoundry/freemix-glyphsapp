@@ -20,9 +20,9 @@ if font:
 		vp = tab.viewPort
 		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( font.selectedLayers[0].width * tab.scale - vp.size.width )
 		if newPosition == len(tab.layers) - 1:
-	 		print()
-	 		# ^ very strange: if we don’t do this
-	 		#   then the glyph is not centred correctly
-	 		#   if the text cursor is active
+			print()
+			# ^ very strange: if we don’t do this
+			#   then the glyph is not centred correctly
+			#   if the text cursor is active
 		tab.viewPort = vp
 		# TODO: in case the new glyph is on a different line, also adjust y 
