@@ -13,19 +13,18 @@ font = Glyphs.font
 if font:
 	tab = font.currentTab
 	if tab:
-		view = tab.graphicView()
-		selectedLayerRange = view.selectedLayerRange()
-		# note: if several glyphs are selected then this will move the whole selection.
-		#       not sure whether this is useful but at least it is not an unexpected behaviour.
-		if selectedLayerRange.location == len( tab.layers ) - 1:
-			# the current glyph is the very last. let’s move to the very first:
-			selectedLayerRange.location = 0
-		else:
-			# move one glyph right:
-			selectedLayerRange.location += 1
-		view.setSelectedLayerRange_(selectedLayerRange)
+		# move cursor:
+		# (adopted from https://glyphsapp.com/news/glyphs-3-2-released)
+		tab = Glyphs.font.currentTab
+		newPosition = (tab.layersCursor + 1) % (len(tab.layers))
+		tab.layersCursor = newPosition
 		# re-center glyph:
 		vp = tab.viewPort
 		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( font.selectedLayers[0].width * tab.scale - vp.size.width )
+		if newPosition == 0:
+	 		print()
+	 		# ^ very strange: if we don’t do this
+	 		#   then the glyph is not centred correctly
+	 		#   if the text cursor is active
 		tab.viewPort = vp
 		# TODO: in case the new glyph is on a different line, also adjust y 
