@@ -14,7 +14,6 @@ if font:
 	tab = font.currentTab
 	if tab:
 		# move cursor:
-		tab = Glyphs.font.currentTab
 		newPosition = (tab.layersCursor - 1 + len(tab.layers)) % (len(tab.layers))
 		tab.layersCursor = newPosition
 		# re-center glyph:

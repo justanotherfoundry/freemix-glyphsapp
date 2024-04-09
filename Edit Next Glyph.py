@@ -15,7 +15,6 @@ if font:
 	if tab:
 		# move cursor:
 		# (adopted from https://glyphsapp.com/news/glyphs-3-2-released)
-		tab = Glyphs.font.currentTab
 		newPosition = (tab.layersCursor + 1) % (len(tab.layers))
 		tab.layersCursor = newPosition
 		# re-center glyph:
