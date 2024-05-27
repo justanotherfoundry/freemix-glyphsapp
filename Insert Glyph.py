@@ -1,11 +1,11 @@
-#MenuTitle: Insert Glyph
+# MenuTitle: Insert Glyph
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__="""
+__doc__ = """
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.
@@ -16,14 +16,17 @@ __doc__="""
 
 """
 
+import objc
 from vanilla import Window, EditText, Button
+from GlyphsApp import Glyphs
 
 LEFT = '<'
 RIGHT = '>'
 
 font = Glyphs.font
 
-def insert_paths( to_layer, from_layer, alignment = LEFT ):
+
+def insert_paths( to_layer, from_layer, alignment=LEFT ):
 	# insert all paths
 	for path in from_layer.copyDecomposedLayer().paths:
 		if alignment == RIGHT:
@@ -33,6 +36,7 @@ def insert_paths( to_layer, from_layer, alignment = LEFT ):
 		to_layer.paths.append( path )
 		# select path (makes is quicker to move around the shape later)
 		to_layer.paths[-1].selected = True
+
 
 class GlyphnameDialog( object):
 
@@ -47,9 +51,9 @@ class GlyphnameDialog( object):
 		self.w.center()
 		self.w.glyphname = EditText( ( x, y, glyphname_width, height ), '')
 		x += glyphname_width + gap
-		self.w.alignleft = Button( ( x, y, button_width, height ), LEFT, callback = self.buttonCallback )
+		self.w.alignleft = Button( ( x, y, button_width, height ), LEFT, callback=self.buttonCallback )
 		x += button_width + gap
-		self.w.alignright = Button( ( x, y, button_width, height ), RIGHT, callback = self.buttonCallback )
+		self.w.alignright = Button( ( x, y, button_width, height ), RIGHT, callback=self.buttonCallback )
 		self.w.setDefaultButton( self.w.alignleft )
 		self.w.alignright.bind( "\x1b", [] )
 		self.w.open()
@@ -74,7 +78,7 @@ class GlyphnameDialog( object):
 			else:
 				self.w.close()
 				return
-		
+
 		for layer in font.selectedLayers:
 			glyph = layer.parent
 			glyph.beginUndo()
@@ -98,11 +102,12 @@ class GlyphnameDialog( object):
 			glyph.endUndo()
 		self.w.close()
 
+
 GSSelectGlyphsDialogController = objc.lookUpClass("GSSelectGlyphsDialogController")
 selectGlyphPanel = GSSelectGlyphsDialogController.alloc().init()
 selectGlyphPanel.setTitle_("Find Glyphs")
 
-master = font.masters[0] # Pick with master you are interested in, e.g., currentTab.masterIndex
+master = font.masters[0]  # Pick with master you are interested in, e.g., currentTab.masterIndex
 selectGlyphPanel.setMasterID_(master.id)
 selectGlyphPanel.setContent_(list(font.glyphs))
 PreviousSearch = Glyphs.defaults["PickGlyphsSearch"]
@@ -115,7 +120,7 @@ if selectGlyphPanel.runModal():
 	other_glyph = selectGlyphPanel.selectedGlyphs()[0]
 else:
 	alignment = RIGHT
-	glyphname =  selectGlyphPanel.glyphsSelectSearchField().stringValue()
+	glyphname = selectGlyphPanel.glyphsSelectSearchField().stringValue()
 	other_glyph = font.glyphs[ glyphname ]
 for layer in font.selectedLayers:
 	glyph = layer.parent

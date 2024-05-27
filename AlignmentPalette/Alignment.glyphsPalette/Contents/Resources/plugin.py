@@ -3,9 +3,9 @@ from __future__ import division, print_function, unicode_literals
 
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-from vanilla import *
+from GlyphsApp import Glyphs, GSEditViewController, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
+from vanilla import Window, Group, EditText, TextBox, HorizontalLine
 from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
@@ -24,14 +24,18 @@ CLOCKWISE = 1
 
 # from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
 GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
+
+
 class ArrowEditText (EditText):
 	nsTextFieldClass = GSSteppingTextField
+
 	def _setCallback(self, callback):
 		super(ArrowEditText, self)._setCallback(callback)
 		if callback is not None and self._continuous:
 			self._nsObject.setContinuous_(True)
 			self._nsObject.setAction_(self._target.action_)
 			self._nsObject.setTarget_(self._target)
+
 
 class AlignmentPalette (PalettePlugin):
 
@@ -98,7 +102,7 @@ class AlignmentPalette (PalettePlugin):
 				return zones
 		except:
 			pass
-		
+
 		glyph = layer.parent
 		if not glyph:
 			return []
@@ -128,7 +132,7 @@ class AlignmentPalette (PalettePlugin):
 				else:
 					zones.append( ( str(zone.position), zone, zone.position ) )
 		# sort by height
-		zones.sort(key=lambda x: x[2], reverse = True )
+		zones.sort(key=lambda x: x[2], reverse=True )
 		return zones
 
 	# returns a list of tuples (zone name, overshoot) for the layer
@@ -190,7 +194,7 @@ class AlignmentPalette (PalettePlugin):
 							if globalOvershoots[index][1] is None:
 								globalOvershoots[index][1] = overshoot
 							elif globalOvershoots[index][1] != overshoot:
-									globalOvershoots[index][1] = 'multiple'
+								globalOvershoots[index][1] = 'multiple'
 						except IndexError:
 							pass
 		return globalOvershoots
@@ -226,7 +230,7 @@ class AlignmentPalette (PalettePlugin):
 
 		posy = self.marginTop
 		# set up fields for center
-		headlineBbox = NSAttributedString.alloc().initWithString_attributes_( 'Bounding box', { NSFontAttributeName:NSFont.boldSystemFontOfSize_( smallSize ) } )
+		headlineBbox = NSAttributedString.alloc().initWithString_attributes_( 'Bounding box', { NSFontAttributeName: NSFont.boldSystemFontOfSize_( smallSize ) } )
 		self.paletteView.group.headlineBbox = TextBox( ( 10, posy, innerWidth, 18 ), headlineBbox, sizeStyle='small' )
 		posy += self.lineSpacing
 		self.paletteView.group.centerXLabel = TextBox( ( 10, posy + 3, innerWidth, 18 ), 'center x', sizeStyle='small' )
@@ -242,7 +246,7 @@ class AlignmentPalette (PalettePlugin):
 		self.paletteView.group.centerY = ArrowEditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
 		posy += self.lineSpacing + self.marginTop
 		# set up fields for overshoot
-		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_( 'Overshoot', { NSFontAttributeName:NSFont.boldSystemFontOfSize_( NSFont.systemFontSizeForControlSize_( smallSize ) ) } )
+		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_( 'Overshoot', { NSFontAttributeName: NSFont.boldSystemFontOfSize_( NSFont.systemFontSizeForControlSize_( smallSize ) ) } )
 		self.paletteView.group.headlineOvershoot = TextBox( ( 10, posy, innerWidth, 18 ), headlineOvershoot, sizeStyle='small' )
 		posy += self.lineSpacing
 		self.paletteView.group, 'lineAbove', HorizontalLine( ( self.marginLeft, posy - 3, innerWidth, 1 ) )
@@ -266,7 +270,7 @@ class AlignmentPalette (PalettePlugin):
 			return
 		if sender:
 			self.font = sender.object()
-			if isinstance(self.font, GSEditViewController): # it is GSEditViewController in Glyphs3
+			if isinstance(self.font, GSEditViewController):  # it is GSEditViewController in Glyphs3
 				try:
 					self.font = self.font.representedObject()
 				except:
@@ -348,7 +352,7 @@ class AlignmentPalette (PalettePlugin):
 	# def lockCallback(self, button):
 	# 	posX, posY, w, h = button.getPosSize()
 
-	@objc.python_method	
+	@objc.python_method
 	def editTextCallback(self, editText):
 		if not self.font or not self.font.selectedLayers:
 			return
@@ -387,7 +391,7 @@ class AlignmentPalette (PalettePlugin):
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
-	
+
 	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
@@ -396,18 +400,18 @@ class AlignmentPalette (PalettePlugin):
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
-	
+
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+
 	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
-	
+
 	@objc.python_method
 	def sortID(self):
 		return self._sortID
-	

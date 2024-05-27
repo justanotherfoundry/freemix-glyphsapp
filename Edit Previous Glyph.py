@@ -1,13 +1,15 @@
-#MenuTitle: Edit Previous Glyph
+# MenuTitle: Edit Previous Glyph
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__="""
+__doc__ = """
 Activates the previous glyph in the tab for editing. You can give it a keyboard shortcut in the macOS system preferences.
 """
+
+from GlyphsApp import Glyphs
 
 font = Glyphs.font
 if font:
@@ -25,4 +27,4 @@ if font:
 			#   then the glyph is not centred correctly
 			#   if the text cursor is active
 		tab.viewPort = vp
-		# TODO: in case the new glyph is on a different line, also adjust y 
+		# TODO: in case the new glyph is on a different line, also adjust y

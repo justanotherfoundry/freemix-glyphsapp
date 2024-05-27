@@ -1,15 +1,18 @@
-#MenuTitle: Toggle Backup Layer
+# MenuTitle: Toggle Backup Layer
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__="""
+__doc__ = """
 This script toggles between the currently selected layer and the master layer (alternatively, between the master and the last backup layer in the list).
 
 If given a keyboard shortcut, this is very useful for comparing two versions of a glyph.
 """
+
+from GlyphsApp import Glyphs
+
 
 font = Glyphs.font
 currentTab = font.currentTab

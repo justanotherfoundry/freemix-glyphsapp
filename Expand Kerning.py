@@ -1,14 +1,15 @@
-#MenuTitle: Expand Kerning
+# MenuTitle: Expand Kerning
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-'''
+__doc__ = '''
 Expand Kerning like we know it from FontLab.
-
 '''
+
+from GlyphsApp import Glyphs
 
 doc = Glyphs.currentDocument
 font = doc.font

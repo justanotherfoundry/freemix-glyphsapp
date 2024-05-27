@@ -1,13 +1,14 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-from vanilla import *
-from AppKit import NSView
+from GlyphsApp import Glyphs, Message, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
+from vanilla import Window, Group, EditText
+# from AppKit import NSView
 
 NUMBER_OF_FIELDS = 20
 MINIMUM_NON_DOT_SUFFIX_LENGTH = 4
+
 
 class SuffixesPalette( PalettePlugin ):
 
@@ -24,9 +25,9 @@ class SuffixesPalette( PalettePlugin ):
 		self.height = 2 * self.margin + self.textFieldHeight + self.gutter * 2
 		self.paletteView = Window( (self.width, self.height), minSize=(self.width, self.height - 10), maxSize=(self.width, self.height + 200 ) )
 		self.paletteView.group = Group( (0, 0, self.width, self.height ) )
-		posx = self.margin
+		# posx = self.margin
 		for i in range( NUMBER_OF_FIELDS ):
-			setattr( self.paletteView.group, 'txt' + str( i ), EditText( ( 10+28*i, self.margin, 25, self.textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='mini' ) )
+			setattr( self.paletteView.group, 'txt' + str( i ), EditText( ( 10 + 28 * i, self.margin, 25, self.textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='mini' ) )
 		# Set dialog to NSView
 		self.dialog = self.paletteView.group.getNSView()
 
@@ -45,7 +46,7 @@ class SuffixesPalette( PalettePlugin ):
 	# changes the index'th suffix of all selected glyphs.
 	# in simulationMode this returns ( oldName, newName ) if newName already exists
 	@objc.python_method
-	def changeDotSuffix( self, newSuffix, index, simulationMode = False ):
+	def changeDotSuffix( self, newSuffix, index, simulationMode=False ):
 		for glyph in self.selectedGlyphs:
 			split = self.dotSplit( glyph.name )
 			try:
@@ -81,7 +82,7 @@ class SuffixesPalette( PalettePlugin ):
 					if editText.get() != self.nameSplit[i]:
 						# text was changed
 						if self.suffixLength == 0:
-							errorNameBefore, errorNameAfter = self.changeDotSuffix( editText.get(), i, simulationMode = True )
+							errorNameBefore, errorNameAfter = self.changeDotSuffix( editText.get(), i, simulationMode=True )
 							if errorNameBefore:
 								editText.enable( False )
 								Message( 'Existing name', 'This would change ' + errorNameBefore + ' to ' + errorNameAfter + ', which already exists.\nNo glyphs were renamed.' )
@@ -128,24 +129,24 @@ class SuffixesPalette( PalettePlugin ):
 	# returns the shared ending or ' ' (note: this is a space)
 	# if no sufficiently long suffix was found.
 	@objc.python_method
-	def determineSharedSuffix( self, selectedNames, minimumLength = MINIMUM_NON_DOT_SUFFIX_LENGTH ):
-			self.suffixLength = 0
-			# shortcut if we have only one name
-			if len( selectedNames ) == 1:
-				return ' '
-			name0 = selectedNames[0]
-			self.suffixLength = len( name0 )
-			for selectedName in selectedNames[1:]:
-				if self.suffixLength > len( selectedName ):
-					self.suffixLength = len( selectedName )
-				for i in range( self.suffixLength ):
-					if name0[-i-1] != selectedName[-i-1]:
-						if i < minimumLength:
-							self.suffixLength = 0
-							return ' '
-						self.suffixLength = i
-						break
-			return name0[-self.suffixLength:]
+	def determineSharedSuffix( self, selectedNames, minimumLength=MINIMUM_NON_DOT_SUFFIX_LENGTH ):
+		self.suffixLength = 0
+		# shortcut if we have only one name
+		if len( selectedNames ) == 1:
+			return ' '
+		name0 = selectedNames[0]
+		self.suffixLength = len( name0 )
+		for selectedName in selectedNames[1:]:
+			if self.suffixLength > len( selectedName ):
+				self.suffixLength = len( selectedName )
+			for i in range( self.suffixLength ):
+				if name0[-i - 1] != selectedName[-i - 1]:
+					if i < minimumLength:
+						self.suffixLength = 0
+						return ' '
+					self.suffixLength = i
+					break
+		return name0[-self.suffixLength:]
 
 	@objc.python_method
 	def updateTextFields( self ):
@@ -194,7 +195,7 @@ class SuffixesPalette( PalettePlugin ):
 				self.font = sender.object()
 		if not self.font:
 			return
-		sharedNames = []
+		# sharedNames = []
 		# self.suffixLength is used to store whether the second field
 		# represents the last suffixLength characters in the glyph name
 		self.suffixLength = 0
@@ -207,11 +208,11 @@ class SuffixesPalette( PalettePlugin ):
 		self.nameSplit = self.determineSharedDotSplit( selectedNames )
 		self.fieldCount = len( self.nameSplit )
 		if self.fieldCount == 1:
-				# no suffixes found yet: append another element
-				# that may be a space if no non-dot suffix was found
-				# so the user can add a suffix
-				self.nameSplit.append( self.determineSharedSuffix( selectedNames ) )
-				self.fieldCount = 2
+			# no suffixes found yet: append another element
+			# that may be a space if no non-dot suffix was found
+			# so the user can add a suffix
+			self.nameSplit.append( self.determineSharedSuffix( selectedNames ) )
+			self.fieldCount = 2
 		self.updateTextFields()
 		self.updateLayout()
 
@@ -222,7 +223,7 @@ class SuffixesPalette( PalettePlugin ):
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
-	
+
 	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
@@ -231,18 +232,18 @@ class SuffixesPalette( PalettePlugin ):
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
-	
+
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+
 	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
-	
+
 	@objc.python_method
 	def sortID(self):
 		return self._sortID
-	
