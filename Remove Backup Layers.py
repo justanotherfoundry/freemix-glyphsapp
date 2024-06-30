@@ -1,16 +1,16 @@
-#MenuTitle: Remove Backup Layers
+# MenuTitle: Remove Backup Layers
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-from __future__ import division, print_function, unicode_literals
 
-__doc__='''
+__doc__ = """
 Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
+"""
 
-'''
+from GlyphsApp import Glyphs
 
 import re
 

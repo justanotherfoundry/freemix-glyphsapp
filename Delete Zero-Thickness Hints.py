@@ -1,4 +1,4 @@
-#MenuTitle: Delete Zero-Thickness Hints
+# MenuTitle: Delete Zero-Thickness Hints
 # encoding: utf-8
 
 # by Tim Ahrens
@@ -6,8 +6,10 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 from __future__ import division, print_function, unicode_literals
+from GlyphsApp import Glyphs, Message
 
-__doc__='''
+
+__doc__ = '''
 Removes all zero-thickness,
 or otherwise invalid hints
 from all glyphs in the font.
@@ -23,20 +25,21 @@ for glyph in font.glyphs:
 			hint = layer.hints[indx]
 			if hint.originNode is None:
 				# this is an invalid hint that was probably set by Glyphs’ auto-instructing
-				print ( "deleting invalid hint from", layer.parent.name )
-				del( layer.hints[indx] )
+				print( "deleting invalid hint from", layer.parent.name )
+				del layer.hints[indx]
 				deletions_count += 1
 				continue
 			if hint.targetNode:
 				if hint.horizontal:
 					if hint.originNode.y == hint.targetNode.y:
-						del( layer.hints[indx] )
+						del layer.hints[indx]
 						deletions_count += 1
 						print( 'deleted zero-width hint from', glyph.name )
 				else:
 					if hint.originNode.x == hint.targetNode.x:
-						del( layer.hints[indx] )
+						del layer.hints[indx]
 						deletions_count += 1
 						print( 'deleted zero-width hint from', glyph.name )
+
 
 Message( '', 'Deleted %i hints.' % deletions_count )

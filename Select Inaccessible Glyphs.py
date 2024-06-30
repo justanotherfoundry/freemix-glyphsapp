@@ -1,12 +1,12 @@
-#MenuTitle: Select Inaccessible Glyphs
+# MenuTitle: Select Inaccessible Glyphs
 # encoding: utf-8
 
-__doc__='''
+__doc__ = '''
 Run this macro while in the Font View.
 
 The macro selects all glyphs that
 - export
-- do not have a Unicode value and 
+- do not have a Unicode value and
 - are not covered by any OT feature
 
 i.e. are not accessible in the final font.
@@ -15,7 +15,7 @@ These glyphs can usually be excluded from the final exported OTF font.
 
 '''
 
-from GlyphsApp import *
+from GlyphsApp import Glyphs
 import re
 
 doc = Glyphs.currentDocument
@@ -32,7 +32,7 @@ features_text = ' '.join( ' '.join( all_features ).splitlines() ).replace( ']', 
 # find substitutions via regex
 substitutions = ' '.join( re.findall( r" by ([^;]*);", features_text ) ).split()
 
-glyphs_inaccessible = [ glyph for glyph in font.glyphs if glyph.export and not glyph.name in substitutions and not glyph.name.startswith('.') and ( not glyph.glyphInfo or not glyph.glyphInfo.unicode ) ]
+glyphs_inaccessible = [ glyph for glyph in font.glyphs if glyph.export and glyph.name not in substitutions and not glyph.name.startswith('.') and ( not glyph.glyphInfo or not glyph.glyphInfo.unicode ) ]
 
 # select inaccessible glyphs (and deselect all others)
 for glyph in font.glyphs:

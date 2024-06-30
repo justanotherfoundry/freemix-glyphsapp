@@ -1,11 +1,11 @@
-#MenuTitle: Mask to Master
+# MenuTitle: Mask to Master
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__='''
+__doc__ = '''
 The selected nodes will adopt the position of the corresponding nodes in the background.
 In combination with Insert Glyph to Background, you can easily
 transfer parts of the outlines between glyphs.
@@ -13,6 +13,8 @@ transfer parts of the outlines between glyphs.
 
 import sys
 from AppKit import NSBeep
+from GlyphsApp import Glyphs, GSNode, OFFCURVE
+
 
 def counterparts( selection, background ):
 	if background.components:
@@ -52,6 +54,7 @@ def counterparts( selection, background ):
 				best_point_range = point_range
 	return zip( selection, best_point_range )
 
+
 def subpaths( selection ):
 	selection.append( GSNode() )
 	# build subpaths
@@ -85,6 +88,7 @@ def subpaths( selection ):
 				current_subpath_is_tail = False
 		nextNode = node.nextNode
 	return subpaths
+
 
 layer = Glyphs.font.selectedLayers[0]
 glyph = layer.parent

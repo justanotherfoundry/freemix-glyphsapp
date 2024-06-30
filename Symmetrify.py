@@ -1,4 +1,4 @@
-#MenuTitle: Symmetrify
+# MenuTitle: Symmetrify
 # encoding: utf-8
 
 # by Tim Ahrens
@@ -8,7 +8,7 @@
 from __future__ import division
 import math
 
-__doc__='''
+__doc__ = '''
 Symmetrifies the glyph shape.
 
 S - creates point reflection (rotational symmetry)
@@ -21,6 +21,8 @@ The buttons are available only as far as the node structure allows.
 '''
 
 from AppKit import NSPoint
+from GlyphsApp import Glyphs, Message, OFFCURVE, addPoints, subtractPoints
+from Symmetrify import blend_points, rotated_vector
 
 doc = Glyphs.currentDocument
 font = doc.font
@@ -63,7 +65,7 @@ class SymmetrifyDialog(object):
 		top = margin
 		left = margin
 		for title in button_titles:
-			button = SquareButton((left, top, size, size), title, callback = self.buttonCallback)
+			button = SquareButton((left, top, size, size), title, callback=self.buttonCallback)
 			setattr(self.w, title, button)
 			left += size + margin
 
@@ -152,7 +154,7 @@ class SymmetrifyDialog(object):
 		for contour in self.contours:
 			if len(contour) % 2 != 0:
 				return False
-			other_point_index = len(contour)//2
+			other_point_index = len(contour) // 2
 			for point_index in range(other_point_index):
 				point = contour[point_index]
 				other_point = contour[other_point_index]
@@ -163,21 +165,21 @@ class SymmetrifyDialog(object):
 
 	def rotate(self):
 		for contour in self.contours:
-			other_point_index = len(contour)//2
+			other_point_index = len(contour) // 2
 			for point_index in range(other_point_index):
 				point = contour[point_index]
 				other_point = contour[other_point_index]
-				point.x	 = 0.50001*point.x - 0.50001*other_point.x + self.cx
-				other_point.x = 2.0*self.cx - point.x
-				point.y	 = 0.50001*point.y - 0.50001*other_point.y + self.cy
-				other_point.y = 2.0*self.cy - point.y
+				point.x = 0.50001 * point.x - 0.50001 * other_point.x + self.cx
+				other_point.x = 2.0 * self.cx - point.x
+				point.y = 0.50001 * point.y - 0.50001 * other_point.y + self.cy
+				other_point.y = 2.0 * self.cy - point.y
 				other_point_index = (other_point_index + 1) % len(contour)
 
 	def blend_points(p0, p1, p2, p3, p4):
 		return NSPoint(0.2 * (p0.x + p1.x + p2.x + p3.x + p4.x), 0.2 * (p0.y + p1.y + p2.y + p3.y + p4.y))
-	
+
 	# returns the vector p-center, rotated around center by angle (given in radians)
-	def rotated_vector(p, angle, center = NSPoint(0, 0)):
+	def rotated_vector(p, angle, center=NSPoint(0, 0)):
 		v = NSPoint(p.x - center.x, p.y - center.y)
 		result = NSPoint()
 		result.x += v.x * math.cos(angle) - v.y * math.sin(angle)
@@ -188,7 +190,7 @@ class SymmetrifyDialog(object):
 		for contour in self.contours:
 			if len(contour) % 5 != 0:
 				return False
-			i1 = len(contour)//5
+			i1 = len(contour) // 5
 			i2 = 2 * i1
 			i3 = 3 * i1
 			i4 = 4 * i1
@@ -207,7 +209,7 @@ class SymmetrifyDialog(object):
 				i4 = (i4 + 1) % len(contour)
 
 	def rotate5(self):
-		fifth_circle = - math.pi * 2 / 5;
+		fifth_circle = - math.pi * 2 / 5
 		sum_x = sum([p.x for c in self.contours for p in c])
 		sum_y = sum([p.y for c in self.contours for p in c])
 		num_p = sum([len(c) for c in self.contours])
@@ -215,7 +217,7 @@ class SymmetrifyDialog(object):
 		cgy = sum_y / num_p
 		cg = NSPoint(cgx, cgy)
 		for contour in self.contours:
-			i1 = len(contour)//5
+			i1 = len(contour) // 5
 			i2 = 2 * i1
 			i3 = 3 * i1
 			i4 = 4 * i1
@@ -262,7 +264,7 @@ class SymmetrifyDialog(object):
 		font.enableUpdateInterface()
 		self.w.close()
 
-	
+
 dialog = SymmetrifyDialog()
 if dialog.layer is not None:
 	dialog.run()

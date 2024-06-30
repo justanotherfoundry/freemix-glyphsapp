@@ -1,11 +1,11 @@
-#MenuTitle: Jump to Alternate
+# MenuTitle: Jump to Alternate
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__="""
+__doc__ = """
 In the edit view, use this script to “jump” back and forth (or to circle)
 between alternate glyphs such as one, one.lf and one.tosf.
 
@@ -13,6 +13,8 @@ Tip: Give it a keyboard shortcut!
 """
 
 from builtins import chr
+from GlyphsApp import Glyphs
+
 
 def jumpToAlternate():
 	font = Glyphs.font
@@ -35,7 +37,7 @@ def jumpToAlternate():
 	for a in range( len( alternates ) ):
 		if alternates[a].name == currentGlyphName:
 			try:
-				nextGlyph = alternates[a+1]
+				nextGlyph = alternates[a + 1]
 			except IndexError:
 				nextGlyph = alternates[0]
 	nextChar = chr( font.characterForGlyph( nextGlyph ) )
@@ -57,9 +59,10 @@ def jumpToAlternate():
 			break
 	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
 	#       (which is always the case for unencoded glyphs)
-	
+
 	textStorage.willChangeValueForKey_('text')
 	text.replaceCharactersInRange_withString_( selectedRange, nextChar )
 	textStorage.didChangeValueForKey_('text')
+
 
 jumpToAlternate()

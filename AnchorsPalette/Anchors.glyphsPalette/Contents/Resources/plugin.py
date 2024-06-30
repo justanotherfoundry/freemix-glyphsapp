@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
+from GlyphsApp import Glyphs, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
 import operator
 from AppKit import NSPoint
 
@@ -10,8 +10,9 @@ MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
 VERTICAL_MARGIN = 6
 
+
 class AnchorsPalette (PalettePlugin):
-	
+
 	dialog = objc.IBOutlet()
 	label0 = objc.IBOutlet()
 	label1 = objc.IBOutlet()
@@ -45,12 +46,12 @@ class AnchorsPalette (PalettePlugin):
 	posy9 = objc.IBOutlet()
 	heightConstrains = objc.IBOutlet()
 	allFieldsHidden = False
-	
+
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
 	def settings(self):
-		self.name = Glyphs.localize({'en': u'Anchors'})
+		self.name = Glyphs.localize({'en': 'Anchors'})
 		self.loadNib( 'AnchorsPaletteView', __file__ )
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
 		self.posxFieldsOriginX = self.posx0.frame().origin.x
@@ -96,7 +97,7 @@ class AnchorsPalette (PalettePlugin):
 			# trim to max MAX_NUMBER_OF_LINES elements:
 			del anchorStats[MAX_NUMBER_OF_LINES:]
 			# sort by average y position:
-			anchorStats = sorted( [(name, stat[1]/stat[0]) for name, stat in anchorStats], key=operator.itemgetter(1), reverse=True )
+			anchorStats = sorted( [(name, stat[1] / stat[0]) for name, stat in anchorStats], key=operator.itemgetter(1), reverse=True )
 			self.anchorNames = []
 			self.allFieldsHidden = False
 		else:
@@ -117,13 +118,13 @@ class AnchorsPalette (PalettePlugin):
 			for layer in self.font.selectedLayers:
 				for anchor in layer.anchors:
 					if anchor.name == anchorName:
-						if x == None:
+						if x is None:
 							x = anchor.position.x
 							if x == round( x, 3 ):
 								x = int( x )
 						elif x != round( anchor.position.x, 3 ):
 							x = ''
-						if y == None:
+						if y is None:
 							y = anchor.position.y
 							if y == round( y, 3 ):
 								y = int( y )
@@ -159,7 +160,7 @@ class AnchorsPalette (PalettePlugin):
 	def start(self):
 		# Adding a callback for the 'GSUpdateInterface' event
 		Glyphs.addCallback(self.update, UPDATEINTERFACE)
-	
+
 	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
@@ -168,18 +169,18 @@ class AnchorsPalette (PalettePlugin):
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
-	
+
 	# Temporary Fix
 	# Sort ID for compatibility with v919:
 	_sortID = 0
+
 	@objc.python_method
 	def setSortID_(self, id):
 		try:
 			self._sortID = id
 		except Exception as e:
 			self.logToConsole( "setSortID_: %s" % str(e) )
-	
+
 	@objc.python_method
 	def sortID(self):
 		return self._sortID
-	

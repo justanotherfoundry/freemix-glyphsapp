@@ -1,14 +1,16 @@
-#MenuTitle: Delete BCP
+# MenuTitle: Delete BCP
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__='''
+__doc__ = '''
 Deletes the selected BCP(s).
 If only one BCP in the curve remains then this makes it a quadratic Bézier.
 '''
+
+from GlyphsApp import Glyphs, OFFCURVE, LINE, QCURVE
 
 doc = Glyphs.currentDocument
 layers = doc.selectedLayers()

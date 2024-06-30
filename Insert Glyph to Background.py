@@ -1,11 +1,11 @@
-#MenuTitle: Insert Glyph to Background
+# MenuTitle: Insert Glyph to Background
 # encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
-__doc__= u"""
+__doc__ = u"""
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.
@@ -19,13 +19,15 @@ __doc__= u"""
 """
 
 from vanilla import Window, EditText, Button, CheckBox
-from AppKit import NSPoint, NSTextField, NSButton, NSBeep
+from AppKit import NSPoint, NSBeep
+from GlyphsApp import Glyphs, GSComponent
 
 LEFT = '<'
 RIGHT = '>'
 
 font = Glyphs.font
 active_layerId = Glyphs.font.selectedLayers[0].layerId
+
 
 def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents ):
 	# clear layer
@@ -60,6 +62,7 @@ def insert_paths( to_layer, from_layer, alignment, as_component, clear_contents 
 				to_layer.background.paths.append( path )
 				to_layer.background.paths[-1].selected = True
 
+
 class GlyphnameDialog( object):
 
 	def __init__( self ):
@@ -81,10 +84,10 @@ class GlyphnameDialog( object):
 		self.w.glyphname.getNSTextField().setToolTip_( u'Enter the name of the glyph to be inserted. It is sufficient to enter the beginning of the glyph name, e.g. “deg” for “degree”.' )
 		# buttons
 		x += glyphname_width + gap
-		self.w.alignleft = Button( ( x, y, button_width, line_height ), LEFT, callback = self.buttonCallback )
+		self.w.alignleft = Button( ( x, y, button_width, line_height ), LEFT, callback=self.buttonCallback )
 		self.w.alignleft.getNSButton().setToolTip_( 'Insert the other glyph left-aligned, i.e. at its original same position. Keyboard shortcut: Enter' )
 		x += button_width + gap
-		self.w.alignright = Button( ( x, y, button_width, line_height ), RIGHT, callback = self.buttonCallback )
+		self.w.alignright = Button( ( x, y, button_width, line_height ), RIGHT, callback=self.buttonCallback )
 		self.w.alignright.getNSButton().setToolTip_( 'Insert the other glyph right-aligned with respect to the advance widths. Keyboard shortcut: Esc' )
 		self.w.setDefaultButton( self.w.alignleft )
 		self.w.alignright.bind( "\x1b", [] )
@@ -95,13 +98,13 @@ class GlyphnameDialog( object):
 			quick_button_width = dialog_width / 2 - hori_margin / 2
 			if self.lmk:
 				x = hori_margin
-				self.w.quickleft = Button( ( x, y, quick_button_width, line_height ), LEFT + ' ' + self.lmk, callback = self.buttonCallback )
+				self.w.quickleft = Button( ( x, y, quick_button_width, line_height ), LEFT + ' ' + self.lmk, callback=self.buttonCallback )
 			if self.rmk:
 				x = hori_margin + ( dialog_width + hori_margin ) / 2
-				self.w.quickright = Button( ( x, y, quick_button_width, line_height ), self.rmk + ' ' + RIGHT, callback = self.buttonCallback )
+				self.w.quickright = Button( ( x, y, quick_button_width, line_height ), self.rmk + ' ' + RIGHT, callback=self.buttonCallback )
 		# insert as component
 		as_component_is_checked = True
-		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"]  is not None:
+		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"] is not None:
 			as_component_is_checked = Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"]
 		y += line_height + gap
 		x = hori_margin
@@ -110,7 +113,7 @@ class GlyphnameDialog( object):
 		# clear current contents
 		y += line_height + gap
 		clear_contents_is_checked = True
-		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"]  is not None:
+		if Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"] is not None:
 			clear_contents_is_checked = Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"]
 		self.w.clear_contents = CheckBox( ( x, y, dialog_width, line_height ), 'Clear current contents', callback=None, value=clear_contents_is_checked )
 		self.w.clear_contents.getNSButton().setToolTip_( 'Check this to clear the background before inserting the other glyph. Uncheck to keep the current contents of the background.' )
@@ -130,7 +133,7 @@ class GlyphnameDialog( object):
 					self.rmk = glyph.rightMetricsKey
 			except TypeError:
 				pass
-	
+
 	def buttonCallback( self, sender ):
 		alignment = sender.getTitle()
 		glyphname = self.w.glyphname.get()
@@ -186,12 +189,13 @@ class GlyphnameDialog( object):
 						# ^ necessary for the re-interpolation
 						other_glyph_copy.layers.append( interpolatedLayer )
 						interpolatedLayer.reinterpolate()
-						insert_paths( layer, interpolatedLayer, alignment, as_component = False, clear_contents = clear_contents_is_checked )
+						insert_paths( layer, interpolatedLayer, alignment, as_component=False, clear_contents=clear_contents_is_checked )
 					elif active_layerId == layer.layerId:
 						insert_paths( layer, other_glyph.layers[layer.associatedMasterId], alignment, as_component_is_checked, clear_contents_is_checked )
 			glyph.endUndo()
 		Glyphs.defaults["com.FMX.InsertGlyphToBackground.AsCompoment"] = as_component_is_checked
 		Glyphs.defaults["com.FMX.InsertGlyphToBackground.ClearContents"] = clear_contents_is_checked
 		self.w.close()
+
 
 GlyphnameDialog()
