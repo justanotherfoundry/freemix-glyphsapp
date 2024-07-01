@@ -16,8 +16,9 @@ import re
 
 font = Glyphs.currentDocument.font
 selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
+is_single_master = len( font.masters ) == 1
 
 for glyph in selected_glyphs:
-	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and ( not layer.name or not re.search( r"(\{[^a-zA-Z]+\})|([\[\]][^a-zA-Z]+\])", layer.name ) ) ]
+	associated_layers = [ layer.layerId for layer in glyph.layers if layer.layerId != layer.associatedMasterId and ( is_single_master or not layer.name or not re.search( r"(\{[^a-zA-Z]+\})|([\[\]][^a-zA-Z]+\])", layer.name ) ) ]
 	for layerId in associated_layers:
 		del glyph.layers[layerId]
