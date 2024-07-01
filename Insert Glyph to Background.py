@@ -90,6 +90,7 @@ class GlyphnameDialog( object):
 		self.w.alignright.bind( "\x1b", [] )
 		# quick-insert
 		self.find_metrics_keys()
+		self.find_suffixless()
 		if self.lmk or self.rmk:
 			y += line_height + gap
 			quick_button_width = dialog_width / 2 - hori_margin / 2
@@ -130,6 +131,21 @@ class GlyphnameDialog( object):
 					self.rmk = glyph.rightMetricsKey
 			except TypeError:
 				pass
+	
+	def find_suffixless( self ):
+		if self.lmk or self.rmk:
+			return
+		for glyph in self.selected_glyphs:
+			name_components = glyph.name.split('.')
+			if len(name_components) > 1:
+				basename = name_components[0]
+				try:
+					if font.glyphs[basename]:
+						self.lmk = basename
+						self.rmk = basename
+				except TypeError:
+					pass
+			break
 	
 	def buttonCallback( self, sender ):
 		alignment = sender.getTitle()
