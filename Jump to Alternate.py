@@ -27,7 +27,8 @@ def jumpToAlternate():
 	alternates = []
 	for glyph in font.glyphs:
 		baseName = glyph.name.split( '.', 1 )[0]
-		if currentBaseName == baseName and not glyph.name.endswith( '.sc' ):
+		if ( currentBaseName == baseName and not glyph.name.endswith( '.sc' ) ) or glyph == currentLayer.parent:
+			# ^ the last condition ensures we add the current glyph (even if .sc) to the list of alterates
 			alternates.append( glyph )
 	if len( alternates ) == 1:
 		# no others found
