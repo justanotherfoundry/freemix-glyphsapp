@@ -25,6 +25,12 @@ from AppKit import NSPoint
 doc = Glyphs.currentDocument
 font = doc.font
 
+PERFECT_SYMMETRY = None
+# • with PERFECT_SYMMETRY, the result is guaranteeed to be symmetrical
+# • without PERFECT_SYMMETRY, the bounding box is guaranteed to be retained
+# This affects 'T', 'C' and 'H' symmetrification when a node is in the centre
+# and the bounding box has uneven dimensions.
+
 try:
 	from vanilla import Window, SquareButton
 except:
@@ -117,9 +123,15 @@ class SymmetrifyDialog(object):
 		flips = [flip_horizontal] + [False] * flip_vertical
 		for contour in self.contours:
 			if self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
-				self.cy = round(self.cy)
+				if PERFECT_SYMMETRY:
+					self.cy = round(self.cy)
+				else:
+					self.cy -= 1.0 / 2048
 			if self.get_flip_partner(contour, is_horizontal=True) % 2 == 0:
-				self.cx = round(self.cx)
+				if PERFECT_SYMMETRY:
+					self.cx = round(self.cx)
+				else:
+					self.cx -= 1.0 / 2048
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
 			for current_is_horizontal in flips:
