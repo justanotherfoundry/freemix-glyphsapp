@@ -171,10 +171,15 @@ class GlyphnameDialog( object):
 			g = font.glyphForUnicode_("%.4X" % uni)
 			if g:
 				glyphname = g.name
+		try:
+			this_glyph = font.selectedLayers[0].parent
+		except IndexError:
+			return
 		other_glyph = font.glyphs[ glyphname ]
 		if not other_glyph:
+			# this means the user typed only the beginning of the intended glyph’s name
 			for glyph in font.glyphs:
-				if glyph.name.startswith( glyphname ):
+				if glyph.name.startswith( glyphname ) and not glyph.name == this_glyph.name:
 					other_glyph = glyph
 					break
 			else:
