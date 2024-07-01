@@ -53,9 +53,8 @@ class AlignmentPalette (PalettePlugin):
 	# returns the center of the bounding box of a layer
 	@objc.python_method
 	def centerOfLayer( self, layer ):
-		if Glyphs.version >= 3:
-			if len(layer.shapes) == 0:
-				return None, None
+		if len(layer.shapes) == 0:
+			return None, None
 		bounds = layer.bounds
 		centerX = NSMidX( bounds )
 		centerY = NSMidY( bounds )
