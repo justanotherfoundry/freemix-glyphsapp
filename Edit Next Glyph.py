@@ -25,5 +25,7 @@ if font:
 			# ^ very strange: if we don’t do this
 			#   then the glyph is not centred correctly
 			#   if the text cursor is active
+			# explanation from Georg:
+			# https://forum.glyphsapp.com/t/centering-the-current-glyph-in-tab/29408/18
 		tab.viewPort = vp
 		# TODO: in case the new glyph is on a different line, also adjust y 
