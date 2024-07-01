@@ -31,6 +31,10 @@ PERFECT_SYMMETRY = None
 # This affects 'T', 'C' and 'H' symmetrification when a node is in the centre
 # and the bounding box has uneven dimensions.
 
+INSTANT_SYMMETRIFICATION = None
+# set INSTANT_SYMMETRIFICATION to 'S', 'T', 'C', 'H' or '*'
+# to perform the symmetrification without showing the dialogue
+
 try:
 	from vanilla import Window, SquareButton
 except:
@@ -278,4 +282,7 @@ class SymmetrifyDialog(object):
 	
 dialog = SymmetrifyDialog()
 if dialog.layer is not None:
-	dialog.run()
+	if INSTANT_SYMMETRIFICATION:
+		dialog.performSymmetrification(INSTANT_SYMMETRIFICATION)
+	else:
+		dialog.run()
