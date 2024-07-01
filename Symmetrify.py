@@ -247,8 +247,7 @@ class SymmetrifyDialog(object):
 				i3 = (i3 + 1) % len(contour)
 				i4 = (i4 + 1) % len(contour)
 
-	def buttonCallback(self, sender):
-		button = sender.getTitle()
+	def performSymmetrification(self, button):
 		font.disableUpdateInterface()
 		glyph = self.layer.parent
 		glyph.beginUndo()
@@ -272,8 +271,10 @@ class SymmetrifyDialog(object):
 		self.layer.syncMetrics()
 		glyph.endUndo()
 		font.enableUpdateInterface()
-		self.w.close()
 
+	def buttonCallback(self, sender):
+		self.performSymmetrification(sender.getTitle())
+		self.w.close()
 	
 dialog = SymmetrifyDialog()
 if dialog.layer is not None:
