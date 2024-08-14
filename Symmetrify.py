@@ -189,11 +189,11 @@ class SymmetrifyDialog(object):
 				other_point.y = 2.0*self.cy - point.y
 				other_point_index = (other_point_index + 1) % len(contour)
 
-	def blend_points(p0, p1, p2, p3, p4):
+	def blend_points(self, p0, p1, p2, p3, p4):
 		return NSPoint(0.2 * (p0.x + p1.x + p2.x + p3.x + p4.x), 0.2 * (p0.y + p1.y + p2.y + p3.y + p4.y))
 	
 	# returns the vector p-center, rotated around center by angle (given in radians)
-	def rotated_vector(p, angle, center = NSPoint(0, 0)):
+	def rotated_vector(self, p, angle, center = NSPoint(0, 0)):
 		v = NSPoint(p.x - center.x, p.y - center.y)
 		result = NSPoint()
 		result.x += v.x * math.cos(angle) - v.y * math.sin(angle)
@@ -221,6 +221,7 @@ class SymmetrifyDialog(object):
 				i2 = (i2 + 1) % len(contour)
 				i3 = (i3 + 1) % len(contour)
 				i4 = (i4 + 1) % len(contour)
+		return True
 
 	def rotate5(self):
 		fifth_circle = - math.pi * 2 / 5;
@@ -236,16 +237,16 @@ class SymmetrifyDialog(object):
 			i3 = 3 * i1
 			i4 = 4 * i1
 			for i0 in range(i1):
-				vector = blend_points(subtractPoints(contour[i0].position, cg),
-					rotated_vector(contour[i1].position, fifth_circle, cg),
-					rotated_vector(contour[i2].position, fifth_circle * 2, cg),
-					rotated_vector(contour[i3].position, fifth_circle * 3, cg),
-					rotated_vector(contour[i4].position, fifth_circle * 4, cg))
+				vector = self.blend_points(subtractPoints(contour[i0].position, cg),
+					self.rotated_vector(contour[i1].position, fifth_circle, cg),
+					self.rotated_vector(contour[i2].position, fifth_circle * 2, cg),
+					self.rotated_vector(contour[i3].position, fifth_circle * 3, cg),
+					self.rotated_vector(contour[i4].position, fifth_circle * 4, cg))
 				contour[i0].position = addPoints(cg, vector)
-				contour[i1].position = addPoints(cg, rotated_vector(vector, -fifth_circle))
-				contour[i2].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 2))
-				contour[i3].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 3))
-				contour[i4].position = addPoints(cg, rotated_vector(vector, -fifth_circle * 4))
+				contour[i1].position = addPoints(cg, self.rotated_vector(vector, -fifth_circle))
+				contour[i2].position = addPoints(cg, self.rotated_vector(vector, -fifth_circle * 2))
+				contour[i3].position = addPoints(cg, self.rotated_vector(vector, -fifth_circle * 3))
+				contour[i4].position = addPoints(cg, self.rotated_vector(vector, -fifth_circle * 4))
 				i1 = (i1 + 1) % len(contour)
 				i2 = (i2 + 1) % len(contour)
 				i3 = (i3 + 1) % len(contour)
