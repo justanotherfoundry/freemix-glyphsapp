@@ -45,7 +45,7 @@ class CapsAndCorners(GeneralPlugin):
 			self.textFieldHeight = 23
 			self.lineToLine = self.textFieldHeight + 5
 			self.w = vanilla.HUDFloatingWindow((100, 100), title=self.name, autosaveName='FMXCapsAndCorners')
-			posy = self.margin
+			posy = self.margin - 4
 			posx = self.margin
 			posx += widthName
 			width = widthFitBox
@@ -54,17 +54,17 @@ class CapsAndCorners(GeneralPlugin):
 			width = widthDimensionBox
 			self.w.headerWidth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text='width')
 			posx += width + gutter
-			width = self.textFieldHeight
+			width = self.textFieldHeight - 10
 			posx += width + gutter
 			width = widthDimensionBox
 			self.w.headerDepth = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text='depth')
 			posx += width
 			dialogWidth = posx + self.margin
-			posy += self.lineToLine
+			posy += self.lineToLine - 8
 			for i in range(NUMBER_OF_FIELDS):
 				posx = self.margin
 				width = widthName
-				setattr(self.w, 'name' + str(i), vanilla.TextBox((posx, posy, width, self.textFieldHeight), text='_cap.something'))
+				setattr(self.w, 'name' + str(i), vanilla.TextBox((posx, posy + 2, width, self.textFieldHeight), text='_cap.something'))
 				posx += width
 				width = widthFitBox
 				setattr(self.w, 'fit_' + str(i), vanilla.CheckBox((posx, posy, width, self.textFieldHeight), callback=self.fitCallback, title='', sizeStyle='small'))
@@ -72,17 +72,21 @@ class CapsAndCorners(GeneralPlugin):
 				width = widthDimensionBox
 				setattr(self.w, 'widt' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
 				posx += width + gutter
-				width = self.textFieldHeight - 2
-				setattr(self.w, 'lock' + str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
+				width = self.textFieldHeight - 10
+				imageButton = vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback)
+				imageButton.getNSButton().setBordered_(False)
+				setattr(self.w, 'lock' + str(i), imageButton)
 				posx += width + gutter
 				width = widthDimensionBox
 				setattr(self.w, 'dept' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
 				posy += self.lineToLine
 			posSize = self.w.getPosSize()
 			self.w.setPosSize((posSize[0], posSize[1], dialogWidth, posSize[3]))
+
 			self.updateDocument(None)
 			self.w.open()
 			self.w.bind('close', self.windowClose_)
+			Glyphs.addCallback(self.update, UPDATEINTERFACE)
 			Glyphs.addCallback(self.updateDocument, DOCUMENTACTIVATED)
 			Glyphs.addCallback(self.updateDocument, DOCUMENTWILLCLOSE)
 		except:
@@ -93,14 +97,13 @@ class CapsAndCorners(GeneralPlugin):
 		for i in range(NUMBER_OF_FIELDS):
 			for prefix in ['name', 'fit_', 'widt', 'lock', 'dept']:
 				getattr(self.w, prefix + str(i)).show(False)
-		Glyphs.removeCallback(self.update)
 		if not Glyphs.currentDocument:
 			self.font = None
 			return
 		self.font = Glyphs.currentDocument.font
 		if not self.font:
 			return
-		Glyphs.addCallback(self.update, UPDATEINTERFACE)
+
 		corners = set()
 		caps = set()
 		for glyph in self.font.glyphs:
@@ -129,7 +132,7 @@ class CapsAndCorners(GeneralPlugin):
 			i += 1
 			if i == NUMBER_OF_FIELDS:
 				break
-		newHeight = self.lineToLine + len(self.cc) * self.lineToLine + 2 * self.margin - 4
+		newHeight = self.lineToLine + len(self.cc) * self.lineToLine + 2 * self.margin - 16
 		posSize = self.w.getPosSize()
 		self.w.setPosSize((posSize[0], posSize[1], posSize[2], newHeight))
 		self.isLocked = [False] * NUMBER_OF_FIELDS
