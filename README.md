@@ -14,6 +14,14 @@ To install Freemix in Glyphs,
 
 See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Kern On for Glyphs](http://kern-on.com), [Just Another Foundry](http://justanotherfoundry.com/)
 
+
+### Adopt from Other Font
+
+Adopts glyph properties from the same-named glyph(s) in a different font.
+
+<img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/img/AdoptFromOtherFont.png" width="320" />
+
+
 ### Alignment Palette
 
 The palette shows the position of the center of the glphs’s bounding box. This works with components, with multiple glyphs selected and is also editable. Useful for centering all case-sensitive punctuation vertically, or to check whether mathematical operands are on the same x position (use Glyphs’ built-in glyph info to check whether they have the same advance width).
@@ -38,6 +46,7 @@ The palette shows the four most frequently used anchors. Setting the x or y posi
 To show this, use Window -> Caps and Corners. This window shows the cap and corner components in the selected glyphs. This helps you check for consistency: just select multiple glyphs. Note that the fields are editable, so you can adjust the scaling of caps and corners for multiple glyphs at once.
 
 <img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.png" width="320" />
+
 
 ### Suffixes Palette
 
