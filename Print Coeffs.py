@@ -3,7 +3,7 @@
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
-# https://github.com/justanotherfoundry/glyphsapp-scripts
+# https://github.com/justanotherfoundry/freemix-glyphsapp
 
 from __future__ import division, print_function, unicode_literals
 

@@ -3,7 +3,7 @@
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
-# https://github.com/justanotherfoundry/glyphsapp-scripts
+# https://github.com/justanotherfoundry/freemix-glyphsapp
 
 __doc__='''
 The selected nodes will adopt the position of the corresponding nodes in the background.

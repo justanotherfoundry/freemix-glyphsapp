@@ -3,7 +3,7 @@
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
-# https://github.com/justanotherfoundry/glyphsapp-scripts
+# https://github.com/justanotherfoundry/freemix-glyphsapp
 
 __doc__="""
 This script toggles between the currently selected layer and the master layer (alternatively, between the master and the last backup layer in the list).

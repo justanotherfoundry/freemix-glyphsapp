@@ -4,7 +4,7 @@ from __future__ import division
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
-# https://github.com/justanotherfoundry/glyphsapp-scripts
+# https://github.com/justanotherfoundry/freemix-glyphsapp
 
 __doc__="""
 Rounds the kerning values to a chosen number.
