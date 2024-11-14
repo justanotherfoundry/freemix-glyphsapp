@@ -57,6 +57,11 @@ To show this, use Window -> Caps and Corners. This window shows the cap and corn
 <img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.png" width="320" />
 
 
+### Delete All Anchors
+
+Removes all anchors from the selected glyphs.
+
+
 ### Delete All Hints
 
 Removes all hints from the selected glyphs.
