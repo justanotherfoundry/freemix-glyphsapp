@@ -1,4 +1,4 @@
-#MenuTitle: Mask to Master
+#MenuTitle: Adopt Background
 # encoding: utf-8
 
 # by Tim Ahrens

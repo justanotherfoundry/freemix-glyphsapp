@@ -15,6 +15,15 @@ To install Freemix in Glyphs,
 See also: [Font Remix Tools for Glyphs](http://remix-tools.com/glyphsapp), [Kern On for Glyphs](http://kern-on.com), [Just Another Foundry](http://justanotherfoundry.com/)
 
 
+### Adopt Background
+
+The selected nodes will adopt the position of the corresponding nodes in the background.
+
+This is one of the simplest but probably the most powerful of my scripts. In combination with Insert Glyph to Background, you can easily transfer parts of the outlines between glyphs.
+
+Tip: Give it a keyboard shortcut if you use it a lot!
+
+
 ### Adopt from Other Font
 
 Adopts glyph properties from the same-named glyph(s) in a different font.
@@ -109,19 +118,6 @@ In the edit view, use this script to “jump” back and forth (or to circle) be
 ### Make Backup Layer
 
 Same as the “Copy” button on the Layers palette but as a script. Because I really want a keyboard shortcut for this. Without a keyboard shortcut this script is completely useless. Sorry.
-
-
-### Mask to Master
-
-Simulates the good ol' Mask to Master function we know from FontLab
-(i.e. replaces the current outline with the background).
-
-You can give it the familiar Cmd+J shortcut via App Shortcuts
-in the Mac OS System Preferences.
-
-The main improvement is that it is appplied only to the selection.
-In combination with Insert Glyph to Background, you can easily
-transfer parts of the outline between glyphs.
 
 
 ### Paste Background
