@@ -6,7 +6,7 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__='''
-Outputs information on the supported languages as per Font Book on macOS.
+Outputs information on the supported languages as per Font Book on macOS (make sure the Macro Panel is open).
 '''
 
 from GlyphsApp import *

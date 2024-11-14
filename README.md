@@ -59,6 +59,13 @@ Removes all hints from the selected glyphs.
 Removes all zero-thickness hints from all glyphs in the font.
 
 
+### Delete BCP
+
+This literally deletes individual BCPs: If you delete one of the two BCPs in a cubic curve then it becomes quadratic.
+
+If the deleted BCP was retracted (i.e. on the node) then the other handle length is adjusted to better retain the shape.
+
+
 ### Edit Next Glyph/ Previous Glyph
 
 Activates the next/ previous glyph in the tab for editing. Makes most sense if you give it a keyboard shortcut in the macOS system preferences.
@@ -67,6 +74,11 @@ Activates the next/ previous glyph in the tab for editing. Makes most sense if y
 ### Expand Kerning
 
 Expand Kerning like we know it from FontLab.
+
+
+### Font Book Checker
+
+Outputs information on the supported languages as per Font Book on macOS (make sure the Macro Panel is open).
 
 
 ### Insert Glyph to Background
@@ -122,7 +134,7 @@ in the Mac OS System Preferences.
 
 ### Print Coeffs
 
-Prints the interpolation coefficients for each master in all instances.
+Prints the interpolation coefficients for each master in all instances (make sure the Macro Panel is open).
 
 
 ### Remove Backup Layers

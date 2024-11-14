@@ -6,8 +6,8 @@
 # https://github.com/justanotherfoundry/glyphsapp-scripts
 
 __doc__='''
-Deletes the selected BCP(s).
-If only one BCP in the curve remains then this makes it a quadratic Bézier.
+This literally deletes the selected BCP(s):
+If you delete one of the two BCPs in a cubic curve then it becomes quadratic.
 '''
 
 for selectedLayer in Glyphs.currentDocument.selectedLayers():

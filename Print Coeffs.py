@@ -8,7 +8,7 @@
 from __future__ import division, print_function, unicode_literals
 
 __doc__='''
-Prints the interpolation coefficients for each master in all instances.
+Prints the interpolation coefficients for each master in all instances (make sure the Macro Panel is open).
 '''
 
 import re
