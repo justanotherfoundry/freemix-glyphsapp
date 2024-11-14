@@ -109,4 +109,5 @@ if any_changes:
 	layer.endChanges()
 	glyph.endUndo()
 else:
-	NSBeep()
+	pass
+# 	NSBeep()
