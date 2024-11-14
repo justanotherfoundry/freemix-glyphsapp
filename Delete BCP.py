@@ -10,11 +10,8 @@ Deletes the selected BCP(s).
 If only one BCP in the curve remains then this makes it a quadratic Bézier.
 '''
 
-doc = Glyphs.currentDocument
-layers = doc.selectedLayers()
-
-for layer in layers:
-	glyph = layer.parent
+for selectedLayer in Glyphs.currentDocument.selectedLayers():
+	glyph = selectedLayer.parent
 	glyph.beginUndo()
 	for path in layer.paths:
 		for i in range(len(path.nodes) - 1, -1, -1):

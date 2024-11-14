@@ -65,14 +65,6 @@ def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer
 		except ZeroDivisionError:
 			return 1.0
 
-# p1 is the vertex (return value is positive or negative)
-def angle(p0, p1, p2):
-	v1x, v1y = pointDiff(p0, p1)
-	v2x, v2y = pointDiff(p2, p1)
-	determinant = v1x * v2y - v1y * v2x
-	dot_product = v1x * v2x + v1y * v2y
-	return math.atan2(determinant, dot_product)
-
 class HandleRelations(ReporterPlugin):
 
 	@objc.python_method
