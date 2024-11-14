@@ -62,12 +62,6 @@ To show this, use Window -> Caps and Corners. This window shows the cap and corn
 Removes all anchors from the selected glyphs.
 
 
-### Delete All Hints
-
-Removes all hints from the selected glyphs.
-(Note: In Glyphs 3, this functionality is built in: In the Font View select the glyphs, right-click and hold ⌥.)
-
-
 ### Delete Zero-Thickness Hints
 
 Removes all zero-thickness hints from all glyphs in the font.
