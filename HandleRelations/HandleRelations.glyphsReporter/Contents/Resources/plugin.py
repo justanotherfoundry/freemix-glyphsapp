@@ -5,16 +5,17 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 import math, statistics
 
+TAU = 6.283185307179586
 TEXT_OFFSET = 15
 TEXT_HUE = 0.0
-DEVIATION_STRICTNESS = 2.2
+DEVIATION_STRICTNESS = 16.0
 DEVIATION_GREEN_MAX = 0.85
 DEVIATION_GREEN_FACTOR = 16.0
 HORIZONTAL_OFFSET_FACTOR = 0.4
 TEXT_SIZE_SMALL = 10.0
 TEXT_SIZE_DEVIATION_FACTOR = 8.0
-OTHER_DIRECTION_PARALLELITY_TOLERANCE = 0.5
-OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR = 1.0 / 64
+OTHER_DIRECTION_PARALLELITY_TOLERANCE = 0.25
+OTHER_DIRECTION_PARALLELITY_TOLERANCE_FACTOR = 1.0 / 128
 OTHER_DIRECTION_DISPLAY_LENGTH = 0.75
 SHALLOW_CURVE_THRESHOLD = 0.4
 # ^ in radians
@@ -35,13 +36,28 @@ def dist(node1, node2):
 	dx, dy = pointDiff(node1, node2)
 	return vectorLength(dx, dy)
 
+# p1 is the vertex (return value is positive or negative)
+def angle(p0, p1, p2):
+	v1x, v1y = pointDiff(p0, p1)
+	v2x, v2y = pointDiff(p2, p1)
+	determinant = v1x * v2y - v1y * v2x
+	dot_product = v1x * v2x + v1y * v2y
+	return math.atan2(determinant, dot_product)
+
+def angle_to_x_axis(p0, p1):
+	dx, dy = pointDiff(p0, p1)
+	return math.atan2(dx, dy)
+
 def relativePosition(node1, node2, node3):
 	outerLength = dist(node3, node1)
 	firstLength = dist(node2, node1)
 	return firstLength / outerLength
 
 def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer, otherLayers):
+	thisLengthSqrt = math.sqrt(min(dist(prevNode, node), dist(nextNode, node)))
+	thisAngle = angle_to_x_axis(prevNode, nextNode)
 	relPositions = [relPosition]
+	errorSum = 0
 	for otherLayer in otherLayers:
 		try:
 			otherPath = otherLayer.paths[pathIndex]
@@ -52,13 +68,18 @@ def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer
 			continue
 		otherRelPosition = relativePosition(otherPrevNode, otherNode, otherNextNode)
 		relPositions.append(otherRelPosition)
+		otherAngle = angle_to_x_axis(otherPrevNode, otherNextNode)
+		angleDiff = thisAngle - otherAngle
+		angleDiff = min(abs(angleDiff), abs(angleDiff + TAU), abs(angleDiff - TAU))
+		errorSum += angleDiff * abs(relPosition - otherRelPosition) * thisLengthSqrt
+		# ^ this is an approximation of the kink we can expect in interpolations
 	medianRelPos = statistics.median(relPositions)
 	if medianRelPos == relPosition:
 		return 0.0
 	else:
 		try:
 			deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition))
-			deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0)
+			deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0) * errorSum / len(otherLayers)
 			return min(1.0, deviation)
 		except ZeroDivisionError:
 			return 1.0
