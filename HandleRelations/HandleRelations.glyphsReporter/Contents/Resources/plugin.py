@@ -191,18 +191,25 @@ class HandleRelations(ReporterPlugin):
 				self.drawRelativePosition(node.prevNode, node, node.nextNode, pathIndex, layer, otherLayers)
 			# shallow curves:
 			for bcp1 in path.nodes:
-				bcp2 = bcp1.nextNode
-				if bcp1.type != OFFCURVE or bcp2.type != OFFCURVE:
-					continue
 				node1 = bcp1.prevNode
-				node2 = bcp2.nextNode
-				if layer.selection and not bcp1.selected and not bcp2.selected and not node1.selected and not node2.selected:
+				if node1.type == OFFCURVE:
+					continue
+				if bcp1.type != OFFCURVE:
+					continue
+				bcp2 = bcp1.nextNode
+				if bcp2.type == OFFCURVE:
+					node2 = bcp2.nextNode
+				else:
+					bcp2 = None
+					node2 = bcp1.nextNode
+				if layer.selection and not bcp1.selected and (bcp2 and not bcp2.selected) and not node1.selected and not node2.selected:
 					continue
 				angle1 = angle(node1, bcp1, node2)
-				angle2 = angle(node1, bcp2, node2)
+				if bcp2:
+					angle2 = angle(node1, bcp2, node2)
 				threshold1 = SHALLOW_CURVE_THRESHOLD
 				threshold2 = SHALLOW_CURVE_THRESHOLD
-				if angle1 * angle2 < 0:
+				if bcp2 and angle1 * angle2 < 0:
 					# the curve has an s-shape so the BCPs are less likely to have redundancy
 					threshold1 *= 0.5
 					threshold2 *= 0.5
@@ -218,17 +225,20 @@ class HandleRelations(ReporterPlugin):
 				if node2.smooth:
 					# bcp2 is likely to be restricted
 					threshold2 *= 0.5
-					if isHoriVerti(node2, bcp2):
+					if bcp2 and isHoriVerti(node2, bcp2):
 						threshold2 *= 0.25
 				if bcp1.selected:
 					threshold1 += 1.0
 					# this almost guarantees that the relation is displayed
-				if bcp2.selected:
+				if bcp2 and bcp2.selected:
 					threshold2 += 1.0
 				if abs(angle1) > math.pi - threshold1 and not samePosition(bcp1, node1):
-					self.drawRelativePosition(node1, bcp1, node2, pathIndex, layer, otherLayers)
-				if abs(angle2) > math.pi - threshold2 and not samePosition(bcp2, node2) and not samePosition(bcp1, bcp2):
-					self.drawRelativePosition(node2, bcp2, node1, pathIndex, layer, otherLayers)
+					if bcp2:
+						self.drawRelativePosition(node1, bcp1, bcp2, pathIndex, layer, otherLayers)
+					else:
+						self.drawRelativePosition(node1, bcp1, node2, pathIndex, layer, otherLayers)
+				if bcp2 and abs(angle2) > math.pi - threshold2 and not samePosition(bcp2, node2) and not samePosition(bcp1, bcp2):
+					self.drawRelativePosition(node2, bcp2, bcp1, pathIndex, layer, otherLayers)
 			pathIndex += 1
 
 	@objc.python_method
