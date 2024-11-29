@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-from __future__ import division, print_function, unicode_literals
-
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
@@ -171,6 +169,8 @@ class HandleRelations(ReporterPlugin):
 	@objc.python_method
 	def foreground(self, layer):
 		if not self.conditionsAreMetForDrawing():
+			return
+		if not layer.parent.mastersCompatible:
 			return
 		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
 		pathIndex = 0
