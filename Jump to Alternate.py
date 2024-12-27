@@ -20,26 +20,26 @@ def jumpToAlternate():
 	# find new glyph:
 	currentLayer = font.selectedLayers[0]
 	currentGlyphName = currentLayer.parent.name
-	currentBaseName = currentGlyphName.split( '.', 1 )[0]
+	currentBaseName = currentGlyphName.split('.', 1)[0]
 	if not currentBaseName:
 		# for example .notdef
 		return
 	alternates = []
 	for glyph in font.glyphs:
-		baseName = glyph.name.split( '.', 1 )[0]
-		if ( currentBaseName == baseName and not glyph.name.endswith( '.sc' ) ) or glyph == currentLayer.parent:
+		baseName = glyph.name.split('.', 1)[0]
+		if (currentBaseName == baseName and not glyph.name.endswith('.sc')) or glyph == currentLayer.parent:
 			# ^ the last condition ensures we add the current glyph (even if .sc) to the list of alterates
-			alternates.append( glyph )
-	if len( alternates ) == 1:
+			alternates.append(glyph)
+	if len(alternates) == 1:
 		# no others found
 		return
-	for a in range( len( alternates ) ):
+	for a in range(len(alternates)):
 		if alternates[a].name == currentGlyphName:
 			try:
 				nextGlyph = alternates[a+1]
 			except IndexError:
 				nextGlyph = alternates[0]
-	nextChar = chr( font.characterForGlyph( nextGlyph ) )
+	nextChar = chr(font.characterForGlyph(nextGlyph))
 	# replace in display string:
 	graphicView = tab.graphicView()
 	textStorage = graphicView.textStorage()
@@ -49,18 +49,18 @@ def jumpToAlternate():
 	while 1:
 		selectedRange.length += 1
 		try:
-			subString = text.attributedSubstringFromRange_( selectedRange )
+			subString = text.attributedSubstringFromRange_(selectedRange)
 		except IndexError:
 			selectedRange.length -= 1
 			break
-		if len( subString.string() ) != 1:
+		if len(subString.string()) != 1:
 			selectedRange.length -= 1
 			break
 	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
 	#       (which is always the case for unencoded glyphs)
 	
 	textStorage.willChangeValueForKey_('text')
-	text.replaceCharactersInRange_withString_( selectedRange, nextChar )
+	text.replaceCharactersInRange_withString_(selectedRange, nextChar)
 	textStorage.didChangeValueForKey_('text')
 
 jumpToAlternate()
