@@ -89,6 +89,11 @@ Expand Kerning like we know it from FontLab.
 Outputs information on the supported languages as per Font Book on macOS (make sure the Macro Panel is open).
 
 
+### Glyphset Diff
+
+Shows the glyphs that are not present in the other font (exactly two fonts need to be open).
+
+
 ### Insert Glyph to Background
 
 This is one of the most powerful scripts in this collection. I highly recommend to give it a keyboard shortcut.
@@ -112,7 +117,7 @@ Same as “Insert Glyph to Background” but the glyph is inserted into the acti
 ### Jump to Alternate
 
 In the edit view, use this script to “jump” back and forth (or to circle) between alternate glyphs such as one, one.lf and one.tosf.
-
+If several glyphs are selected you can choose to add or remove suffixes.
 
 ### Make Backup Layer
 
