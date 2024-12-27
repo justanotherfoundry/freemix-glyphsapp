@@ -13,12 +13,15 @@ Tip: Give it a keyboard shortcut!
 """
 
 from builtins import chr
+font = Glyphs.font
 
 def jumpToAlternate():
-	font = Glyphs.font
 	tab = font.currentTab
 	# find new glyph:
-	currentLayer = font.selectedLayers[0]
+	try:
+		currentLayer = font.selectedLayers[0]
+	except IndexError:
+		return
 	currentGlyphName = currentLayer.parent.name
 	currentBaseName = currentGlyphName.split('.', 1)[0]
 	if not currentBaseName:
