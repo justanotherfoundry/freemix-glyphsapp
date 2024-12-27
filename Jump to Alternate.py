@@ -15,8 +15,29 @@ Tip: Give it a keyboard shortcut!
 from builtins import chr
 font = Glyphs.font
 
+def replaceInDisplayString(newString):
+	graphicView = font.currentTab.graphicView()
+	textStorage = graphicView.textStorage()
+	text = textStorage.text()
+	selectedRange = graphicView.selectedRange()
+	selectedRange.length = 1
+	while 1:
+		selectedRange.length += 1
+		try:
+			subString = text.attributedSubstringFromRange_(selectedRange)
+		except IndexError:
+			selectedRange.length -= 1
+			break
+		if len(subString.string()) != 1:
+			selectedRange.length -= 1
+			break
+	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
+	#       (which is always the case for unencoded glyphs)
+	textStorage.willChangeValueForKey_('text')
+	text.replaceCharactersInRange_withString_(selectedRange, newString)
+	textStorage.didChangeValueForKey_('text')
+
 def jumpToAlternate():
-	tab = font.currentTab
 	# find new glyph:
 	try:
 		currentLayer = font.selectedLayers[0]
@@ -43,27 +64,6 @@ def jumpToAlternate():
 			except IndexError:
 				nextGlyph = alternates[0]
 	nextChar = chr(font.characterForGlyph(nextGlyph))
-	# replace in display string:
-	graphicView = tab.graphicView()
-	textStorage = graphicView.textStorage()
-	text = textStorage.text()
-	selectedRange = graphicView.selectedRange()
-	selectedRange.length = 1
-	while 1:
-		selectedRange.length += 1
-		try:
-			subString = text.attributedSubstringFromRange_(selectedRange)
-		except IndexError:
-			selectedRange.length -= 1
-			break
-		if len(subString.string()) != 1:
-			selectedRange.length -= 1
-			break
-	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
-	#       (which is always the case for unencoded glyphs)
-	
-	textStorage.willChangeValueForKey_('text')
-	text.replaceCharactersInRange_withString_(selectedRange, nextChar)
-	textStorage.didChangeValueForKey_('text')
+	replaceInDisplayString(nextChar)
 
 jumpToAlternate()
