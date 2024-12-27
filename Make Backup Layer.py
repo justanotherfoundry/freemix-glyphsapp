@@ -19,9 +19,10 @@ import datetime
 for layer in Glyphs.font.selectedLayers:
 	glyph = layer.parent
 	newLayer = layer.copy()
-	if newLayer.isBraceLayer:
+	if newLayer.isSpecialLayer:
 		newLayer.name = newLayer.name + datetime.datetime.now().strftime( " %b %-d %y, %H:%M" )
-		newLayer.isBraceLayer = False
+		del newLayer.attributes["axisRules"]
+		del newLayer.attributes["coordinates"]
 	else:
 		newLayer.name = datetime.datetime.now().strftime( "%b %-d %y, %H:%M" )
 	glyph.layers.append( newLayer )
