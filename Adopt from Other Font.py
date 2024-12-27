@@ -117,7 +117,8 @@ class AdoptDialog(object):
 			if props['Add Anchors']:
 				for anchor in otherLayer.anchors:
 					if not anchor.name in layer.anchors.keys():
-						layer.anchors[anchor.name] =anchor
+						layer.anchors[anchor.name] = anchor
+						print(otherLayer.parent.name, 'adding anchor', anchor.name)
 			if props['Replace Components']:
 				layer.shapes.clear()
 				layer.shapes.extend(list(otherLayer.components))
