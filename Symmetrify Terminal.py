@@ -41,8 +41,17 @@ class FMXpoint:
 	def __sub__(self, other):
 		return FMXpoint(self.x - other.x, self.y - other.y)
 
+	def __isub__(self, other):
+		self.x -= other.x
+		self.y -= other.y
+		return self
+
 	def __mul__(self, scalar):
 		return FMXpoint(self.x * scalar, self.y * scalar)
+
+	def __imul__(self, scalar):
+		self.x *= scalar
+		self.y *= scalar
 
 	def lengthSquared(self):
 		return self.x ** 2 + self.y ** 2
