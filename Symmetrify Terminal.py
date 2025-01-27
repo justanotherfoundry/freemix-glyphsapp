@@ -70,7 +70,10 @@ class FMXpoint:
 			return self * (newLength / self.length())
 
 	def isShorterThan(self, other):
-		return self.lengthSquared() < other.lengthSquared()
+		if isinstance(newLength, FMXpoint):
+			return self.lengthSquared() < other.lengthSquared()
+		else:
+			return self.lengthSquared() < other ** 2
 
 	def rounded(self):
 		return FMXpoint(round(self.x), round(self.y))
