@@ -10,15 +10,16 @@ __doc__='''
 '''
 
 import math
+from Cocoa import NSPoint, NSMakePoint
 
 class FMXpoint:
-	def __init__(self, x, y):
+	def __init__(self, x, y=None):
+		if isinstance(x, GSNode):
+			x, y = x.position
+		elif isinstance(x, NSPoint):
+			x, y = x
 		self.x = x
 		self.y = y
-
-	@classmethod
-	def fromNode(cls, glyphsNode):
-		return cls(glyphsNode.position.x, glyphsNode.position.y)
 
 	def assignToNode(self, glyphsNode):
 		pos = glyphsNode.position
@@ -140,10 +141,10 @@ for selectedLayer in Font.selectedLayers:
 				if n2.position == n3.position:
 					# retracted BCP
 					n3 = n3.nextNode
-				p0 = FMXpoint.fromNode(n0)
-				p1 = FMXpoint.fromNode(n1)
-				p2 = FMXpoint.fromNode(n2)
-				p3 = FMXpoint.fromNode(n3)
+				p0 = FMXpoint(n0)
+				p1 = FMXpoint(n1)
+				p2 = FMXpoint(n2)
+				p3 = FMXpoint(n3)
 				vertex = intersection(p0, p1, p2, p3)
 				if vertex and FMXpoint.dist(p1, vertex) > MAX_VERTEX_DIST:
 					vertex = None
