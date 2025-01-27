@@ -93,9 +93,6 @@ class FMXpoint:
 	def dist(cls, p1, p2):
 		return (p1 - p2).length()
 
-def samePosition(node1, node2):
-	return node1.position.x == node2.position.x and node1.position.y == node2.position.y
-
 def intersection(p1, p2, p3, p4):
 	A1 = p2.y - p1.y
 	B1 = p1.x - p2.x
@@ -125,13 +122,13 @@ for selectedLayer in Font.selectedLayers:
 				n1 = node
 				n2 = n1.nextNode
 				n3 = n2.nextNode
-				if samePosition(n1, n2):
+				if n1.position == n2.position:
 					# pointed terminal, perpendicularity not applicable
 					continue
-				if samePosition(n0, n1):
+				if n0.position == n1.position:
 					# retracted BCP
 					n0 = n0.prevNode
-				if samePosition(n2, n3):
+				if n2.position == n3.position:
 					# retracted BCP
 					n3 = n3.nextNode
 				p0 = FMXpoint.fromNode(n0)
