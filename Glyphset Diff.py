@@ -23,9 +23,7 @@ def setFilter(font, glyphNames):
 if len(Glyphs.documents) == 2:
 	thisFont = Glyphs.documents[0].font
 	otherFont = Glyphs.documents[1].font
-
-	otherGlyphnames = set(otherFont.glyphNames())
-	diff = [glyph.name for glyph in thisFont.glyphs if glyph.name not in otherGlyphnames]
+	diff = list(set(thisFont.glyphNames()) - set(otherFont.glyphNames()))
 	setFilter(thisFont, diff)
 else:
 	Message('Please make sure that\nexactly two fonts are open', '')
