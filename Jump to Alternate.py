@@ -22,7 +22,7 @@ def sharedSuffix(layers):
 	suffix = None
 	for layer in layers:
 		try:
-			glyphSuffix = layer.parent.name.split('.')[1]
+			glyphSuffix = layer.parent.name.split('.')[-1]
 			if not suffix:
 				suffix = glyphSuffix
 			elif glyphSuffix != suffix:
