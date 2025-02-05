@@ -18,6 +18,19 @@ from builtins import chr
 import vanilla
 font = Glyphs.font
 
+def sharedSuffix(layers):
+	suffix = None
+	for layer in layers:
+		try:
+			glyphSuffix = layer.parent.name.split('.')[1]
+			if not suffix:
+				suffix = glyphSuffix
+			elif glyphSuffix != suffix:
+				return None
+		except IndexError:
+			return None
+	return suffix
+
 def replaceInDisplayString(newString):
 	graphicView = font.currentTab.graphicView()
 	textStorage = graphicView.textStorage()
@@ -81,6 +94,9 @@ def jumpToAlternate():
 		dialog = JumpDialog()
 		dialog.w.open()
 		dialog.w.makeKey()
+		suffix = sharedSuffix(font.selectedLayers)
+		if suffix:
+			dialog.w.removeSuffix.set('.' + suffix)
 		return
 	# find new glyph:
 	try:
