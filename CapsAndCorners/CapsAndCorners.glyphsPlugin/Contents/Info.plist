@@ -13,9 +13,9 @@
 	<key>CFBundleName</key>
 	<string>Caps and Corners</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.glyphsPlugin/Contents/Info.plist</string>
 	<key>productPageURL</key>
