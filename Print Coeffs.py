@@ -43,7 +43,7 @@ for instance in Glyphs.font.instances:
 			coeff = instance.instanceInterpolations[master.id]
 			if coeff:
 				coeff_str = '%10.2f%%' % ( coeff * 100 )
-		except KeyError:
+		except (KeyError, TypeError):
 			pass
 		print( coeff_str.rjust( master_column_width ), end='' )
 	print()
