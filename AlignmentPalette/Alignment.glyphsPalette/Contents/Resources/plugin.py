@@ -79,6 +79,9 @@ class AlignmentPalette (PalettePlugin):
 		globalCenterY = None
 		for layer in layers:
 			centerX, centerY = self.centerOfLayer(layer)
+			if centerX is None:
+				# empty layer (no need to check centerY)
+				continue
 			if globalCenterX is None:
 				globalCenterX    = centerX
 				globalCenterXmax = centerX
@@ -89,9 +92,14 @@ class AlignmentPalette (PalettePlugin):
 				globalCenterXmax = max(globalCenterXmax, centerX)
 				globalCenterY    = min(globalCenterY, centerY)
 				globalCenterYmax = max(globalCenterYmax, centerY)
-		if globalCenterX != globalCenterXmax:
+		if globalCenterX is None:
+			# only empty layers
+			globalCenterX = ''
+		elif globalCenterX != globalCenterXmax:
 			globalCenterX = str(globalCenterX) + ' — ' + str(globalCenterXmax)
-		if globalCenterY != globalCenterYmax:
+		if globalCenterY is None:
+			globalCenterY = ''
+		elif globalCenterY != globalCenterYmax:
 			globalCenterY = str(globalCenterY) + ' — ' + str(globalCenterYmax)
 		return globalCenterX, globalCenterY
 
@@ -261,11 +269,11 @@ class AlignmentPalette (PalettePlugin):
 		posy += self.lineSpacing
 		self.paletteView.group.centerXLabel = TextBox((10, posy + 3, innerWidth, 18), 'center x', sizeStyle='small')
 		self.posy_centerX = posy
-		self.paletteView.group.centerX = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small')
+		self.paletteView.group.centerX = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, sizeStyle='small')
 		posy += self.lineSpacing
 		self.paletteView.group.centerYLabel = TextBox((10, posy + 3, innerWidth, 18), 'center y', sizeStyle='small')
 		self.posy_centerY = posy
-		self.paletteView.group.centerY = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small')
+		self.paletteView.group.centerY = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, sizeStyle='small')
 		posy += self.lineSpacing + self.marginTop
 		# set up fields for overshoot
 		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_('Overshoot', {NSFontAttributeName: NSFont.boldSystemFontOfSize_(NSFont.systemFontSizeForControlSize_(smallSize))})
@@ -312,10 +320,6 @@ class AlignmentPalette (PalettePlugin):
 		if self.font.selectedLayers:
 			# determine centers
 			globalCenterX, globalCenterY = self.centerOfLayers(self.font.selectedLayers)
-			if globalCenterX is None:
-				globalCenterX = ''
-			if globalCenterY is None:
-				globalCenterY = ''
 			# update dialog
 			self.paletteView.group.centerX.show(True)
 			self.paletteView.group.centerX.set(globalCenterX)
