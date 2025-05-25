@@ -13,7 +13,7 @@ MAX_ZONES = 10
 
 # if False, this deactivates the grid, i.e. allows fractional positioning
 # to achieve exact centering
-STICK_TO_GRID = False
+STICK_TO_GRID = True
 
 # maximum number of glyphs
 MAX_GLYPHS_COUNT = 100
