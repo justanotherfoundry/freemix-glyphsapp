@@ -80,13 +80,19 @@ class AlignmentPalette (PalettePlugin):
 		for layer in layers:
 			centerX, centerY = self.centerOfLayer( layer )
 			if globalCenterX is None:
-				globalCenterX = centerX
-			elif globalCenterX != centerX:
-				globalCenterX = ''
-			if globalCenterY is None:
-				globalCenterY = centerY
-			elif globalCenterY != centerY:
-				globalCenterY = ''
+				globalCenterX    = centerX
+				globalCenterXmax = centerX
+				globalCenterY    = centerY
+				globalCenterYmax = centerY
+			else:
+				globalCenterX    = min(globalCenterX, centerX)
+				globalCenterXmax = max(globalCenterXmax, centerX)
+				globalCenterY    = min(globalCenterY, centerY)
+				globalCenterYmax = max(globalCenterYmax, centerY)
+		if globalCenterX != globalCenterXmax:
+			globalCenterX = str(globalCenterX) + ' — ' + str(globalCenterXmax)
+		if globalCenterY != globalCenterYmax:
+			globalCenterY = str(globalCenterY) + ' — ' + str(globalCenterYmax)
 		return globalCenterX, globalCenterY
 
 	# returns a list of tuples with zone name, zone and height,
@@ -238,7 +244,7 @@ class AlignmentPalette (PalettePlugin):
 		self.lineSpacing = 21
 		smallSize = NSFont.systemFontSizeForControlSize_( NSFont.smallSystemFontSize() )
 		textFieldHeight = smallSize + 7
-		textFieldWidth = 50
+		textFieldWidth = 70
 		# lockHeight = textFieldHeight
 		innerWidth = width - 2 * self.marginLeft
 		height = ( MAX_ZONES + 4 ) * self.lineSpacing + self.marginTop * 3
