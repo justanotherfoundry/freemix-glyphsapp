@@ -198,12 +198,8 @@ class AlignmentPalette (PalettePlugin):
 			else:
 				overshoots = self.overshootsOfLayer( layer )
 				for index, ( name, overshoot ) in enumerate( overshoots ):
-					if overshoot is not None:
-						try:
-							if globalOvershoots[index][1] != overshoot:
-									globalOvershoots[index][1] = 'multiple'
-						except IndexError:
-							pass
+					if globalOvershoots[index][1] != overshoot:
+						globalOvershoots[index][1] = 'multiple'
 		return globalOvershoots
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
