@@ -295,21 +295,8 @@ class AlignmentPalette (PalettePlugin):
 			globalCenterX, globalCenterY = self.centerOfLayers( self.font.selectedLayers )
 			if globalCenterX is None:
 				globalCenterX = ''
-			else:
-				# display as integers if the numbers are whole numbers
-				try:
-					if globalCenterX == int( globalCenterX ):
-						globalCenterX = int( globalCenterX )
-				except ValueError:
-					pass
 			if globalCenterY is None:
 				globalCenterY = ''
-			else:
-				try:
-					if globalCenterY == int( globalCenterY ):
-						globalCenterY = int( globalCenterY )
-				except ValueError:
-					pass
 			# update dialog
 			self.paletteView.group.centerX.show( True )
 			self.paletteView.group.centerX.set( globalCenterX )
@@ -333,13 +320,6 @@ class AlignmentPalette (PalettePlugin):
 				if overshoot == -1:
 					# nothing in the zone
 					overshoot = ''
-				else:
-					# display as integers if the numbers are whole numbers
-					try:
-						if overshoot == int( overshoot ):
-							overshoot = int( overshoot )
-					except ValueError:
-						pass
 				getattr( self.paletteView.group, 'value' + str( i ) ).show( True )
 				getattr( self.paletteView.group, 'value' + str( i ) ).set( overshoot )
 			except IndexError:
