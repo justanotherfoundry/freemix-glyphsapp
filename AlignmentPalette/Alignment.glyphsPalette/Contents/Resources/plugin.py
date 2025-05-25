@@ -22,13 +22,14 @@ MAX_GLYPHS_COUNT = 100
 COUNTERCLOCKWISE = -1
 CLOCKWISE = 1
 
-def simplifyValue(value):
-	if abs(value - round(value)) < 0.05:
-		return int(value)
-	roundedToHalf = 0.5 * round(value * 2)
-	if abs(value - roundedToHalf) < 0.05:
-		return roundedToHalf
-	return value
+def displayStrFromNumbers(value1, value2):
+	if value1 is None:
+		return ''
+	str1 = f"{value1:.1f}".rstrip('0').rstrip('.')
+	str2 = f'{value2:.1f}'.rstrip('0').rstrip('.')
+	if str1 == str2:
+		return str1
+	return str1 + ' — ' + str2
 
 # from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
 GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
@@ -67,8 +68,6 @@ class AlignmentPalette (PalettePlugin):
 		bounds = layer.bounds
 		centerX = NSMidX(bounds)
 		centerY = NSMidY(bounds)
-		centerX = simplifyValue(centerX)
-		centerY = simplifyValue(centerY)
 		return centerX, centerY
 
 	# returns the center of the layers,
@@ -92,16 +91,7 @@ class AlignmentPalette (PalettePlugin):
 				globalCenterXmax = max(globalCenterXmax, centerX)
 				globalCenterY    = min(globalCenterY, centerY)
 				globalCenterYmax = max(globalCenterYmax, centerY)
-		if globalCenterX is None:
-			# only empty layers
-			globalCenterX = ''
-		elif globalCenterX != globalCenterXmax:
-			globalCenterX = str(globalCenterX) + ' — ' + str(globalCenterXmax)
-		if globalCenterY is None:
-			globalCenterY = ''
-		elif globalCenterY != globalCenterYmax:
-			globalCenterY = str(globalCenterY) + ' — ' + str(globalCenterYmax)
-		return globalCenterX, globalCenterY
+		return displayStrFromNumbers(globalCenterX, globalCenterXmax), displayStrFromNumbers(globalCenterY, globalCenterYmax)
 
 	# returns a list of tuples with zone name, zone and height,
 	# sorted by height
@@ -183,7 +173,6 @@ class AlignmentPalette (PalettePlugin):
 					for index, (name, zone, height) in enumerate(zones):
 						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
 							overshoot = node2.y - height
-							overshoot = simplifyValue(overshoot)
 							existingOvershoot = overshoots[index][1]
 							if overshoot > existingOvershoot:
 								overshoots[index][1] = overshoot
@@ -192,7 +181,6 @@ class AlignmentPalette (PalettePlugin):
 					for index, (name, zone, height) in enumerate(zones):
 						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
 							overshoot = height - node2.y
-							overshoot = simplifyValue(overshoot)
 							existingOvershoot = overshoots[index][1]
 							if overshoot > existingOvershoot:
 								overshoots[index][1] = overshoot
@@ -230,7 +218,7 @@ class AlignmentPalette (PalettePlugin):
 					# some glyphs do not have anything in/on the zone, some do
 					zone[1] = 'multiple'
 				else:
-					zone[1] = str(minValue) + ' — ' + str(maxValue)
+					zone[1] = displayStrFromNumbers(minValue, maxValue)
 		return globalOvershoots
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
