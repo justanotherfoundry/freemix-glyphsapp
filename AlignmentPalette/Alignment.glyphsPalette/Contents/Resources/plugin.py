@@ -216,7 +216,7 @@ class AlignmentPalette (PalettePlugin):
 					# some glyphs do not have anything in/on the zone, some do
 					zone[1] = 'multiple'
 				else:
-					zone[1] = str(minValue) + '—' + str(maxValue)
+					zone[1] = str(minValue) + ' — ' + str(maxValue)
 		return globalOvershoots
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
