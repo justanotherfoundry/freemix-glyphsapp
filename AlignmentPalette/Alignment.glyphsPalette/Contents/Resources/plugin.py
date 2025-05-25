@@ -200,9 +200,7 @@ class AlignmentPalette (PalettePlugin):
 				for index, ( name, overshoot ) in enumerate( overshoots ):
 					if overshoot is not None:
 						try:
-							if globalOvershoots[index][1] is None:
-								globalOvershoots[index][1] = overshoot
-							elif globalOvershoots[index][1] != overshoot:
+							if globalOvershoots[index][1] != overshoot:
 									globalOvershoots[index][1] = 'multiple'
 						except IndexError:
 							pass
