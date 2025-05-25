@@ -44,6 +44,15 @@ except:
 		Message("This script requires the Vanilla module. To install it, go to Glyphs > Preferences > Addons > Modules and click the Install Modules button.", "Missing module")
 
 
+def apply_grid(v):
+	if font.grid > 0:
+		return round(v / font.grid) * font.grid
+	else:
+		return v
+
+def apply_half_grid(v):
+	return 0.5 * apply_grid(v * 2)
+
 class SymmetrifyDialog(object):
 
 	def __init__(self):
@@ -126,16 +135,16 @@ class SymmetrifyDialog(object):
 	def flip(self, flip_horizontal, flip_vertical):
 		flips = [flip_horizontal] + [False] * flip_vertical
 		for contour in self.contours:
-			if self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
-				if PERFECT_SYMMETRY:
-					self.cy = round(self.cy)
-				else:
-					self.cy -= 1.0 / 2048
-			if self.get_flip_partner(contour, is_horizontal=True) % 2 == 0:
-				if PERFECT_SYMMETRY:
-					self.cx = round(self.cx)
-				else:
-					self.cx -= 1.0 / 2048
+			if PERFECT_SYMMETRY and self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
+				# we have points on the line of symmetry
+				self.cy = apply_grid(self.cy)
+			else:
+				# this is relevant if we have fractional input
+				self.cy = apply_half_grid(self.cy)
+			if PERFECT_SYMMETRY and self.get_flip_partner(contour, is_horizontal=True) % 2 == 0:
+				self.cx = apply_grid(self.cx)
+			else:
+				self.cx = apply_half_grid(self.cx)
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
 			for current_is_horizontal in flips:
@@ -148,13 +157,26 @@ class SymmetrifyDialog(object):
 						x, y = xy[point_index]
 						partner_x, partner_y = xy[partner_index]
 						if current_is_horizontal:
-							x = 0.50001 * x - 0.50001 * partner_x + self.cx
-							y = 0.5 * y + 0.5 * partner_y + 0.00001 * (x - 0.5 * partner_x)
-							xy[partner_index] = (2 * self.cx - x, y)
+							rx = 0.5 * (x - partner_x)
+							ry = 0.5 * (y + partner_y) - self.cy
+							rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
+							ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
+							x = apply_grid(self.cx + rx)
+							y = apply_grid(self.cy + ry)
+							if point_index != partner_index:
+							# ^ the effect of this check is that points on the line of symmetry
+							#   are treated conservatively (i.e. keep their position if almost on the line)
+								# the partner is strictly mirrored:
+								xy[partner_index] = (apply_grid(self.cx - rx), y)
 						else:
-							x = 0.5 * x + 0.5 * partner_x + 0.00001 * (y - 0.5 * partner_y)
-							y = 0.50001 * y - 0.50001 * partner_y + self.cy
-							xy[partner_index] = (x, 2 * self.cy - y)
+							ry = 0.5 * (y - partner_y)
+							rx = 0.5 * (x + partner_x) - self.cx
+							ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
+							rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
+							y = apply_grid(self.cy + ry)
+							x = apply_grid(self.cx + rx)
+							if point_index != partner_index:
+								xy[partner_index] = (x, apply_grid(self.cy - ry))
 						xy[point_index] = (x, y)
 					if partner_index == 0:
 						partner_index = len(contour) - 1
@@ -162,7 +184,8 @@ class SymmetrifyDialog(object):
 						partner_index -= 1
 			for point_index in range(len(contour)):
 				point = contour[point_index]
-				point.x, point.y = xy[point_index]
+				new_x, new_y = xy[point_index]
+				point.x, point.y = apply_grid(new_x), apply_grid(new_y)
 
 	def can_rotate(self):
 		for contour in self.contours:
@@ -183,10 +206,14 @@ class SymmetrifyDialog(object):
 			for point_index in range(other_point_index):
 				point = contour[point_index]
 				other_point = contour[other_point_index]
-				point.x	 = 0.50001*point.x - 0.50001*other_point.x + self.cx
-				other_point.x = 2.0*self.cx - point.x
-				point.y	 = 0.50001*point.y - 0.50001*other_point.y + self.cy
-				other_point.y = 2.0*self.cy - point.y
+				rx = 0.5 * (point.x - other_point.x)
+				ry = 0.5 * (point.y - other_point.y)
+				rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
+				ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
+				point.x = apply_grid(self.cx + rx)
+				point.y = apply_grid(self.cy + ry)
+				other_point.x = apply_grid(self.cx - rx)
+				other_point.y = apply_grid(self.cy - ry)
 				other_point_index = (other_point_index + 1) % len(contour)
 
 	def blend_points(self, p0, p1, p2, p3, p4):
