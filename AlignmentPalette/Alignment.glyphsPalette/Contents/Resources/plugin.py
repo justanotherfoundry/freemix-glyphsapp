@@ -45,8 +45,8 @@ class AlignmentPalette (PalettePlugin):
 
 	# sets the center of the bounding box of a layer
 	@objc.python_method
-	def setCenterOfLayer( self, layer, newCenterX, newCenterY ):
-		centerX, centerY = self.centerOfLayer( layer )
+	def setCenterOfLayer(self, layer, newCenterX, newCenterY):
+		centerX, centerY = self.centerOfLayer(layer)
 		try:
 			shiftX = newCenterX - centerX
 		except TypeError:
@@ -55,18 +55,18 @@ class AlignmentPalette (PalettePlugin):
 			shiftY = newCenterY - centerY
 		except TypeError:
 			shiftY = 0
-		layer.applyTransform( [ 1.0, 0.0, 0.0, 1.0, shiftX, shiftY ] )
+		layer.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
 		layer.syncMetrics()
 
 	# returns the center of the bounding box of a layer
 	@objc.python_method
-	def centerOfLayer( self, layer ):
+	def centerOfLayer(self, layer):
 		if Glyphs.versionNumber >= 3:
 			if len(layer.shapes) == 0:
 				return None, None
 		bounds = layer.bounds
-		centerX = NSMidX( bounds )
-		centerY = NSMidY( bounds )
+		centerX = NSMidX(bounds)
+		centerY = NSMidY(bounds)
 		centerX = simplifyValue(centerX)
 		centerY = simplifyValue(centerY)
 		return centerX, centerY
@@ -74,11 +74,11 @@ class AlignmentPalette (PalettePlugin):
 	# returns the center of the layers,
 	# x or y might be '' if they vary between layers
 	@objc.python_method
-	def centerOfLayers( self, layers ):
+	def centerOfLayers(self, layers):
 		globalCenterX = None
 		globalCenterY = None
 		for layer in layers:
-			centerX, centerY = self.centerOfLayer( layer )
+			centerX, centerY = self.centerOfLayer(layer)
 			if globalCenterX is None:
 				globalCenterX    = centerX
 				globalCenterXmax = centerX
@@ -98,7 +98,7 @@ class AlignmentPalette (PalettePlugin):
 	# returns a list of tuples with zone name, zone and height,
 	# sorted by height
 	@objc.python_method
-	def namedZones( self, layer ):
+	def namedZones(self, layer):
 		metrics = None
 		try:
 			metrics = layer.metrics
@@ -126,36 +126,36 @@ class AlignmentPalette (PalettePlugin):
 		if not masters:
 			return []
 		master = masters[0]
-		topHeights = [ ('cap height', master.capHeight), ('ascender', master.ascender), ('x-height', master.xHeight) ]
-		bottomHeights = [ ('baseline', 0), ('descender', master.descender) ]
+		topHeights = [('cap height', master.capHeight), ('ascender', master.ascender), ('x-height', master.xHeight)]
+		bottomHeights = [('baseline', 0), ('descender', master.descender)]
 		zones = []
 		for zone in master.alignmentZones:
 			if zone.size > 0:
 				for name, y in topHeights:
 					if y >= zone.position and y <= zone.position + zone.size:
-						zones.append( ( name, zone, y ) )
+						zones.append((name, zone, y))
 						break
 				else:
-					zones.append( ( str(zone.position), zone, zone.position ) )
+					zones.append((str(zone.position), zone, zone.position))
 			elif zone.size < 0:
 				for name, y in bottomHeights:
 					if y <= zone.position and y >= zone.position + zone.size:
-						zones.append( ( name, zone, y ) )
+						zones.append((name, zone, y))
 						break
 				else:
-					zones.append( ( str(zone.position), zone, zone.position ) )
+					zones.append((str(zone.position), zone, zone.position))
 		# sort by height
-		zones.sort(key=lambda x: x[2], reverse = True )
+		zones.sort(key=lambda x: x[2], reverse = True)
 		return zones
 
 	# returns a list of tuples (zone name, overshoot) for the layer
 	# overshoot may be None
 	@objc.python_method
-	def overshootsOfLayer( self, layer ):
-		zones = self.namedZones( layer )
-		overshoots = [ [ name, -1 ] for name, zone, height in zones ]
+	def overshootsOfLayer(self, layer):
+		zones = self.namedZones(layer)
+		overshoots = [[name, -1] for name, zone, height in zones]
 		for path in layer.copyDecomposedLayer().paths:
-			if path.direction == CLOCKWISE or len( path.nodes ) < 2:
+			if path.direction == CLOCKWISE or len(path.nodes) < 2:
 				continue
 			node2 = path.nodes[-2]
 			node3 = path.nodes[-1]
@@ -172,7 +172,7 @@ class AlignmentPalette (PalettePlugin):
 					pass
 				# top extremum
 				elif node2.y >= node1.y and node2.y >= node3.y and node1.x > node3.x:
-					for index, ( name, zone, height ) in enumerate( zones ):
+					for index, (name, zone, height) in enumerate(zones):
 						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
 							overshoot = node2.y - height
 							overshoot = simplifyValue(overshoot)
@@ -181,7 +181,7 @@ class AlignmentPalette (PalettePlugin):
 								overshoots[index][1] = overshoot
 				# bottom extremum
 				elif node2.y <= node1.y and node2.y <= node3.y and node1.x < node3.x:
-					for index, ( name, zone, height ) in enumerate( zones ):
+					for index, (name, zone, height) in enumerate(zones):
 						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
 							overshoot = height - node2.y
 							overshoot = simplifyValue(overshoot)
@@ -194,16 +194,16 @@ class AlignmentPalette (PalettePlugin):
 	# might be 'multiple' if they vary between layers.
 	# layers must not be empty.
 	@objc.python_method
-	def overshootsOfLayers( self, layers ):
+	def overshootsOfLayers(self, layers):
 		globalOvershoots = None
 		for layer in layers:
 			if not layer:
 				continue
 			if not globalOvershoots:
-				globalOvershoots = self.overshootsOfLayer( layer )
+				globalOvershoots = self.overshootsOfLayer(layer)
 			else:
-				overshoots = self.overshootsOfLayer( layer )
-				for index, ( name, overshoot ) in enumerate( overshoots ):
+				overshoots = self.overshootsOfLayer(layer)
+				for index, (name, overshoot) in enumerate(overshoots):
 					zone = globalOvershoots[index]
 					if zone[1] == overshoot:
 						continue
@@ -242,45 +242,41 @@ class AlignmentPalette (PalettePlugin):
 		self.marginTop = 7
 		self.marginLeft = 7
 		self.lineSpacing = 21
-		smallSize = NSFont.systemFontSizeForControlSize_( NSFont.smallSystemFontSize() )
+		smallSize = NSFont.systemFontSizeForControlSize_(NSFont.smallSystemFontSize())
 		textFieldHeight = smallSize + 7
 		textFieldWidth = 70
 		# lockHeight = textFieldHeight
 		innerWidth = width - 2 * self.marginLeft
-		height = ( MAX_ZONES + 4 ) * self.lineSpacing + self.marginTop * 3
+		height = (MAX_ZONES + 4) * self.lineSpacing + self.marginTop * 3
 		self.posx_TextField = width - textFieldWidth - self.marginLeft
 
 		# Create Vanilla window and group with controls
-		self.paletteView = Window( (width, height), minSize=(width, height - 10), maxSize=(width, height + 200 ) )
-		self.paletteView.group = Group( (0, 0, width, height ) )
+		self.paletteView = Window((width, height), minSize=(width, height - 10), maxSize=(width, height + 200))
+		self.paletteView.group = Group((0, 0, width, height))
 
 		posy = self.marginTop
 		# set up fields for center
-		headlineBbox = NSAttributedString.alloc().initWithString_attributes_( 'Bounding box', { NSFontAttributeName:NSFont.boldSystemFontOfSize_( smallSize ) } )
-		self.paletteView.group.headlineBbox = TextBox( ( 10, posy, innerWidth, 18 ), headlineBbox, sizeStyle='small' )
+		headlineBbox = NSAttributedString.alloc().initWithString_attributes_('Bounding box', {NSFontAttributeName: NSFont.boldSystemFontOfSize_(smallSize)})
+		self.paletteView.group.headlineBbox = TextBox((10, posy, innerWidth, 18), headlineBbox, sizeStyle='small')
 		posy += self.lineSpacing
-		self.paletteView.group.centerXLabel = TextBox( ( 10, posy + 3, innerWidth, 18 ), 'center x', sizeStyle='small' )
+		self.paletteView.group.centerXLabel = TextBox((10, posy + 3, innerWidth, 18), 'center x', sizeStyle='small')
 		self.posy_centerX = posy
-		# self.paletteView.group.lockX = ImageButton( ( self.posx_TextField - lockHeight - 5, posy, lockHeight, lockHeight ), imageNamed='GSLockUnlockedTemplate', bordered=False, imagePosition='top', callback=self.lockCallback, sizeStyle='regular' )
-		# self.lockXlocked = False
-		self.paletteView.group.centerX = ArrowEditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
+		self.paletteView.group.centerX = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small')
 		posy += self.lineSpacing
-		self.paletteView.group.centerYLabel = TextBox( ( 10, posy + 3, innerWidth, 18 ), 'center y', sizeStyle='small' )
+		self.paletteView.group.centerYLabel = TextBox((10, posy + 3, innerWidth, 18), 'center y', sizeStyle='small')
 		self.posy_centerY = posy
-		# self.paletteView.group.lockY = ImageButton( ( self.posx_TextField - lockHeight - 5, posy, lockHeight, lockHeight ), imageNamed='GSLockUnlockedTemplate', bordered=False, imagePosition='top', callback=self.lockCallback, sizeStyle='regular' )
-		# self.lockYlocked = False
-		self.paletteView.group.centerY = ArrowEditText( ( self.posx_TextField, posy, textFieldWidth, textFieldHeight ), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small' )
+		self.paletteView.group.centerY = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, placeholder='multiple', sizeStyle='small')
 		posy += self.lineSpacing + self.marginTop
 		# set up fields for overshoot
-		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_( 'Overshoot', { NSFontAttributeName:NSFont.boldSystemFontOfSize_( NSFont.systemFontSizeForControlSize_( smallSize ) ) } )
-		self.paletteView.group.headlineOvershoot = TextBox( ( 10, posy, innerWidth, 18 ), headlineOvershoot, sizeStyle='small' )
+		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_('Overshoot', {NSFontAttributeName: NSFont.boldSystemFontOfSize_(NSFont.systemFontSizeForControlSize_(smallSize))})
+		self.paletteView.group.headlineOvershoot = TextBox((10, posy, innerWidth, 18), headlineOvershoot, sizeStyle='small')
 		posy += self.lineSpacing
-		self.paletteView.group, 'lineAbove', HorizontalLine( ( self.marginLeft, posy - 3, innerWidth, 1 ) )
-		for i in range( MAX_ZONES ):
-			setattr( self.paletteView.group, 'name' + str( i ), TextBox( ( 10, posy, innerWidth, 18 ), '', sizeStyle='small' ) )
-			setattr( self.paletteView.group, 'value' + str( i ), TextBox( ( self.posx_TextField, posy, textFieldWidth - 3, textFieldHeight ), '', sizeStyle='small', alignment='right' ) )
+		self.paletteView.group, 'lineAbove', HorizontalLine((self.marginLeft, posy - 3, innerWidth, 1))
+		for i in range(MAX_ZONES):
+			setattr(self.paletteView.group, 'name' + str(i), TextBox((10, posy, innerWidth, 18), '', sizeStyle='small'))
+			setattr(self.paletteView.group, 'value' + str(i), TextBox((self.posx_TextField, posy, textFieldWidth - 3, textFieldHeight), '', sizeStyle='small', alignment='right'))
 			posy += self.lineSpacing
-			setattr( self.paletteView.group, 'line' + str( i ), HorizontalLine( ( self.marginLeft, posy - 3, innerWidth, 1 ) ) )
+			setattr(self.paletteView.group, 'line' + str(i), HorizontalLine((self.marginLeft, posy - 3, innerWidth, 1)))
 		# set dialog to NSView
 		self.dialog = self.paletteView.group.getNSView()
 		# set self.font
@@ -290,7 +286,7 @@ class AlignmentPalette (PalettePlugin):
 			self.font = windowController.document().font
 
 	@objc.python_method
-	def update( self, sender=None ):
+	def update(self, sender=None):
 		# do not update in case the palette is collapsed
 		if self.dialog.frame().origin.y != 0:
 			return
@@ -304,52 +300,52 @@ class AlignmentPalette (PalettePlugin):
 		if not self.font:
 			return
 		# do not update when too may glyphs are selected
-		if not self.font.selectedLayers or len( self.font.selectedLayers ) > MAX_GLYPHS_COUNT:
-			self.paletteView.group.centerX.show( False )
-			self.paletteView.group.centerY.show( False )
-			for i in range( MAX_ZONES ):
-				getattr( self.paletteView.group, 'name' + str( i ) ).set( '' )
-				getattr( self.paletteView.group, 'value' + str( i ) ).show( False )
-				getattr( self.paletteView.group, 'line' + str( i ) ).show( False )
+		if not self.font.selectedLayers or len(self.font.selectedLayers) > MAX_GLYPHS_COUNT:
+			self.paletteView.group.centerX.show(False)
+			self.paletteView.group.centerY.show(False)
+			for i in range(MAX_ZONES):
+				getattr(self.paletteView.group, 'name' + str(i)).set('')
+				getattr(self.paletteView.group, 'value' + str(i)).show(False)
+				getattr(self.paletteView.group, 'line' + str(i)).show(False)
 			return
 		# update the center x and y
 		if self.font.selectedLayers:
 			# determine centers
-			globalCenterX, globalCenterY = self.centerOfLayers( self.font.selectedLayers )
+			globalCenterX, globalCenterY = self.centerOfLayers(self.font.selectedLayers)
 			if globalCenterX is None:
 				globalCenterX = ''
 			if globalCenterY is None:
 				globalCenterY = ''
 			# update dialog
-			self.paletteView.group.centerX.show( True )
-			self.paletteView.group.centerX.set( globalCenterX )
-			self.paletteView.group.centerY.show( True )
-			self.paletteView.group.centerY.set( globalCenterY )
+			self.paletteView.group.centerX.show(True)
+			self.paletteView.group.centerX.set(globalCenterX)
+			self.paletteView.group.centerY.show(True)
+			self.paletteView.group.centerY.set(globalCenterY)
 		else:
-			self.paletteView.group.centerX.show( False )
-			self.paletteView.group.centerY.show( False )
+			self.paletteView.group.centerX.show(False)
+			self.paletteView.group.centerY.show(False)
 		# update the overshoots
 		if self.font.selectedLayers:
 			# determine overshoots
-			globalOvershoots = self.overshootsOfLayers( self.font.selectedLayers )
+			globalOvershoots = self.overshootsOfLayers(self.font.selectedLayers)
 		else:
 			globalOvershoots = []
-		for i in range( MAX_ZONES ):
+		for i in range(MAX_ZONES):
 			try:
 				zoneName, overshoot = globalOvershoots[i]
-				getattr( self.paletteView.group, 'name' + str( i ) ).set( zoneName )
-				getattr( self.paletteView.group, 'line' + str( i ) ).show( True )
+				getattr(self.paletteView.group, 'name' + str(i)).set(zoneName)
+				getattr(self.paletteView.group, 'line' + str(i)).show(True)
 				assert(overshoot is not None)
 				if overshoot == -1:
 					# nothing in the zone
 					overshoot = ''
-				getattr( self.paletteView.group, 'value' + str( i ) ).show( True )
-				getattr( self.paletteView.group, 'value' + str( i ) ).set( overshoot )
+				getattr(self.paletteView.group, 'value' + str(i)).show(True)
+				getattr(self.paletteView.group, 'value' + str(i)).set(overshoot)
 			except IndexError:
 				# this hides the excess fields
-				getattr( self.paletteView.group, 'name' + str( i ) ).set( '' )
-				getattr( self.paletteView.group, 'value' + str( i ) ).show( False )
-				getattr( self.paletteView.group, 'line' + str( i ) ).show( False )
+				getattr(self.paletteView.group, 'name' + str(i)).set('')
+				getattr(self.paletteView.group, 'value' + str(i)).show(False)
+				getattr(self.paletteView.group, 'line' + str(i)).show(False)
 
 	# in future, this could be used to "lock" the x or y value,
 	# i.e. auto-update the glyph in a "set up and forget" fashion
@@ -361,11 +357,11 @@ class AlignmentPalette (PalettePlugin):
 		if not self.font or not self.font.selectedLayers:
 			return
 		try:
-			newCenterX = float( self.paletteView.group.centerX.get() )
+			newCenterX = float(self.paletteView.group.centerX.get())
 		except ValueError:
 			newCenterX = None
 		try:
-			newCenterY = float( self.paletteView.group.centerY.get() )
+			newCenterY = float(self.paletteView.group.centerY.get())
 		except ValueError:
 			newCenterY = None
 		if not STICK_TO_GRID:
@@ -376,12 +372,12 @@ class AlignmentPalette (PalettePlugin):
 			self.font.gridSubDivisions *= 2
 		# we first treat only layers without components,
 		# so as to make sure we are not updating the referenced glyph after the component
-		for hasComponents in [ False, True ]:
+		for hasComponents in [False, True]:
 			# set the layers' centers
 			for layer in self.font.selectedLayers:
-				if ( len( layer.components ) > 0 ) == hasComponents:
+				if (len(layer.components) > 0) == hasComponents:
 					layer.parent.beginUndo()
-					self.setCenterOfLayer( layer, newCenterX, newCenterY )
+					self.setCenterOfLayer(layer, newCenterX, newCenterY)
 					layer.parent.endUndo()
 		# restore the number of subdivisions
 		if not STICK_TO_GRID:
@@ -413,7 +409,7 @@ class AlignmentPalette (PalettePlugin):
 		try:
 			self._sortID = id
 		except Exception as e:
-			self.logToConsole( "setSortID_: %s" % str(e) )
+			self.logToConsole("setSortID_: %s" % str(e))
 	
 	@objc.python_method
 	def sortID(self):
