@@ -76,6 +76,8 @@ class AlignmentPalette (PalettePlugin):
 	def centerOfLayers(self, layers):
 		globalCenterX = None
 		globalCenterY = None
+		globalCenterXmax = None
+		globalCenterYmax = None
 		for layer in layers:
 			centerX, centerY = self.centerOfLayer(layer)
 			if centerX is None:
