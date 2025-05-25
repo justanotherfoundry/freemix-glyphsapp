@@ -14,7 +14,7 @@ transfer parts of the outlines between glyphs.
 import sys
 from AppKit import NSBeep
 
-def counterparts( selection, background ):
+def decomposedBackground(background):
 	if background.components:
 		# we cannot use background.copyDecomposedLayer() here
 		# as this would also decompose caps and corners.
@@ -25,6 +25,9 @@ def counterparts( selection, background ):
 		glyph_copy.parent = glyph.parent
 		background = glyph_copy.layers[foregroundLayer.layerId].background
 		background.decomposeComponents()
+	return background
+
+def counterparts( selection, background ):
 	best_point_range = []
 	best_deviation = sys.maxsize
 	# search in each path
@@ -93,9 +96,10 @@ if layer.selection:
 else:
 	selection = [node for path in layer.paths for node in path.nodes]
 any_changes = False
+background = decomposedBackground(layer.background)
 subpaths = subpaths( selection )
 for subpath in subpaths:
-	for node, bg_node in counterparts( subpath, layer.background ):
+	for node, bg_node in counterparts( subpath, background ):
 		if not any_changes:
 			if node.position == bg_node.position:
 				continue
