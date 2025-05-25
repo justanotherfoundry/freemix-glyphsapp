@@ -22,6 +22,14 @@ MAX_GLYPHS_COUNT = 100
 COUNTERCLOCKWISE = -1
 CLOCKWISE = 1
 
+def simplifyValue(value):
+	if abs(value - round(value)) < 0.05:
+		return int(value)
+	roundedToHalf = 0.5 * round(value * 2)
+	if abs(value - roundedToHalf) < 0.05:
+		return roundedToHalf
+	return value
+
 # from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
 GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
 class ArrowEditText (EditText):
@@ -59,6 +67,8 @@ class AlignmentPalette (PalettePlugin):
 		bounds = layer.bounds
 		centerX = NSMidX( bounds )
 		centerY = NSMidY( bounds )
+		centerX = simplifyValue(centerX)
+		centerY = simplifyValue(centerY)
 		return centerX, centerY
 
 	# returns the center of the layers,
@@ -159,6 +169,7 @@ class AlignmentPalette (PalettePlugin):
 					for index, ( name, zone, height ) in enumerate( zones ):
 						if zone.size > 0 and node2.y >= zone.position and node2.y <= zone.position + zone.size:
 							overshoot = node2.y - height
+							overshoot = simplifyValue(overshoot)
 							existingOvershoot = overshoots[index][1]
 							if overshoot > existingOvershoot:
 								overshoots[index][1] = overshoot
@@ -167,6 +178,7 @@ class AlignmentPalette (PalettePlugin):
 					for index, ( name, zone, height ) in enumerate( zones ):
 						if zone.size < 0 and node2.y <= zone.position and node2.y >= zone.position + zone.size:
 							overshoot = height - node2.y
+							overshoot = simplifyValue(overshoot)
 							existingOvershoot = overshoots[index][1]
 							if overshoot > existingOvershoot:
 								overshoots[index][1] = overshoot
