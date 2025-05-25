@@ -198,8 +198,25 @@ class AlignmentPalette (PalettePlugin):
 			else:
 				overshoots = self.overshootsOfLayer( layer )
 				for index, ( name, overshoot ) in enumerate( overshoots ):
-					if globalOvershoots[index][1] != overshoot:
-						globalOvershoots[index][1] = 'multiple'
+					zone = globalOvershoots[index]
+					if zone[1] == overshoot:
+						continue
+					if len(zone) == 2:
+						# need to add a third value.
+						# zone[1] is to be interpreted as the min,
+						# zone[2] is to be interpreted as the max
+						zone.append(zone[1])
+					zone[1] = min(zone[1], overshoot)
+					zone[2] = max(zone[2], overshoot)
+		for zone in globalOvershoots:
+			if len(zone) == 3:
+				minValue = zone[1]
+				maxValue = zone.pop()
+				if minValue == -1:
+					# some glyphs do not have anything in/on the zone, some do
+					zone[1] = 'multiple'
+				else:
+					zone[1] = str(minValue) + '—' + str(maxValue)
 		return globalOvershoots
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
