@@ -329,21 +329,19 @@ class AlignmentPalette (PalettePlugin):
 				zoneName, overshoot = globalOvershoots[i]
 				getattr( self.paletteView.group, 'name' + str( i ) ).set( zoneName )
 				getattr( self.paletteView.group, 'line' + str( i ) ).show( True )
-				if overshoot is not None:
-					if overshoot == -1:
-						# nothing in the zone
-						overshoot = ''
-					else:
-						# display as integers if the numbers are whole numbers
-						try:
-							if overshoot == int( overshoot ):
-								overshoot = int( overshoot )
-						except ValueError:
-							pass
-					getattr( self.paletteView.group, 'value' + str( i ) ).show( True )
-					getattr( self.paletteView.group, 'value' + str( i ) ).set( overshoot )
+				assert(overshoot is not None)
+				if overshoot == -1:
+					# nothing in the zone
+					overshoot = ''
 				else:
-					getattr( self.paletteView.group, 'value' + str( i ) ).show( False )
+					# display as integers if the numbers are whole numbers
+					try:
+						if overshoot == int( overshoot ):
+							overshoot = int( overshoot )
+					except ValueError:
+						pass
+				getattr( self.paletteView.group, 'value' + str( i ) ).show( True )
+				getattr( self.paletteView.group, 'value' + str( i ) ).set( overshoot )
 			except IndexError:
 				# this hides the excess fields
 				getattr( self.paletteView.group, 'name' + str( i ) ).set( '' )
