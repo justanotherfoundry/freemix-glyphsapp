@@ -108,6 +108,18 @@ for subpath in subpaths:
 				glyph.beginUndo()
 				layer.beginChanges()
 		node.position = bg_node.position
+for anchor in layer.anchors:
+	if anchor.selected or not layer.selection:
+		closestBackgroundAnchor = None
+		closestDist = -1
+		for backgroundAnchor in background.anchors:
+			dist = abs(backgroundAnchor.position.x - anchor.position.x) + abs(backgroundAnchor.position.y - anchor.position.y)
+			if closestDist == -1 or dist < closestDist:
+				closestDist = dist
+				closestBackgroundAnchor = backgroundAnchor
+		if closestDist != 0 and closestBackgroundAnchor:
+			anchor.position = closestBackgroundAnchor.position
+			any_changes = True
 if any_changes:
 	layer.syncMetrics()
 	layer.endChanges()
