@@ -202,7 +202,16 @@ class AlignmentPalette (PalettePlugin):
 			else:
 				overshoots = self.overshootsOfLayer(layer)
 				for index, (name, overshoot) in enumerate(overshoots):
-					zone = globalOvershoots[index]
+					try:
+						zone = globalOvershoots[index]
+					except IndexError:
+						# we have a different number of zones in the layers
+						# TODO: support this
+						continue
+					if zone[0] != name:
+						# we have differently named zones in the layers
+						# TODO: support this
+						continue
 					if zone[1] == overshoot:
 						continue
 					if len(zone) == 2:
