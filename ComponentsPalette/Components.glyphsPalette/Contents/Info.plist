@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>plugin</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.remixtools.ComponentsPalette</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Components Palette</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>UpdateFeedURL</key>
+	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/ComponentsPalette/Components.glyphsPalette/Contents/Info.plist</string>
+	<key>productPageURL</key>
+	<string>https://github.com/justanotherfoundry/freemix-glyphsapp</string>
+	<key>productReleaseNotes</key>
+	<string>Initial release.</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright, Tim Ahrens, 2025</string>
+	<key>NSPrincipalClass</key>
+	<string>ComponentsPalette</string>
+	<key>PyMainFileNames</key>
+	<array>
+		<string>plugin.py</string>
+	</array>
+</dict>
+</plist>

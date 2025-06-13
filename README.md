@@ -57,6 +57,11 @@ To show this, use Window -> Caps and Corners. This window shows the cap and corn
 <img src="https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/CapsAndCorners/CapsAndCorners.png" width="320" />
 
 
+### Components Palette
+
+The palette shows the position of components in the selected glyphs. This helps you check for consistent positioning if multiple glyphs are selected.
+
+
 ### Delete All Anchors
 
 Removes all anchors from the selected glyphs.
