@@ -20,6 +20,10 @@ OTHER_DIRECTION_DISPLAY_LENGTH = 0.75
 SHALLOW_CURVE_THRESHOLD = 0.4
 # ^ in radians
 
+ignoredMasters = []
+# usage example:
+# ignoredMasters = ['Light Compressed', 'Extrabold Compressed', 'Light Compressed Italic']
+
 def samePosition(node1, node2):
 	return node1.position.x == node2.position.x and node1.position.y == node2.position.y
 
@@ -193,7 +197,7 @@ class HandleRelations(ReporterPlugin):
 			return
 		if not layer.parent.mastersCompatible:
 			return
-		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
+		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer and not otherLayer.name in ignoredMasters]
 		pathIndex = 0
 		for path in layer.paths:
 			# smooth nodes:
