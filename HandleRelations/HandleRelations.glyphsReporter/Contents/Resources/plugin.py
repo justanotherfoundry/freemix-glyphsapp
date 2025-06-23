@@ -78,7 +78,7 @@ def relPositionDeviation(prevNode, node, nextNode, pathIndex, relPosition, layer
 		return 0.0
 	else:
 		try:
-			deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0-relPosition) / (1.0-medianRelPos), (1.0-medianRelPos) / (1.0-relPosition))
+			deviationRel = max(relPosition / medianRelPos, medianRelPos / relPosition, (1.0 - relPosition) / (1.0 - medianRelPos), (1.0 - medianRelPos) / (1.0 - relPosition))
 			deviation = DEVIATION_STRICTNESS * (deviationRel - 1.0) * errorSum / len(otherLayers)
 			return min(1.0, deviation)
 		except ZeroDivisionError:
@@ -97,7 +97,7 @@ class HandleRelations(ReporterPlugin):
 			tool = currentController.toolDrawDelegate()
 			textToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolText"))
 			handToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolHand"))
-			if not textToolIsActive and not handToolIsActive: 
+			if not textToolIsActive and not handToolIsActive:
 				return True
 		return False
 
@@ -115,7 +115,7 @@ class HandleRelations(ReporterPlugin):
 		bothHandlesLength = vectorLength(bothHandlesX, bothHandlesY)
 		offsetX = - bothHandlesY / bothHandlesLength * offsetLength
 		offsetY = bothHandlesX / bothHandlesLength * offsetLength
-		self.drawTextAtPoint(text, NSPoint(node.position.x + offsetX, node.position.y + offsetY), align = textAlignment, fontColor = fontColor, fontSize = fontSize)
+		self.drawTextAtPoint(text, NSPoint(node.position.x + offsetX, node.position.y + offsetY), align=textAlignment, fontColor=fontColor, fontSize=fontSize)
 
 	@objc.python_method
 	def drawRelativePosition(self, prevNode, node, nextNode, pathIndex, layer, otherLayers):
@@ -128,8 +128,8 @@ class HandleRelations(ReporterPlugin):
 			green = DEVIATION_GREEN_MAX - deviation * DEVIATION_GREEN_FACTOR
 			green = max(0.0, green)
 			textColor = NSColor.colorWithRed_green_blue_alpha_(red, green, 0.0, 1.0)
-			textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR;
-		self.drawTextNearNode(prevNode, node, nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
+			textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR
+		self.drawTextNearNode(prevNode, node, nextNode, text="{:.2f}".format(relPosition).lstrip('0'), fontColor=textColor, fontSize=textSize)
 
 	@objc.python_method
 	def drawLineFromNodeToPoint(self, node, line):
@@ -153,7 +153,7 @@ class HandleRelations(ReporterPlugin):
 	# returns True if the node is to be ignored
 	@objc.python_method
 	def drawOtherDirections(self, node, pathIndex, layer, otherLayers):
-		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set() 
+		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set()
 		inHandleX, inHandleY = pointDiff(node.prevNode, node)
 		outHandleX, outHandleY = pointDiff(node.nextNode, node)
 		inHandleLengthSq = inHandleX**2 + inHandleY**2
@@ -193,7 +193,7 @@ class HandleRelations(ReporterPlugin):
 			return
 		if not layer.parent.mastersCompatible:
 			return
-		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer]
+		otherLayers = [otherLayer for otherLayer in layer.parent.layers if otherLayer is not layer and otherLayer.isMasterLayer]
 		pathIndex = 0
 		for path in layer.paths:
 			# smooth nodes:
