@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
+from GlyphsApp import Glyphs, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
 import operator
 from AppKit import NSPoint
 

@@ -1,9 +1,11 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-import math, statistics
+from Cocoa import NSColor, NSBezierPath, NSClassFromString, NSPoint
+from GlyphsApp import OFFCURVE
+from GlyphsApp.plugins import ReporterPlugin
+import math
+import statistics
 
 TAU = 6.283185307179586
 TEXT_OFFSET = 15

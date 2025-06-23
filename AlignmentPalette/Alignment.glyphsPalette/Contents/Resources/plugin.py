@@ -3,9 +3,9 @@ from __future__ import division, print_function, unicode_literals
 
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-from vanilla import *
+from GlyphsApp import Glyphs, GSEditViewController, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
+from vanilla import Window, Group, TextBox, EditText, HorizontalLine
 from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY
 # maximum number of zones to be diasplayed
 # increase this value if you have more zones in your font
