@@ -158,28 +158,32 @@ class SymmetrifyDialog(object):
 						# ^ this check is for performance only,
 						#   to avoid treating point pairs twice
 						x, y = xy[point_index]
-						partner_x, partner_y = xy[partner_index]
-						if current_is_horizontal:
-							rx = 0.5 * (x - partner_x)
-							ry = 0.5 * (y + partner_y) - self.cy
-							rx += SMALL_POS if rx > 0 else SMALL_NEG
-							ry += SMALL_POS if ry > 0 else SMALL_NEG
-							x = apply_grid(self.cx + rx)
-							y = apply_grid(self.cy + ry)
-							if point_index != partner_index:
-							# ^ the effect of this check is that points on the line of symmetry
-							#   are treated conservatively (i.e. keep their position if almost on the line)
-								# the partner is strictly mirrored:
-								xy[partner_index] = (apply_grid(self.cx - rx), y)
+						if point_index == partner_index:
+							# point is (should be) on the line of symmetry
+							# but this may be imposible with integer coordinates
+							# and odd bbox size (i.e. .5 centre)
+							if current_is_horizontal:
+								x = self.cx + (SMALL_NEG if x < self.cx else SMALL_POS)
+								# ^ the added value means it will be rounded towards its original position
+							else:
+								y = self.cy + (SMALL_NEG if y < self.cy else SMALL_POS)
 						else:
-							ry = 0.5 * (y - partner_y)
-							rx = 0.5 * (x + partner_x) - self.cx
+							partner_x, partner_y = xy[partner_index]
+							if current_is_horizontal:
+								rx = 0.5 * (x - partner_x)
+								ry = 0.5 * (y + partner_y) - self.cy
+							else:
+								ry = 0.5 * (y - partner_y)
+								rx = 0.5 * (x + partner_x) - self.cx
 							ry += SMALL_POS if ry > 0 else SMALL_NEG
 							rx += SMALL_POS if rx > 0 else SMALL_NEG
-							y = apply_grid(self.cy + ry)
-							x = apply_grid(self.cx + rx)
-							if point_index != partner_index:
-								xy[partner_index] = (x, apply_grid(self.cy - ry))
+							# ^ the added value means it will be rounded away from the centre
+							x = self.cx + rx
+							y = self.cy + ry
+							if current_is_horizontal:
+								xy[partner_index] = (self.cx - rx, y)
+							else:
+								xy[partner_index] = (x, self.cy - ry)
 						xy[point_index] = (x, y)
 					if partner_index == 0:
 						partner_index = len(contour) - 1
