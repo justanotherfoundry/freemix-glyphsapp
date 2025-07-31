@@ -133,7 +133,7 @@ class SymmetrifyDialog(object):
 		return best_partner_index_for_0
 
 	def flip(self, flip_horizontal, flip_vertical):
-		flips = [flip_horizontal] + [False] * flip_vertical
+		flips = [True] * flip_horizontal + [False] * flip_vertical
 		for contour in self.contours:
 			if PERFECT_SYMMETRY and self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
 				# we have points on the line of symmetry
