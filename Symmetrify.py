@@ -35,6 +35,9 @@ INSTANT_SYMMETRIFICATION = None
 # set INSTANT_SYMMETRIFICATION to 'S', 'T', 'C', 'H' or '*'
 # to perform the symmetrification without showing the dialogue
 
+SMALL_NEG = -1.0 / 4096
+SMALL_POS = 1.0 / 4096
+
 try:
 	from vanilla import Window, SquareButton
 except:
@@ -159,8 +162,8 @@ class SymmetrifyDialog(object):
 						if current_is_horizontal:
 							rx = 0.5 * (x - partner_x)
 							ry = 0.5 * (y + partner_y) - self.cy
-							rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
-							ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
+							rx += SMALL_POS if rx > 0 else SMALL_NEG
+							ry += SMALL_POS if ry > 0 else SMALL_NEG
 							x = apply_grid(self.cx + rx)
 							y = apply_grid(self.cy + ry)
 							if point_index != partner_index:
@@ -171,8 +174,8 @@ class SymmetrifyDialog(object):
 						else:
 							ry = 0.5 * (y - partner_y)
 							rx = 0.5 * (x + partner_x) - self.cx
-							ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
-							rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
+							ry += SMALL_POS if ry > 0 else SMALL_NEG
+							rx += SMALL_POS if rx > 0 else SMALL_NEG
 							y = apply_grid(self.cy + ry)
 							x = apply_grid(self.cx + rx)
 							if point_index != partner_index:
@@ -208,8 +211,8 @@ class SymmetrifyDialog(object):
 				other_point = contour[other_point_index]
 				rx = 0.5 * (point.x - other_point.x)
 				ry = 0.5 * (point.y - other_point.y)
-				rx += 1.0 / 4096 if rx > 0 else -1.0 / 4096
-				ry += 1.0 / 4096 if ry > 0 else -1.0 / 4096
+				rx += SMALL_POS if rx > 0 else SMALL_NEG
+				ry += SMALL_POS if ry > 0 else SMALL_NEG
 				point.x = apply_grid(self.cx + rx)
 				point.y = apply_grid(self.cy + ry)
 				other_point.x = apply_grid(self.cx - rx)
