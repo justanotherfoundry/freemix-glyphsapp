@@ -46,6 +46,10 @@ except:
 	else:
 		Message("This script requires the Vanilla module. To install it, go to Glyphs > Preferences > Addons > Modules and click the Install Modules button.", "Missing module")
 
+def swapped_if(t, do_swap):
+	if do_swap:
+		return (t[1], t[0])
+	return t
 
 def apply_grid(v):
 	if font.grid > 0:
@@ -150,6 +154,7 @@ class SymmetrifyDialog(object):
 				self.cx = apply_half_grid(self.cx)
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
+			almost_one = 1023 / 1024 if font.grid > 0 else 1
 			for current_is_horizontal in flips:
 				partner_index = self.get_flip_partner(contour, current_is_horizontal)
 				assert partner_index is not None
@@ -157,34 +162,20 @@ class SymmetrifyDialog(object):
 					if point_index <= partner_index:
 						# ^ this check is for performance only,
 						#   to avoid treating point pairs twice
-						x, y = xy[point_index]
-						if point_index == partner_index:
-							# point is (should be) on the line of symmetry
-							# but this may be imposible with integer coordinates
-							# and odd bbox size (i.e. .5 centre)
-							if current_is_horizontal:
-								x = self.cx + (SMALL_NEG if x < self.cx else SMALL_POS)
-								# ^ the added value means it will be rounded towards its original position
-							else:
-								y = self.cy + (SMALL_NEG if y < self.cy else SMALL_POS)
-						else:
-							partner_x, partner_y = xy[partner_index]
-							if current_is_horizontal:
-								rx = 0.5 * (x - partner_x)
-								ry = 0.5 * (y + partner_y) - self.cy
-							else:
-								ry = 0.5 * (y - partner_y)
-								rx = 0.5 * (x + partner_x) - self.cx
-							ry += SMALL_POS if ry > 0 else SMALL_NEG
-							rx += SMALL_POS if rx > 0 else SMALL_NEG
-							# ^ the added value means it will be rounded away from the centre
-							x = self.cx + rx
-							y = self.cy + ry
-							if current_is_horizontal:
-								xy[partner_index] = (self.cx - rx, y)
-							else:
-								xy[partner_index] = (x, self.cy - ry)
-						xy[point_index] = (x, y)
+						x, y = swapped_if(xy[point_index], current_is_horizontal)
+						partner_x, partner_y = swapped_if(xy[partner_index], current_is_horizontal)
+						c_x, c_y = swapped_if((self.cx, self.cy), current_is_horizontal)
+						correction_x = 0.5 * (partner_x - x)
+						correction_y = (c_y - 0.5 * (partner_y + y))
+						# ensure we don’t end up with .5 coordinates:
+						correction_x *= almost_one if partner_x >= x else 1.0/almost_one
+						correction_y *= almost_one if partner_y >= y else 1.0/almost_one
+						x += correction_x
+						y += correction_y
+						xy[point_index] = swapped_if((x, y), current_is_horizontal)
+						if point_index != partner_index:
+							partner_y = 2 * c_y - y
+							xy[partner_index] = swapped_if((x, partner_y), current_is_horizontal)
 					if partner_index == 0:
 						partner_index = len(contour) - 1
 					else:
