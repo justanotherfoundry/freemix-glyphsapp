@@ -46,6 +46,7 @@ class SuffixesPalette( PalettePlugin ):
 	# in simulationMode this returns ( oldName, newName ) if newName already exists
 	@objc.python_method
 	def changeDotSuffix( self, newSuffix, index, simulationMode = False ):
+		newSuffix = newSuffix.strip()
 		for glyph in self.selectedGlyphs:
 			split = self.dotSplit( glyph.name )
 			try:
@@ -68,6 +69,7 @@ class SuffixesPalette( PalettePlugin ):
 	# for all selected glyphs
 	@objc.python_method
 	def changeNameEnding( self, newSuffix, n ):
+		newSuffix = newSuffix.strip()
 		for glyph in self.selectedGlyphs:
 			glyph.name = glyph.name[:-n] + newSuffix
 
