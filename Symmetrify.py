@@ -180,7 +180,12 @@ class SymmetrifyDialog(object):
 						xy[point_index] = swapped_if((x, y), current_is_horizontal)
 						if point_index != partner_index:
 							partner_y = 2 * c_y - y
-							xy[partner_index] = swapped_if((x, partner_y), current_is_horizontal)
+							if is_last_round:
+								# we can use the perfectly mirrored x here:
+								xy[partner_index] = swapped_if((x, partner_y), current_is_horizontal)
+							else:
+								partner_x -= correction_x
+								xy[partner_index] = swapped_if((partner_x, partner_y), current_is_horizontal)
 					if partner_index == 0:
 						partner_index = len(contour) - 1
 					else:
