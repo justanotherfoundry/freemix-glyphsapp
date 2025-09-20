@@ -154,8 +154,11 @@ class SymmetrifyDialog(object):
 				self.cx = apply_half_grid(self.cx)
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
-			almost_one = 1023 / 1024 if font.grid > 0 else 1
 			for current_is_horizontal in flips:
+				is_last_round = current_is_horizontal == flips[-1]
+				almost_one = 1023 / 1024 if font.grid > 0 else 1
+				if is_last_round:
+					almost_one *= almost_one
 				partner_index = self.get_flip_partner(contour, current_is_horizontal)
 				assert partner_index is not None
 				for point_index in range(len(contour)):
