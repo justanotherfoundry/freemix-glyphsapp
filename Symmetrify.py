@@ -165,6 +165,8 @@ class SymmetrifyDialog(object):
 						x, y = swapped_if(xy[point_index], current_is_horizontal)
 						partner_x, partner_y = swapped_if(xy[partner_index], current_is_horizontal)
 						c_x, c_y = swapped_if((self.cx, self.cy), current_is_horizontal)
+						# at this point, we are assuming a horizontal axis (vertical flipping).
+						# the x values will be (nearly) the same.
 						correction_x = 0.5 * (partner_x - x)
 						correction_y = (c_y - 0.5 * (partner_y + y))
 						# ensure we don’t end up with .5 coordinates:
