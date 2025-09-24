@@ -119,10 +119,9 @@ class AlignmentPalette (PalettePlugin):
 		glyph = layer.parent
 		if not glyph:
 			return []
-		font = glyph.parent
-		if not font:
+		if not self.font:
 			return []
-		masters = [m for m in font.masters if m.id == layer.associatedMasterId]
+		masters = [m for m in self.font.masters if m.id == layer.associatedMasterId]
 		if not masters:
 			return []
 		master = masters[0]
