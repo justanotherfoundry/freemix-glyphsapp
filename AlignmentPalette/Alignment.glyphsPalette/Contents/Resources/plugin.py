@@ -379,7 +379,11 @@ class AlignmentPalette (PalettePlugin):
 			# set the layers' centers
 			for layer in self.font.selectedLayers:
 				if (len(layer.components) > 0) == hasComponents:
-					layer.parent.beginUndo()
+					try:
+						layer.parent.beginUndo()
+					except AttributeError:
+						# probably a line break
+						continue
 					self.setCenterOfLayer(layer, newCenterX, newCenterY)
 					layer.parent.endUndo()
 		# restore the number of subdivisions
