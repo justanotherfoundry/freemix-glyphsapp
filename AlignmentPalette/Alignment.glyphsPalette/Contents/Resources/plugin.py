@@ -56,6 +56,9 @@ class AlignmentPalette (PalettePlugin):
 			shiftY = newCenterY - centerY
 		except TypeError:
 			shiftY = 0
+		if self.font.grid != 0:
+			shiftX = self.font.grid * round(shiftX/self.font.grid)
+			shiftY = self.font.grid * round(shiftY/self.font.grid)
 		layer.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
 		layer.syncMetrics()
 
