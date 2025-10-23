@@ -49,11 +49,11 @@ class AlignmentPalette (PalettePlugin):
 	def setCenterOfLayer(self, layer, newCenterX, newCenterY):
 		centerX, centerY = self.centerOfLayer(layer)
 		try:
-			shiftX = newCenterX - centerX
+			shiftX = newCenterX - centerX + 0.125
 		except TypeError:
 			shiftX = 0
 		try:
-			shiftY = newCenterY - centerY
+			shiftY = newCenterY - centerY + 0.125
 		except TypeError:
 			shiftY = 0
 		if self.font.grid != 0:
