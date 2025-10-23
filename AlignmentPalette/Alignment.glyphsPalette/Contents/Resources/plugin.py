@@ -301,9 +301,9 @@ class AlignmentPalette (PalettePlugin):
 			return
 		if sender:
 			self.font = sender.object()
-			if isinstance(self.font, GSEditViewController): # it is GSEditViewController in Glyphs3
+			if isinstance(sender.object(), GSEditViewController):
 				try:
-					self.font = self.font.representedObject()
+					self.font = sender.object().representedObject()
 				except:
 					pass
 		if not self.font:
