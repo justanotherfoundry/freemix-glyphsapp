@@ -306,6 +306,11 @@ class AlignmentPalette (PalettePlugin):
 					self.font = sender.object().representedObject()
 				except:
 					pass
+			if isinstance(sender.object(), GSFontViewController):
+				try:
+					self.font = sender.object().parent
+				except:
+					pass
 		if not self.font:
 			return
 		# do not update when too may glyphs are selected
