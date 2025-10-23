@@ -149,7 +149,7 @@ class GlyphnameDialog( object):
 	
 	def buttonCallback( self, sender ):
 		alignment = sender.getTitle()
-		glyphname = self.w.glyphname.get()
+		glyphname = self.w.glyphname.get().strip(" /")
 		if len( alignment ) != 1:
 			# this implies that a quick-insert button was pressed
 			title_split = alignment.split()
