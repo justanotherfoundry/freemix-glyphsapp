@@ -247,13 +247,13 @@ class AlignmentPalette (PalettePlugin):
 			'fr': 'Alignement',
 			'pt': 'Alinhamento',
 		})
-		width = 150
-		self.marginTop = 7
-		self.marginLeft = 7
+		width = 160
+		self.marginTop = 6
+		self.marginLeft = 6
 		self.lineSpacing = 21
 		smallSize = NSFont.systemFontSizeForControlSize_(NSFont.smallSystemFontSize())
 		textFieldHeight = smallSize + 7
-		textFieldWidth = 70
+		textFieldWidth = 86
 		# lockHeight = textFieldHeight
 		innerWidth = width - 2 * self.marginLeft
 		height = (MAX_ZONES + 4) * self.lineSpacing + self.marginTop * 3
