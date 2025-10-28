@@ -397,6 +397,7 @@ class AlignmentPalette (PalettePlugin):
 		if not STICK_TO_GRID:
 			self.font.gridSubDivisions /= 2
 		Glyphs.redraw()
+		self.update()
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# the following methods are adopted from the SDK without any changes
