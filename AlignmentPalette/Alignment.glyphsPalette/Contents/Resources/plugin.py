@@ -7,8 +7,9 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
 from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY
-# maximum number of zones to be diasplayed
-# increase this value if you have more zones in your font
+
+# maximum number of zones to be displayed
+# (increase this value if you have more zones in your font)
 MAX_ZONES = 8
 
 # if False, this deactivates the grid, i.e. allows fractional positioning
