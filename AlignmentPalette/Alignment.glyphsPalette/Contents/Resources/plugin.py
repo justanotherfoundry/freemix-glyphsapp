@@ -6,7 +6,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from vanilla import *
-from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY
+from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY, NSEvent, NSAlternateKeyMask
 
 # maximum number of zones to be displayed
 # (increase this value if you have more zones in your font)
@@ -396,11 +396,20 @@ class AlignmentPalette (PalettePlugin):
 				self.font.gridSubDivisions = 1
 			# we temporarily double the number of subdivisions to allow for precise centering
 			self.font.gridSubDivisions *= 2
+		applyToAllMasters = NSEvent.modifierFlags() & NSShiftKeyMask
+		if applyToAllMasters:
+			layers = list({
+				l.parent.layers[m.id]
+				for l in self.font.selectedLayers
+				for m in self.font.masters
+			})
+		else:
+			layers = self.font.selectedLayers
 		# we first treat only layers without components,
 		# so as to make sure we are not updating the referenced glyph after the component
 		for hasComponents in [False, True]:
 			# set the layers' centers
-			for layer in self.font.selectedLayers:
+			for layer in layers:
 				if (len(layer.components) > 0) == hasComponents:
 					try:
 						layer.parent.beginUndo()
