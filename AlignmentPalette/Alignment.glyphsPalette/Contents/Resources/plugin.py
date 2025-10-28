@@ -366,14 +366,29 @@ class AlignmentPalette (PalettePlugin):
 	def editTextCallback(self, editText):
 		if not self.font or not self.font.selectedLayers:
 			return
+		# x:
+		newCenterX = self.paletteView.group.centerX.get()
 		try:
-			newCenterX = float(self.paletteView.group.centerX.get())
+			newCenterX = float(newCenterX)
 		except ValueError:
-			newCenterX = None
+			# see whether it is a glyph name:
+			glyph = self.font.glyphs[newCenterX]
+			if glyph:
+				layer = glyph.layers[self.font.selectedFontMaster.id]
+				newCenterX, _ = self.centerOfLayer(layer)
+			else:
+				newCenterX = None
+		# y:
+		newCenterY = self.paletteView.group.centerY.get()
 		try:
-			newCenterY = float(self.paletteView.group.centerY.get())
+			newCenterY = float(newCenterY)
 		except ValueError:
-			newCenterY = None
+			glyph = self.font.glyphs[newCenterY]
+			if glyph:
+				layer = glyph.layers[self.font.selectedFontMaster.id]
+				_, newCenterY = self.centerOfLayer(layer)
+			else:
+				newCenterY = None
 		if not STICK_TO_GRID:
 			# zero subdivisions would not make sense
 			if self.font.gridSubDivisions == 0:
