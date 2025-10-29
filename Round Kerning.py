@@ -10,8 +10,6 @@ Rounds the kerning values to a chosen number.
 In addition, values smaller than MIN_VALUE are erased.
 '''
 
-from __future__ import division
-
 MIN_VALUE = 4
 QUANTISATION = 1
 from GlyphsApp import *

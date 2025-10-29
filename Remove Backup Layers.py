@@ -8,8 +8,6 @@ __doc__ = '''
 Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
 '''
 
-from __future__ import division, print_function, unicode_literals
-
 font = Glyphs.currentDocument.font
 selected_glyphs = set( [ layer.parent for layer in font.selectedLayers ] )
 

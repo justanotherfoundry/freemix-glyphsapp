@@ -16,7 +16,6 @@ H - creates 2-axis symmetry (ie. all the above)
 The buttons are available only as far as the node structure allows.
 '''
 
-from __future__ import division
 import math
 from AppKit import NSPoint
 

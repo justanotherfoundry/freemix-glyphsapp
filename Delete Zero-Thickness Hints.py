@@ -10,8 +10,6 @@ or otherwise invalid hints
 from all glyphs in the font.
 '''
 
-from __future__ import division, print_function, unicode_literals
-
 doc = Glyphs.currentDocument
 font = doc.font
 
