@@ -1,17 +1,16 @@
 #MenuTitle: Delete Zero-Thickness Hints
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-from __future__ import division, print_function, unicode_literals
-
-__doc__='''
+__doc__ = '''
 Removes all zero-thickness,
 or otherwise invalid hints
 from all glyphs in the font.
 '''
+
+from __future__ import division, print_function, unicode_literals
 
 doc = Glyphs.currentDocument
 font = doc.font

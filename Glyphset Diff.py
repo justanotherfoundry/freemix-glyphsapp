@@ -1,5 +1,4 @@
-# MenuTitle: Glyphset Diff
-# encoding: utf-8
+#MenuTitle: Glyphset Diff
 
 # by Tim Ahrens
 # http://justanotherfoundry.com

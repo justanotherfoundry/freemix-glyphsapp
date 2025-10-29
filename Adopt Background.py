@@ -1,11 +1,10 @@
 #MenuTitle: Adopt Background
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
+__doc__ = '''
 The selected nodes will adopt the position of the corresponding nodes in the background.
 In combination with Insert Glyph to Background, you can easily
 transfer parts of the outlines between glyphs.

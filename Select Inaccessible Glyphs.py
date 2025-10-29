@@ -1,7 +1,10 @@
 #MenuTitle: Select Inaccessible Glyphs
-# encoding: utf-8
 
-__doc__='''
+# by Tim Ahrens
+# http://justanotherfoundry.com
+# https://github.com/justanotherfoundry/freemix-glyphsapp
+
+__doc__ = '''
 Run this macro while in the Font View.
 
 The macro selects all glyphs that
@@ -12,7 +15,6 @@ The macro selects all glyphs that
 i.e. are not accessible in the final font.
 
 These glyphs can usually be excluded from the final exported OTF font.
-
 '''
 
 from GlyphsApp import *

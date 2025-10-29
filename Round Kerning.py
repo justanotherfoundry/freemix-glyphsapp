@@ -1,16 +1,16 @@
 #MenuTitle: Round Kerning
-# encoding: utf-8
-from __future__ import division
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__="""
+__doc__ = '''
 Rounds the kerning values to a chosen number.
 
 In addition, values smaller than MIN_VALUE are erased.
-"""
+'''
+
+from __future__ import division
 
 MIN_VALUE = 4
 QUANTISATION = 1

@@ -1,11 +1,10 @@
 #MenuTitle: Delete BCP
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
+__doc__ = '''
 This literally deletes the selected BCP(s):
 If you delete one of the two BCPs in a cubic curve then it becomes quadratic.
 '''

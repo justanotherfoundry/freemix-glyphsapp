@@ -1,18 +1,17 @@
 #MenuTitle: Jump to Alternate
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__="""
+__doc__ = '''
 In the edit view, use this script to “jump” back and forth (or to circle)
 between alternate glyphs such as one, one.lf and one.tosf.
 
 Tip: Give it a keyboard shortcut!
 
 If several glyphs are selected you can choose to add or remove suffixes.
-"""
+'''
 
 from builtins import chr
 import vanilla

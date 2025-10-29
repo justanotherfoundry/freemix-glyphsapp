@@ -1,12 +1,11 @@
 #MenuTitle: Symmetrify Terminal
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
-	Select a stroke end (i.e. the two nodes). This script makes the terminal perpendicular (symmetrical).
+__doc__ = '''
+Select a stroke end (i.e. the two nodes). This script makes the terminal perpendicular (symmetrical).
 '''
 
 import math

@@ -1,11 +1,10 @@
 #MenuTitle: Make Cubic Curve
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
+__doc__ = '''
 Same as Path > Other > Convert to cubic
 but it can be applied to individual curve segments
 (i.e. respects the selection).

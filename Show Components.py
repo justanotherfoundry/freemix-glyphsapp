@@ -1,15 +1,14 @@
 #MenuTitle: Show Components
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__="""
+__doc__ = '''
 Shows the glyphs contained within the selected glyph(s).
 Useful for “dissolving” ligatures, or to determine glyph set dependencies
 (i.e. glyphs that cannot be deleted if the selected ones are to be retained).
-"""
+'''
 
 tabLayers = Glyphs.font.currentTab.layers
 for layer in Glyphs.font.selectedLayers:

@@ -1,16 +1,14 @@
 #MenuTitle: Print Coeffs
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-from __future__ import division, print_function, unicode_literals
-
-__doc__='''
+__doc__ = '''
 Prints the interpolation coefficients for each master in all instances (make sure the Macro Panel is open).
 '''
 
+from __future__ import division, print_function, unicode_literals
 import re
 
 abbreviations = {

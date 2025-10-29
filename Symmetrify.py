@@ -1,14 +1,10 @@
 #MenuTitle: Symmetrify
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-from __future__ import division
-import math
-
-__doc__='''
+__doc__ = '''
 Symmetrifies the glyph shape.
 
 S - creates point reflection (rotational symmetry)
@@ -20,6 +16,8 @@ H - creates 2-axis symmetry (ie. all the above)
 The buttons are available only as far as the node structure allows.
 '''
 
+from __future__ import division
+import math
 from AppKit import NSPoint
 
 doc = Glyphs.currentDocument

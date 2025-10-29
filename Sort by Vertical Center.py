@@ -1,8 +1,12 @@
-# MenuTitle: Sort by Vertical Center
-# -*- coding: utf-8 -*-
-__doc__ = """
+#MenuTitle: Sort by Vertical Center
+
+# by Tim Ahrens
+# http://justanotherfoundry.com
+# https://github.com/justanotherfoundry/freemix-glyphsapp
+
+__doc__ = '''
 Outputs the selected glyphs (from Font or Edit view) in a new tab, sorted by vertical center.
-"""
+'''
 
 import GlyphsApp
 

@@ -4,9 +4,8 @@
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-'''
+__doc__ = '''
 Converts the class kerning to glyph-glyph pairs
-
 '''
 
 doc = Glyphs.currentDocument

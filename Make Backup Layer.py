@@ -1,15 +1,14 @@
 #MenuTitle: Make Backup Layer
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__="""
+__doc__ = '''
 Same as the “+” button on the Layers palette.
 
 I wrote this script mostly because it allows me to assign a keyboard shortcut. Also, it correctly copies brace layers, unlike Glyphs’ built-in function.
-"""
+'''
 
 GSLayer.isBraceLayer = property(lambda self: bool(self.pyobjc_instanceMethods.isBraceLayer()),
 								lambda self, value: self.setBraceLayer_(value) )

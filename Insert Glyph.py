@@ -1,11 +1,10 @@
 #MenuTitle: Insert Glyph
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__="""
+__doc__ = '''
 1. Enter a glyph name.
 2. Press the left align or right align button.
 3. This script will clear the mask, then insert the specified glyph into the mask.
@@ -13,8 +12,7 @@ __doc__="""
 - With right align selected, the contours will be pasted as if the advance widths were aligned.
 - The keyboard shortcuts for left and right aligned are Enter and Esc.
 - It is sufficient to enter the beginning of the glyph name, e.g. "deg" for "degree".
-
-"""
+'''
 
 from vanilla import Window, EditText, Button
 

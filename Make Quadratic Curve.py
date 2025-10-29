@@ -1,11 +1,10 @@
 #MenuTitle: Make Quadratic Curve
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
+__doc__ = '''
 Converts cubic curves to quadratic curves (if a BCP is selected).
 
 This does not try to retain the shape, it does not add or remove nodes, it simply re-defines the cuve type.

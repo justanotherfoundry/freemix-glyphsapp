@@ -1,11 +1,10 @@
 #MenuTitle: Adopt from Other Font
-# encoding: utf-8
 
 # by Tim Ahrens
 # http://justanotherfoundry.com
 # https://github.com/justanotherfoundry/freemix-glyphsapp
 
-__doc__='''
+__doc__ = '''
 Adopts glyph properties from the same-named glyph in a different font.
 '''
 
