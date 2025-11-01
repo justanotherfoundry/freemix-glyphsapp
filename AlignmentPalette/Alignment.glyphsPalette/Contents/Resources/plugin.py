@@ -1,7 +1,3 @@
-# encoding: utf-8
-from __future__ import division, print_function, unicode_literals
-
-
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
@@ -369,27 +365,23 @@ class AlignmentPalette (PalettePlugin):
 			return
 		# x:
 		newCenterX = self.paletteView.group.centerX.get()
+		sourceGlyphX = None
 		try:
 			newCenterX = float(newCenterX)
 		except ValueError:
 			# see whether it is a glyph name:
-			glyph = self.font.glyphs[newCenterX]
-			if glyph:
-				layer = glyph.layers[self.font.selectedFontMaster.id]
-				newCenterX, _ = self.centerOfLayer(layer)
-			else:
-				newCenterX = None
+			sourceGlyphX = self.font.glyphs[newCenterX]
+			if not sourceGlyphX:
+				return
 		# y:
 		newCenterY = self.paletteView.group.centerY.get()
+		sourceGlyphY = None
 		try:
 			newCenterY = float(newCenterY)
 		except ValueError:
-			glyph = self.font.glyphs[newCenterY]
-			if glyph:
-				layer = glyph.layers[self.font.selectedFontMaster.id]
-				_, newCenterY = self.centerOfLayer(layer)
-			else:
-				newCenterY = None
+			sourceGlyphY = self.font.glyphs[newCenterY]
+			if not sourceGlyphY:
+				return
 		if not STICK_TO_GRID:
 			# zero subdivisions would not make sense
 			if self.font.gridSubDivisions == 0:
@@ -416,6 +408,17 @@ class AlignmentPalette (PalettePlugin):
 					except AttributeError:
 						# probably a line break
 						continue
+					if sourceGlyphX:
+						sourceLayerX = sourceGlyphX.layers[layer.layerId]
+						if not sourceLayerX:
+							# we seem to have a non-master layer and a source glyph
+							continue
+						newCenterX, _ = self.centerOfLayer(sourceLayerX)
+					if sourceGlyphY:
+						sourceLayerY = sourceGlyphY.layers[layer.layerId]
+						if not sourceLayerY:
+							continue
+						_, newCenterY = self.centerOfLayer(sourceLayerY)
 					self.setCenterOfLayer(layer, newCenterX, newCenterY)
 					layer.parent.endUndo()
 		# restore the number of subdivisions
