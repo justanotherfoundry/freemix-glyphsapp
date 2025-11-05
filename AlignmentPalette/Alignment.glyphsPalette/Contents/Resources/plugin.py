@@ -43,19 +43,24 @@ class AlignmentPalette (PalettePlugin):
 
 	# sets the center of the bounding box of a layer
 	@objc.python_method
-	def setCenterOfLayer(self, layer, newCenterX, newCenterY):
+	def setCenterOfLayer(self, layer, newCenter, isX):
 		centerX, centerY = self.centerOfLayer(layer)
-		try:
-			shiftX = newCenterX - centerX + 0.125
-		except TypeError:
-			shiftX = 0
-		try:
-			shiftY = newCenterY - centerY + 0.125
-		except TypeError:
+		if isX:
 			shiftY = 0
-		if self.font.grid != 0:
-			shiftX = self.font.grid * round(shiftX/self.font.grid)
-			shiftY = self.font.grid * round(shiftY/self.font.grid)
+			try:
+				shiftX = newCenter - centerX + 0.125
+			except TypeError:
+				return
+			if self.font.grid != 0:
+				shiftX = self.font.grid * round(shiftX/self.font.grid)
+		else:
+			shiftX = 0
+			try:
+				shiftY = newCenter - centerY + 0.125
+			except TypeError:
+				return
+			if self.font.grid != 0:
+				shiftY = self.font.grid * round(shiftY/self.font.grid)
 		layer.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
 		layer.syncMetrics()
 
@@ -363,6 +368,7 @@ class AlignmentPalette (PalettePlugin):
 	def editTextCallback(self, editText):
 		if not self.font or not self.font.selectedLayers:
 			return
+		isX = editText == self.paletteView.group.centerX
 		# x:
 		newCenterX = self.paletteView.group.centerX.get()
 		sourceGlyphX = None
@@ -419,7 +425,8 @@ class AlignmentPalette (PalettePlugin):
 						if not sourceLayerY:
 							continue
 						_, newCenterY = self.centerOfLayer(sourceLayerY)
-					self.setCenterOfLayer(layer, newCenterX, newCenterY)
+					newCenter = newCenterX if isX else newCenterY
+					self.setCenterOfLayer(layer, newCenter, isX)
 					layer.parent.endUndo()
 		# restore the number of subdivisions
 		if not STICK_TO_GRID:
