@@ -13,9 +13,9 @@
 	<key>CFBundleName</key>
 	<string>Alignment Palette</string>
 	<key>CFBundleVersion</key>
-	<string>121</string>
+	<string>122</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.20</string>
+	<string>1.21</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/AlignmentPalette/Alignment.glyphsPalette/Contents/Info.plist</string>
 	<key>productPageURL</key>
@@ -23,7 +23,7 @@
 	<key>productReleaseNotes</key>
 	<string>allow glyph/name or character; all masters at once</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Tim Ahrens, 2025</string>
+	<string>Copyright Tim Ahrens, 2025</string>
 	<key>NSPrincipalClass</key>
 	<string>AlignmentPalette</string>
 	<key>PyMainFileNames</key>
