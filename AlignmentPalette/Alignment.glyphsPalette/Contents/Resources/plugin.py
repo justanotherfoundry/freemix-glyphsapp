@@ -45,22 +45,12 @@ class AlignmentPalette (PalettePlugin):
 	@objc.python_method
 	def setCenterOfLayer(self, layer, newCenter, isX):
 		centerX, centerY = self.centerOfLayer(layer)
-		if isX:
-			shiftY = 0
-			try:
-				shiftX = newCenter - centerX + 0.125
-			except TypeError:
-				return
-			if self.font.grid != 0:
-				shiftX = self.font.grid * round(shiftX/self.font.grid)
-		else:
-			shiftX = 0
-			try:
-				shiftY = newCenter - centerY + 0.125
-			except TypeError:
-				return
-			if self.font.grid != 0:
-				shiftY = self.font.grid * round(shiftY/self.font.grid)
+		oldCenter = centerX if isX else centerY
+		shift = newCenter - oldCenter + 0.125
+		if self.font.grid != 0:
+			shift = self.font.grid * round(shift/self.font.grid)
+		shiftX = shift if isX else 0
+		shiftY = shift if not isX else 0
 		layer.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
 		layer.syncMetrics()
 
