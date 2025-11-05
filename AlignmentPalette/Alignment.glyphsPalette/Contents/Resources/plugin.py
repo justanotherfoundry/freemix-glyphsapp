@@ -359,24 +359,14 @@ class AlignmentPalette (PalettePlugin):
 		if not self.font or not self.font.selectedLayers:
 			return
 		isX = editText == self.paletteView.group.centerX
-		# x:
-		newCenterX = self.paletteView.group.centerX.get()
-		sourceGlyphX = None
+		newCenter = editText.get()
+		sourceGlyph = None
 		try:
-			newCenterX = float(newCenterX)
+			newCenter = float(newCenter)
 		except ValueError:
 			# see whether it is a glyph name:
-			sourceGlyphX = self.font.glyphs[newCenterX]
-			if not sourceGlyphX:
-				return
-		# y:
-		newCenterY = self.paletteView.group.centerY.get()
-		sourceGlyphY = None
-		try:
-			newCenterY = float(newCenterY)
-		except ValueError:
-			sourceGlyphY = self.font.glyphs[newCenterY]
-			if not sourceGlyphY:
+			sourceGlyph = self.font.glyphs[newCenter]
+			if not sourceGlyph:
 				return
 		if not STICK_TO_GRID:
 			# zero subdivisions would not make sense
@@ -404,18 +394,12 @@ class AlignmentPalette (PalettePlugin):
 					except AttributeError:
 						# probably a line break
 						continue
-					if sourceGlyphX:
-						sourceLayerX = sourceGlyphX.layers[layer.layerId]
-						if not sourceLayerX:
-							# we seem to have a non-master layer and a source glyph
+					if sourceGlyph:
+						sourceLayer = sourceGlyph.layers[layer.layerId]
+						if not sourceLayer:
 							continue
-						newCenterX, _ = self.centerOfLayer(sourceLayerX)
-					if sourceGlyphY:
-						sourceLayerY = sourceGlyphY.layers[layer.layerId]
-						if not sourceLayerY:
-							continue
-						_, newCenterY = self.centerOfLayer(sourceLayerY)
-					newCenter = newCenterX if isX else newCenterY
+						sourceCenterX, sourceCenterY = self.centerOfLayer(sourceLayer)
+						newCenter = sourceCenterX if isX else sourceCenterY
 					self.setCenterOfLayer(layer, newCenter, isX)
 					layer.parent.endUndo()
 		# restore the number of subdivisions
