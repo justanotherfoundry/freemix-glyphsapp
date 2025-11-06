@@ -15,6 +15,7 @@ If several glyphs are selected you can choose to add or remove suffixes.
 
 from builtins import chr
 import vanilla
+from Foundation import NSString, NSMakeRange
 font = Glyphs.font
 
 def sharedSuffix(layers):
@@ -31,25 +32,17 @@ def sharedSuffix(layers):
 	return suffix
 
 def replaceInDisplayString(newString):
+	newString = NSString.stringWithString_(newString)
 	graphicView = font.currentTab.graphicView()
-	textStorage = graphicView.textStorage()
-	text = textStorage.text()
 	selectedRange = graphicView.selectedRange()
-	while 1:
-		selectedRange.length += 1
-		try:
-			subString = text.attributedSubstringFromRange_(selectedRange)
-		except IndexError:
-			selectedRange.length -= 1
-			break
-		if len(subString.string()) != 1:
-			selectedRange.length -= 1
-			break
-	# note: selectedRange.length will be 2 if the (nominal) Unicode value of the glyph is four-byte
-	#       (which is always the case for unencoded glyphs)
-	textStorage.willChangeValueForKey_('text')
-	text.replaceCharactersInRange_withString_(selectedRange, newString)
-	textStorage.didChangeValueForKey_('text')
+	textSelectionLength = selectedRange.length
+	if textSelectionLength == 0:
+		# no text selection but we want to replace the current glyph,
+		# i.e. to the right of the text cursor (which corresponds to font.selectedLayers)
+		selectedRange.length = 1
+	graphicView.replaceCharactersInRange_withString_(selectedRange, newString)
+	if textSelectionLength != 0:
+		graphicView.setSelectedRange_(NSMakeRange(selectedRange.location, newString.length()))
 
 class JumpDialog(object):
 
