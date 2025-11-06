@@ -18,6 +18,16 @@ import vanilla
 from Foundation import NSString, NSMakeRange
 font = Glyphs.font
 
+# returns the full suffix or '' or None
+def fullSuffix(glyph, baseName):
+	nameSplit = glyph.name.split('.', 1)
+	if nameSplit[0] == baseName:
+		try:
+			return nameSplit[1]
+		except IndexError:
+			return ''
+	return None
+
 def sharedSuffix(layers):
 	suffix = None
 	for layer in layers:
@@ -101,11 +111,15 @@ def jumpToAlternate():
 		# for example .notdef
 		return
 	alternates = []
+	dontJumpToSC = not currentGlyphName.endswith('.sc')
+	# ^ let’s not jump from non-SC to SC
 	for glyph in font.glyphs:
-		baseName = glyph.name.split('.', 1)[0]
-		if (currentBaseName == baseName and not glyph.name.endswith('.sc')) or glyph == currentLayer.parent:
-			# ^ the last condition ensures we add the current glyph (even if .sc) to the list of alterates
-			alternates.append(glyph)
+		suffix = fullSuffix(glyph, currentBaseName)
+		if suffix is None:
+			continue
+		if dontJumpToSC and glyph.name.endswith('.sc'):
+			continue
+		alternates.append(glyph)
 	if len(alternates) == 1:
 		# no others found
 		return
