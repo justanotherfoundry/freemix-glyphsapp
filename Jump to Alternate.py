@@ -46,6 +46,22 @@ def sharedSuffix(layers):
 			return None
 	return suffix
 
+def sharedAlternateSuffixes(font):
+	suffixes = None
+	for layer in font.selectedLayers:
+		currentSuffixes = []
+		currentBaseName = layer.parent.name.split('.', 1)[0]
+		for glyph in font.glyphs:
+			suffix = fullSuffix(glyph, currentBaseName)
+			if not suffix is None:
+				currentSuffixes.append(suffix)
+		currentSuffixes.sort()
+		if suffixes is None:
+			suffixes = set(currentSuffixes)
+		else:
+			suffixes.intersection_update(currentSuffixes)
+	return suffixes
+
 def replaceInDisplayString(newString):
 	newString = NSString.stringWithString_(newString)
 	graphicView = font.currentTab.graphicView()
@@ -98,12 +114,36 @@ class JumpDialog(object):
 
 def jumpToAlternate():
 	if len(font.selectedLayers) > 1:
-		dialog = JumpDialog()
-		dialog.w.open()
-		dialog.w.makeKey()
-		suffix = sharedSuffix(font.selectedLayers)
-		if suffix:
-			dialog.w.removeSuffix.set('.' + suffix)
+		alternateSuffixes = sharedAlternateSuffixes(font)
+		currentSuffix = sharedSuffix(font.selectedLayers)
+		if currentSuffix in alternateSuffixes:
+			alternateSuffixes = sorted(list(alternateSuffixes))
+			i = alternateSuffixes.index(currentSuffix)
+			nextSuffix = alternateSuffixes[(i + 1) % len(alternateSuffixes)]
+			if nextSuffix:
+				nextSuffix = '.' + nextSuffix
+			if currentSuffix:
+				currentSuffix = '.' + currentSuffix
+			newText = ''
+			for layer in font.selectedLayers:
+				glyph = layer.parent
+				glyphName = glyph.name
+				if currentSuffix == '':
+					glyphName += nextSuffix
+				elif glyphName.endswith(currentSuffix):
+					glyphName = glyphName[:-len(currentSuffix)] + nextSuffix
+				nextGlyph = font.glyphs[glyphName]
+				if nextGlyph:
+					glyph = nextGlyph
+				nextChar = chr(font.characterForGlyph(glyph))
+				newText += nextChar
+			replaceInDisplayString(newText)
+		else:
+			dialog = JumpDialog()
+			dialog.w.open()
+			dialog.w.makeKey()
+			if currentSuffix is not None:
+				dialog.w.removeSuffix.set('.' + currentSuffix)
 		return
 	# find new glyph:
 	try:
