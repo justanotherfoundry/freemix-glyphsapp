@@ -18,6 +18,13 @@ import vanilla
 from Foundation import NSString, NSMakeRange
 font = Glyphs.font
 
+# returns the suffix or ''
+def getSuffix(glyph):
+	nameSplit = glyph.name.split('.', 1)
+	if len(nameSplit) == 1:
+		return ''
+	return glyph.name.split('.')[-1]
+
 # returns the full suffix or '' or None
 def fullSuffix(glyph, baseName):
 	nameSplit = glyph.name.split('.', 1)
@@ -28,16 +35,14 @@ def fullSuffix(glyph, baseName):
 			return ''
 	return None
 
+# returns the shared suffix or '' or None
 def sharedSuffix(layers):
 	suffix = None
 	for layer in layers:
-		try:
-			glyphSuffix = layer.parent.name.split('.')[-1]
-			if not suffix:
-				suffix = glyphSuffix
-			elif glyphSuffix != suffix:
-				return None
-		except IndexError:
+		glyphSuffix = getSuffix(layer.parent)
+		if suffix is None:
+			suffix = glyphSuffix
+		elif glyphSuffix != suffix:
 			return None
 	return suffix
 
