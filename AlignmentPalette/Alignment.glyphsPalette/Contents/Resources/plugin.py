@@ -51,7 +51,9 @@ class AlignmentPalette (PalettePlugin):
 			shift = self.font.grid * round(shift/self.font.grid)
 		shiftX = shift if isX else 0
 		shiftY = shift if not isX else 0
-		layer.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
+		# shift all shapes (but _not_ the anchors):
+		for shape in layer.shapes:
+			shape.applyTransform([1.0, 0.0, 0.0, 1.0, shiftX, shiftY])
 		layer.syncMetrics()
 
 	# returns the center of the bounding box of a layer
