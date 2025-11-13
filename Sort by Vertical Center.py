@@ -32,7 +32,8 @@ def center_y(layer):
 	return bbox.origin.y + bbox.size.height / 2.0
 
 # sort layers by their center y
-sorted_layers = sorted(get_selected_layers(font), key=center_y)
+layers_without_duplicates = list(dict.fromkeys(get_selected_layers(font)))
+sorted_layers = sorted(layers_without_duplicates, key=center_y)
 
 tab_text = ""
 current_center = None
