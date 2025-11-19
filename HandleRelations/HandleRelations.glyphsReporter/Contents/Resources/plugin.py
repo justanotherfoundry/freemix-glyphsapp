@@ -197,7 +197,7 @@ class HandleRelations(ReporterPlugin):
 			return
 		if not layer.parent.mastersCompatible:
 			return
-		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and otherLayer.isMasterLayer and not otherLayer.name in ignoredMasters]
+		otherLayers = [otherLayer for otherLayer in layer.parent.layers if not otherLayer is layer and (otherLayer.isMasterLayer or otherLayer.isSpecialLayer) and not otherLayer.name in ignoredMasters]
 		pathIndex = 0
 		for path in layer.paths:
 			# smooth nodes:
