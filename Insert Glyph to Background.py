@@ -199,6 +199,7 @@ class GlyphnameDialog( object):
 						# the corresponding brace layer was not found in other_glyph.
 						# let’s interpolate it on-the-fly:
 						other_glyph_copy = other_glyph.copy()
+						other_glyph_copy.setUndoManager_(None)
 						other_glyph_copy.parent = font
 						# ^ Glyphs needs the font’s master coordinates for the re-interpolation
 						interpolatedLayer = layer.copy()
