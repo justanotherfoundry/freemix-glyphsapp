@@ -193,7 +193,7 @@ class GlyphnameDialog( object):
 						insert_paths( layer, other_layer, alignment, as_component_is_checked, clear_contents_is_checked )
 						break
 				else:
-					if layer.isBraceLayer:
+					if layer.isBraceLayer():
 						# the corresponding brace layer was not found in other_glyph.
 						# let’s interpolate it on-the-fly:
 						other_glyph_copy = other_glyph.copy()
