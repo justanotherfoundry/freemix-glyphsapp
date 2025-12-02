@@ -25,6 +25,11 @@ try:
 except KeyError:
 	layerIdAttribute = None
 
+# determine last layer:
+for layer in currentGlyph.layers:
+	if layer.associatedMasterId == currentLayer.associatedMasterId:
+		lastLayerId = layer.layerId
+
 textStorage.willChangeValueForKey_("text")
 if layerIdAttribute == currentLayer.layerId:
 	# currently on backup layer. switch to master layer:
@@ -42,11 +47,7 @@ else:
 		backupLayer = None
 	if not backupLayer:
 		# backup layer not specified (remembered). use the last layer:
-		for layer in currentGlyph.layers:
-			if layer.layerId == currentLayer.layerId:
-				continue
-			if layer.associatedMasterId == currentLayer.associatedMasterId:
-				backupLayerId = layer.layerId
+		backupLayerId = lastLayerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
 
 # trigger UI update:
