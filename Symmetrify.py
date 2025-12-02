@@ -97,10 +97,10 @@ class SymmetrifyDialog(object):
 			self.contours = [[node for node in path.nodes] for path in self.layer.paths]
 
 	def init_center(self):
-		max_x = max([node.position.x for contour in self.contours for node in contour])
-		min_x = min([node.position.x for contour in self.contours for node in contour])
-		max_y = max([node.position.y for contour in self.contours for node in contour])
-		min_y = min([node.position.y for contour in self.contours for node in contour])
+		max_x = max([node.position.x for contour in self.contours for node in contour if node.type != OFFCURVE])
+		min_x = min([node.position.x for contour in self.contours for node in contour if node.type != OFFCURVE])
+		max_y = max([node.position.y for contour in self.contours for node in contour if node.type != OFFCURVE])
+		min_y = min([node.position.y for contour in self.contours for node in contour if node.type != OFFCURVE])
 		self.cx = 0.5 * (max_x + min_x)
 		self.cy = 0.5 * (max_y + min_y)
 
