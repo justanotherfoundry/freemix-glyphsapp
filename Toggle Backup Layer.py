@@ -12,6 +12,8 @@ If given a keyboard shortcut, this is very useful for comparing two versions of 
 
 font = Glyphs.font
 currentTab = font.currentTab
+currentLayer = font.selectedLayers[0]
+currentGlyph = currentLayer.parent
 
 textStorage = currentTab.graphicView().textStorage()
 text = textStorage.text()
@@ -22,7 +24,6 @@ try:
 	layerIdAttribute = text.attribute_atIndex_effectiveRange_("GSLayerIdAttrib", selectedRange.location, None)[0]
 except KeyError:
 	layerIdAttribute = None
-currentLayer = font.selectedLayers[0]
 
 textStorage.willChangeValueForKey_("text")
 if layerIdAttribute == currentLayer.layerId:
@@ -31,7 +32,6 @@ if layerIdAttribute == currentLayer.layerId:
 	backupLayerId = layerIdAttribute
 else:
 	# currently on master layer.
-	currentGlyph = currentLayer.parent
 	try:
 		backupLayer = currentGlyph.layers[backupLayerId]
 	except NameError:
