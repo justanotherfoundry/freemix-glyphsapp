@@ -39,7 +39,7 @@ else:
 	# currently on master layer.
 	try:
 		backupLayer = currentGlyph.layers[backupLayerId]
-	except NameError:
+	except (TypeError, NameError):
 		# uninitialized backupLayerId
 		backupLayer = None
 	if backupLayer and backupLayer.associatedMasterId != currentLayer.layerId:
@@ -49,6 +49,12 @@ else:
 		# backup layer not specified (remembered). use the last layer:
 		backupLayerId = lastLayerId
 	text.addAttribute_value_range_("GSLayerIdAttrib", backupLayerId, selectedRange)
+
+if backupLayerId == lastLayerId:
+	# “forget” the used backup layer:
+	backupLayerId = None
+	# the effect is that when new backup layers are added,
+	# it will switch to the last (added) layer instead of the current one
 
 # trigger UI update:
 textStorage.didChangeValueForKey_("text")
