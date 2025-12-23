@@ -30,6 +30,20 @@ def samePosition(node1, node2):
 def isHoriVerti(node1, node2):
 	return node1.position.x == node2.position.x or node1.position.y == node2.position.y
 
+def isHoriVertiAllLayers(node1, node2, pathIndex, otherLayers):
+	if not isHoriVerti(node1, node2):
+		return False
+	for otherLayer in otherLayers:
+		try:
+			otherPath = otherLayer.paths[pathIndex]
+			otherNode1 = otherPath.nodes[node1.index]
+			otherNode2 = otherPath.nodes[node2.index]
+		except IndexError:
+				continue
+		if not isHoriVerti(otherNode1, otherNode2):
+			return False
+	return True
+
 def pointDiff(node1, node2):
 	return node1.position.x - node2.position.x, node1.position.y - node2.position.y
 
@@ -208,7 +222,7 @@ class HandleRelations(ReporterPlugin):
 					continue
 				if layer.selection and not node.selected and (node.prevNode.type != OFFCURVE or not node.prevNode.selected) and (node.nextNode.type != OFFCURVE or not node.nextNode.selected):
 					continue
-				if isHoriVerti(node.prevNode, node.nextNode):
+				if isHoriVertiAllLayers(node.prevNode, node.nextNode, pathIndex, otherLayers):
 					continue
 				ignoreNode = self.drawOtherDirections(node, pathIndex, layer, otherLayers)
 				if ignoreNode:
