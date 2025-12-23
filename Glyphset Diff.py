@@ -23,6 +23,13 @@ if len(Glyphs.documents) == 2:
 	thisFont = Glyphs.documents[0].font
 	otherFont = Glyphs.documents[1].font
 	diff = list(set(thisFont.glyphNames()) - set(otherFont.glyphNames()))
-	setFilter(thisFont, diff)
+	if diff:
+		setFilter(thisFont, diff)
+	else:
+		diffReverse = set(otherFont.glyphNames()) - set(thisFont.glyphNames())
+		if diffReverse:
+			Message('The other font has additional glyphs.', '')
+		else:
+			Message('The glyph sets are identical', '')
 else:
 	Message('Please make sure that\nexactly two fonts are open', '')
