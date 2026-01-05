@@ -14,8 +14,13 @@ if font:
 	if tab:
 		# move cursor:
 		# (adopted from https://glyphsapp.com/news/glyphs-3-2-released)
-		newPosition = (tab.layersCursor + 1) % (len(tab.layers)-1)
-		tab.layersCursor = newPosition
+		while 1:
+			newPosition = (tab.layersCursor + 1) % (len(tab.layers))
+			tab.layersCursor = newPosition
+			if newPosition == 0 or font.selectedLayers:
+				# non-empty font.selectedLayers means the current layer os _not_ a newline (GSControlLayer)
+				# the check newPosition == 0 is necessary to avoid an infinite loop in a tab with only newlines
+				break
 		# re-center glyph:
 		vp = tab.viewPort
 		vp.origin.x = tab.selectedLayerOrigin.x + 0.5 * ( font.selectedLayers[0].width * tab.scale - vp.size.width )
