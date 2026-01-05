@@ -14,7 +14,7 @@ if font:
 	if tab:
 		# move cursor:
 		# (adopted from https://glyphsapp.com/news/glyphs-3-2-released)
-		newPosition = (tab.layersCursor + 1) % (len(tab.layers))
+		newPosition = (tab.layersCursor + 1) % (len(tab.layers)-1)
 		tab.layersCursor = newPosition
 		# re-center glyph:
 		vp = tab.viewPort

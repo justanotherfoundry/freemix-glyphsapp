@@ -13,7 +13,7 @@ if font:
 	tab = font.currentTab
 	if tab:
 		# move cursor:
-		newPosition = (tab.layersCursor - 1 + len(tab.layers)) % (len(tab.layers))
+		newPosition = (tab.layersCursor - 1 + len(tab.layers)-1) % (len(tab.layers)-1)
 		tab.layersCursor = newPosition
 		# re-center glyph:
 		vp = tab.viewPort
