@@ -116,7 +116,39 @@ class SymmetrifyDialog(object):
 				if self.get_flip_partner(contour, current_is_horizontal) % 2 == 0:
 					# we have points on the line of symmetry
 					return apply_grid(bbox_based)
-		return apply_half_grid(bbox_based)
+		# determine whether to prefer bbox or on-grid center:
+		prefer_center_on_grid = 0
+		for contour in self.contours:
+			partner_index = self.get_flip_partner(contour, current_is_horizontal)
+			for point_index in range(len(contour)):
+				if point_index == partner_index:
+					# points on the line of symmetry strongly prefer center on the grid:
+					prefer_center_on_grid += 11
+				elif point_index < partner_index:
+					# ^ to avoid treating point pairs twice
+					n1 = contour[point_index]
+					n2 = contour[partner_index]
+					v1 = n1.x if current_is_horizontal else n1.y
+					v2 = n2.x if current_is_horizontal else n2.y
+					diff = (v1 - v2)
+					if diff == apply_grid(diff/2) * 2:
+						# the point pair currently has, and therefore prefers, an even-numbered distance,
+						# i.e. center on the grid
+						prefer_center_on_grid += 5
+					else:
+						# we give it a rather strong preference for bbox center:
+						prefer_center_on_grid -= 10
+				if partner_index == 0:
+					partner_index = len(contour) - 1
+				else:
+					partner_index -= 1
+		if prefer_center_on_grid <= 0:
+			# keep the bbox center:
+			return apply_half_grid(bbox_based)
+		all_oncurve = self.all_x_oncurve if current_is_horizontal else self.all_y_oncurve
+		cg = sum(all_oncurve) / len(all_oncurve)
+		return apply_grid(0.9 * cg + 0.1 * bbox_based)
+		# ^ just a small nudge towards the bbox center in case it sits on the fence
 
 	def run(self):
 		self.w.open()
