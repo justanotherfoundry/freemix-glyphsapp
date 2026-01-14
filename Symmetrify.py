@@ -74,7 +74,7 @@ class SymmetrifyDialog(object):
 		if self.can_rotate5():
 			button_titles.append('*')
 		if all(self.get_flip_partner(contour, is_horizontal=False) is not None for contour in self.contours):
-			# ^ note: here, it does not matter whether we is_horizontal is Ture or False
+			# ^ note: here, it does not matter whether is_horizontal is True or False
 			button_titles.extend(['T', 'C', 'H'])
 		if not button_titles:
 			self.layer = None
@@ -97,10 +97,12 @@ class SymmetrifyDialog(object):
 			self.contours = [[node for node in path.nodes] for path in self.layer.paths]
 
 	def init_center(self):
-		max_x = max([node.position.x for contour in self.contours for node in contour if node.type != OFFCURVE])
-		min_x = min([node.position.x for contour in self.contours for node in contour if node.type != OFFCURVE])
-		max_y = max([node.position.y for contour in self.contours for node in contour if node.type != OFFCURVE])
-		min_y = min([node.position.y for contour in self.contours for node in contour if node.type != OFFCURVE])
+		self.all_x_oncurve = [node.position.x for contour in self.contours for node in contour if node.type != OFFCURVE]
+		self.all_y_oncurve = [node.position.y for contour in self.contours for node in contour if node.type != OFFCURVE]
+		max_x = max(self.all_x_oncurve)
+		min_x = min(self.all_x_oncurve)
+		max_y = max(self.all_y_oncurve)
+		min_y = min(self.all_y_oncurve)
 		self.cx = 0.5 * (max_x + min_x)
 		self.cy = 0.5 * (max_y + min_y)
 
