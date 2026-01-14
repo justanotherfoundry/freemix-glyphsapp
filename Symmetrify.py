@@ -106,6 +106,18 @@ class SymmetrifyDialog(object):
 		self.cx = 0.5 * (max_x + min_x)
 		self.cy = 0.5 * (max_y + min_y)
 
+	def refine_center(self, current_is_horizontal):
+		bbox_based = self.cx if current_is_horizontal else self.cy
+		if bbox_based == apply_grid(bbox_based):
+			# no further considerations necessary
+			return bbox_based
+		if PERFECT_SYMMETRY:
+			for contour in self.contours:
+				if self.get_flip_partner(contour, current_is_horizontal) % 2 == 0:
+					# we have points on the line of symmetry
+					return apply_grid(bbox_based)
+		return apply_half_grid(bbox_based)
+
 	def run(self):
 		self.w.open()
 
@@ -139,18 +151,9 @@ class SymmetrifyDialog(object):
 		return best_partner_index_for_0
 
 	def flip(self, flip_horizontal, flip_vertical):
+		self.cx = self.refine_center(True)
+		self.cy = self.refine_center(False)
 		flips = [True] * flip_horizontal + [False] * flip_vertical
-		for contour in self.contours:
-			if PERFECT_SYMMETRY and self.get_flip_partner(contour, is_horizontal=False) % 2 == 0:
-				# we have points on the line of symmetry
-				self.cy = apply_grid(self.cy)
-			else:
-				# this is relevant if we have fractional input
-				self.cy = apply_half_grid(self.cy)
-			if PERFECT_SYMMETRY and self.get_flip_partner(contour, is_horizontal=True) % 2 == 0:
-				self.cx = apply_grid(self.cx)
-			else:
-				self.cx = apply_half_grid(self.cx)
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
 			for current_is_horizontal in flips:
