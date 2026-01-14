@@ -186,13 +186,10 @@ class SymmetrifyDialog(object):
 		self.cx = self.refine_center(True)
 		self.cy = self.refine_center(False)
 		flips = [True] * flip_horizontal + [False] * flip_vertical
+		almost_one = 32767 / 32768 if font.grid > 0 else 1
 		for contour in self.contours:
 			xy = [(p.x, p.y) for p in contour]
 			for current_is_horizontal in flips:
-				is_last_round = current_is_horizontal == flips[-1]
-				almost_one = 1023 / 1024 if font.grid > 0 else 1
-				if is_last_round:
-					almost_one *= almost_one
 				partner_index = self.get_flip_partner(contour, current_is_horizontal)
 				assert partner_index is not None
 				for point_index in range(len(contour)):
@@ -203,23 +200,19 @@ class SymmetrifyDialog(object):
 						partner_x, partner_y = swapped_if(xy[partner_index], current_is_horizontal)
 						c_x, c_y = swapped_if((self.cx, self.cy), current_is_horizontal)
 						# at this point, we are assuming a horizontal axis (vertical flipping).
-						# the x values will be (nearly) the same.
-						correction_x = 0.5 * (partner_x - x)
+						# the x values will be the same.
 						correction_y = (c_y - 0.5 * (partner_y + y))
-						# ensure we don’t end up with .5 coordinates:
-						correction_x *= almost_one if partner_x >= x else 1.0/almost_one
-						correction_y *= almost_one if partner_y >= y else 1.0/almost_one
-						x += correction_x
-						y += correction_y
-						xy[point_index] = swapped_if((x, y), current_is_horizontal)
-						if point_index != partner_index:
+						if point_index == partner_index:
+							# point is on the axis
+							correction_y *= ALMOST_ONE
+							xy[point_index] = swapped_if((x, y + correction_y), current_is_horizontal)
+						else:
+							correction_x = 0.5 * (partner_x - x)
+							x += correction_x
+							y += correction_y
 							partner_y = 2 * c_y - y
-							if is_last_round:
-								# we can use the perfectly mirrored x here:
-								xy[partner_index] = swapped_if((x, partner_y), current_is_horizontal)
-							else:
-								partner_x -= correction_x
-								xy[partner_index] = swapped_if((partner_x, partner_y), current_is_horizontal)
+							xy[point_index] = swapped_if((x, y), current_is_horizontal)
+							xy[partner_index] = swapped_if((x, partner_y), current_is_horizontal)
 					if partner_index == 0:
 						partner_index = len(contour) - 1
 					else:
@@ -227,6 +220,10 @@ class SymmetrifyDialog(object):
 			for point_index in range(len(contour)):
 				point = contour[point_index]
 				new_x, new_y = xy[point_index]
+				new_x += SMALL_POS if new_x > self.cx else SMALL_NEG
+				new_y += SMALL_POS if new_y > self.cy else SMALL_NEG
+				# ^ this results in a tendency to push the nodes outwards
+				#   (somewhat arbitrary but we have to make a decision and this makes the behaviour consistent)
 				point.x, point.y = apply_grid(new_x), apply_grid(new_y)
 
 	def can_rotate(self):
