@@ -204,7 +204,7 @@ class SymmetrifyDialog(object):
 						correction_y = (c_y - 0.5 * (partner_y + y))
 						if point_index == partner_index:
 							# point is on the axis
-							correction_y *= ALMOST_ONE
+							correction_y *= almost_one
 							xy[point_index] = swapped_if((x, y + correction_y), current_is_horizontal)
 						else:
 							correction_x = 0.5 * (partner_x - x)
