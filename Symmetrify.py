@@ -137,7 +137,7 @@ class SymmetrifyDialog(object):
 						prefer_center_on_grid += 5
 					else:
 						# we give it a rather strong preference for bbox center:
-						prefer_center_on_grid -= 10
+						prefer_center_on_grid -= 11
 				if partner_index == 0:
 					partner_index = len(contour) - 1
 				else:
