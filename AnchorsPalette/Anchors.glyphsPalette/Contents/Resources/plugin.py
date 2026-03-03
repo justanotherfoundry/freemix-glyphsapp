@@ -54,6 +54,7 @@ class AnchorsPalette (PalettePlugin):
 		self.loadNib( 'AnchorsPaletteView', __file__ )
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
 		self.posxFieldsOriginX = self.posx0.frame().origin.x
+		self.anchorNames = []
 
 	@objc.IBAction
 	def editTextCallback_(self, textField):
@@ -62,7 +63,11 @@ class AnchorsPalette (PalettePlugin):
 		except ValueError:
 			self.update()
 			return
-		anchorName = self.anchorNames[textField.tag()]
+		try:
+			anchorName = self.anchorNames[textField.tag()]
+		except:
+			self.update()
+			return
 		for layer in self.font.selectedLayers:
 			for anchor in layer.anchors:
 				if anchor.name == anchorName:
