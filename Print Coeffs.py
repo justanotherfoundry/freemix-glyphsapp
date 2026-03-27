@@ -35,6 +35,10 @@ print( ''.ljust( first_column_width ), ''.join( [ n.rjust( master_column_width )
 for instance in Glyphs.font.instances:
 	print( ' ' if instance.active else '*', end='' )
 	print( instance.fullName.ljust( first_column_width ), end='' )
+	disabledMasters = []
+	for cp in instance.customParameters:
+		if cp.active and cp.name == 'Disable Masters':
+			disabledMasters = cp.value
 	for master in  Glyphs.font.masters:
 		coeff_str = ''
 		try:
@@ -43,5 +47,8 @@ for instance in Glyphs.font.instances:
 				coeff_str = '%10.2f%%' % ( coeff * 100 )
 		except (KeyError, TypeError):
 			pass
+		if master.name in disabledMasters:
+			assert not coeff_str
+			coeff_str = '×   '
 		print( coeff_str.rjust( master_column_width ), end='' )
 	print()
