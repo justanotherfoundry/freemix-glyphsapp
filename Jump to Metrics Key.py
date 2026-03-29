@@ -12,24 +12,36 @@ Tip: Give it a keyboard shortcut!
 
 from builtins import chr
 
+def getMetricsKeyGlyph():
+	font = Glyphs.font
+	layer = font.selectedLayers[0]
+	try:
+		return font.glyphs[layer.leftMetricsKey.strip('=').strip('|')]
+	except AttributeError:
+		pass
+	try:
+		return font.glyphs[layer.rightMetricsKey.strip('=').strip('|')]
+	except AttributeError:
+		pass
+	try:
+		return font.glyphs[layer.parent.leftMetricsKey.strip('=').strip('|')]
+	except AttributeError:
+		pass
+	try:
+		return font.glyphs[layer.parent.rightMetricsKey.strip('=').strip('|')]
+	except AttributeError:
+		pass
+
 def jumpToMetricsKey():
 	font = Glyphs.font
-	tab = font.currentTab
-	# find new glyph:
-	currentLayer = font.selectedLayers[0]
-	try:
-		nextGlyph = font.glyphs[currentLayer.leftMetricsKey.strip('=').strip('|')]
-	except AttributeError:
-		try:
-			nextGlyph = font.glyphs[currentLayer.parent.rightMetricsKey.strip('=').strip('|')]
-		except AttributeError:
-			return
+	nextGlyph = getMetricsKeyGlyph()
 	if not nextGlyph:
 		return
 	nextChar = chr(font.characterForGlyph(nextGlyph))
 	if not nextChar:
 		return
 	# replace in display string:
+	tab = font.currentTab
 	graphicView = tab.graphicView()
 	textStorage = graphicView.textStorage()
 	text = textStorage.text()
