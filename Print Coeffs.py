@@ -18,6 +18,7 @@ abbreviations = {
 	'Tall': 'Ta',
 	'Condensed': 'Cnd',
 	'Compressed': 'Cmp',
+	'Headline': 'Head',
 }
 abbreviations = dict((re.escape(k), v) for k, v in abbreviations.items())
 pattern = re.compile("|".join(abbreviations.keys()))
@@ -39,6 +40,7 @@ for instance in Glyphs.font.instances:
 	for cp in instance.customParameters:
 		if cp.active and cp.name == 'Disable Masters':
 			disabledMasters = cp.value
+	print( '⚠' if instance.manualInterpolation else ' ', end='' )
 	for master in  Glyphs.font.masters:
 		coeff_str = ''
 		try:
