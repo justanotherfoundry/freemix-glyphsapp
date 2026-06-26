@@ -168,6 +168,16 @@ i.e. are not accessible in the final font.
 These glyphs can usually be excluded from the final exported OTF font.
 
 
+### Show Components
+
+Shows the glyphs contained within the selected glyph(s). Useful for “dissolving” ligatures, or to determine glyph set dependencies (i.e. glyphs that cannot be deleted if the selected ones are to be retained).
+
+
+### Sort by Vertical Center
+
+Outputs the selected glyphs (from Font or Edit view) in a new tab, sorted by vertical center. This can be very useful for checking consistency and grouping (while some of the information in this listing is often meaningless). The Alignment Palette will help you further inspect (or edit) the vertical positioning of the glyphs.
+
+
 ### Suffixes Palette
 
 The palette shows the name(s) of the selected glyph(s), split by suffix. The fields are editable.
