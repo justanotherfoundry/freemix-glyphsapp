@@ -142,6 +142,11 @@ in the Mac OS System Preferences.
 Prints the interpolation coefficients for each master in all instances (make sure the Macro Panel is open).
 
 
+### Print Exports as Table
+
+Prints details of the exports as a table. Respects the selection of exports if the Exports tab is active. Make sure the Macro Panel is open.
+
+
 ### Remove Backup Layers
 
 Removes all backup layers (i.e. those created using the "Copy" button) from the selected glyphs.
