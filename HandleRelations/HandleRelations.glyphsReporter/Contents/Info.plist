@@ -15,7 +15,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.04</string><!-- update -->
 	<key>CFBundleVersion</key>
-	<string>5</string><!-- update -->
+	<string>6</string><!-- update -->
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/justanotherfoundry/freemix-glyphsapp/master/HandleRelations/HandleRelations.glyphsReporter/Contents/Info.plist</string>
 	<key>productPageURL</key>
