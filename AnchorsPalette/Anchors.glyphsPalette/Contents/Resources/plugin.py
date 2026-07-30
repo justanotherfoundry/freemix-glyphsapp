@@ -10,7 +10,7 @@ MAX_NUMBER_OF_LINES = 10
 VERTICAL_MARGIN = 6
 
 class AnchorsPalette (PalettePlugin):
-	
+
 	dialog = objc.IBOutlet()
 	label0 = objc.IBOutlet()
 	label1 = objc.IBOutlet()
@@ -109,41 +109,45 @@ class AnchorsPalette (PalettePlugin):
 		else:
 			anchorStats = []
 		for i in range( MAX_NUMBER_OF_LINES ):
+			posx = getattr( self, 'posx' + str( i ) )
+			posy = getattr( self, 'posy' + str( i ) )
+			label = getattr( self, 'label' + str( i ) )
 			try:
 				anchorName = anchorStats[i][0]
 			except IndexError:
-				getattr( self, 'label' + str( i ) ).setStringValue_( '' )
-				getattr( self, 'posx' + str( i ) ).setHidden_( True )
-				getattr( self, 'posy' + str( i ) ).setHidden_( True )
+				label.setStringValue_( '' )
+				posx.setHidden_( True )
+				posy.setHidden_( True )
 				continue
-			getattr( self, 'posx' + str( i ) ).setHidden_( False )
-			getattr( self, 'posy' + str( i ) ).setHidden_( False )
-			getattr( self, 'label' + str( i ) ).setStringValue_( anchorName )
+			posx.setHidden_( False )
+			posy.setHidden_( False )
+			label.setStringValue_( anchorName )
 			x = None
 			y = None
 			for layer in self.font.selectedLayers:
-				for anchor in layer.anchors:
-					if anchor.name == anchorName:
-						if x == None:
-							x = anchor.position.x
-							if x == round( x, 3 ):
-								x = int( x )
-						elif x != round( anchor.position.x, 3 ):
-							x = ''
-						if y == None:
-							y = anchor.position.y
-							if y == round( y, 3 ):
-								y = int( y )
-						elif y != round( anchor.position.y, 3 ):
-							y = ''
+				anchor = layer.anchors[anchorName]
+				if anchor is None:
+					continue
+				if x is None:
+					x = anchor.position.x
+					if x == round( x, 3 ):
+						x = int( x )
+				elif x != round( anchor.position.x, 3 ):
+					x = ''
+				if y is None:
+					y = anchor.position.y
+					if y == round( y, 3 ):
+						y = int( y )
+				elif y != round( anchor.position.y, 3 ):
+					y = ''
 			if x == '':
-				getattr( self, 'posx' + str( i ) ).setStringValue_( '' )
+				posx.setStringValue_( '' )
 			else:
-				getattr( self, 'posx' + str( i ) ).setIntValue_( x )
+				posx.setIntValue_( x )
 			if y == '':
-				getattr( self, 'posy' + str( i ) ).setStringValue_( '' )
+				posy.setStringValue_( '' )
 			else:
-				getattr( self, 'posy' + str( i ) ).setIntValue_( y )
+				posy.setIntValue_( y )
 			self.anchorNames.append( anchorName )
 		if collapsed:
 			height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight

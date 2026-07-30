@@ -99,6 +99,10 @@ class ComponentsPalette (PalettePlugin):
 		for i in range(MAX_NUMBER_OF_LINES):
 			x = None
 			y = None
+			label = getattr(self, 'label' + str(i))
+			posx = getattr(self, 'posx' + str(i))
+			posy = getattr(self, 'posy' + str(i))
+			
 			if not self.font.selectedLayers:
 				# this also catches None, which Glyphs may return
 				pass
@@ -106,13 +110,12 @@ class ComponentsPalette (PalettePlugin):
 				layer = self.font.selectedLayers[0]
 				try:
 					component = layer.components[i]
-					x = component.position.x
-					y = component.position.y
-					getattr(self, 'label' + str(i)).setStringValue_(component.name)
+					x, y = component.position
+					label.setStringValue_(component.name)
 				except IndexError:
 					pass
 			else:
-				getattr(self, 'label' + str(i)).setStringValue_(str(i + 1))
+				label.setStringValue_(str(i + 1))
 				for layer in self.font.selectedLayers:
 					try:
 						component = layer.components[i]
@@ -127,21 +130,21 @@ class ComponentsPalette (PalettePlugin):
 					elif y != round(component.position.y, 3):
 						y = ''
 			assert ((x is None) == (y is None))
-			if x is None:
-				getattr(self, 'label' + str(i)).setStringValue_('')
-				getattr(self, 'posx' + str(i)).setHidden_(True)
-				getattr(self, 'posy' + str(i)).setHidden_(True)
+			if x is None or y is None:
+				label.setStringValue_('')
+				posx.setHidden_(True)
+				posy.setHidden_(True)
 				continue
-			getattr(self, 'posx' + str(i)).setHidden_(False)
-			getattr(self, 'posy' + str(i)).setHidden_(False)
+			posx.setHidden_(False)
+			posy.setHidden_(False)
 			if x == '':
-				getattr(self, 'posx' + str(i)).setStringValue_('')
+				posx.setStringValue_('')
 			else:
-				getattr(self, 'posx' + str(i)).setIntValue_(int(x))
+				posx.setIntValue_(int(x))
 			if y == '':
-				getattr(self, 'posy' + str(i)).setStringValue_('')
+				posy.setStringValue_('')
 			else:
-				getattr(self, 'posy' + str(i)).setIntValue_(int(y))
+				posy.setIntValue_(int(y))
 			visibleLinesCount = i + 1
 		height = VERTICAL_MARGIN + visibleLinesCount * self.lineheight
 		# we are never reducing the height of the palette
