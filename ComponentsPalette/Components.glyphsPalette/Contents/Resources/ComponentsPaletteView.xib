@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ComponentsPalette">
+        <customObject id="-2" userLabel="File's Owner" customClass="AnchorsPalette">
             <connections>
                 <outlet property="dialog" destination="1" id="G3Z-hO-q3f"/>
                 <outlet property="heightConstrains" destination="neg-iS-sWc" id="maU-Rn-DXb"/>
@@ -45,343 +45,407 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="164" height="98"/>
+            <rect key="frame" x="0.0" y="0.0" width="164" height="260"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="q2t-JE-Eu5" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="76" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q2t-JE-Eu5" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="238" width="36" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="PMy-kF-Ay1"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="9gz-pi-C0f">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="jSh-7n-XyQ"/>
+                        <action selector="editTextCallbackX:" target="-2" id="gb8-Ec-Jgc"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="t37-ZF-RKq" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="76" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t37-ZF-RKq" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="238" width="36" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="Ucw-VB-mgc"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="l9g-cC-nUP">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="TQi-GF-j3j"/>
+                        <action selector="editTextCallbackY:" target="-2" id="xDc-n4-ZZw"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="AnE-DY-yBU">
-                    <rect key="frame" x="9" y="78" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AnE-DY-yBU">
+                    <rect key="frame" x="10" y="242" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="VqQ-9F-XiY">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="1" id="RjK-mb-Tt9" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="53" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="RjK-mb-Tt9" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="212" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="QXY-9H-5jq">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="NH1-mm-7ru"/>
+                        <action selector="editTextCallbackX:" target="-2" id="rzb-Ny-xQg"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="1" id="R3Y-gf-LCw" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="53" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-gf-LCw" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="212" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="8df-HT-baT">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="pWR-AA-yc6"/>
+                        <action selector="editTextCallbackY:" target="-2" id="pu8-Ye-fkC"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="smM-oH-Dii">
-                    <rect key="frame" x="9" y="55" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="smM-oH-Dii">
+                    <rect key="frame" x="10" y="216" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="kEW-U2-wE3">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="2" id="wr3-nm-J64" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="30" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="wr3-nm-J64" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="186" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="E8D-wG-WvQ">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="SiM-4W-eCx"/>
+                        <action selector="editTextCallbackX:" target="-2" id="VtV-y6-WGB"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="2" id="mp8-6Z-4iV" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="30" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="mp8-6Z-4iV" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="186" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="qAf-7C-5v4">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="ePy-fx-SRz"/>
+                        <action selector="editTextCallbackY:" target="-2" id="xMO-aO-7zb"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fMT-R1-Ilw">
-                    <rect key="frame" x="9" y="32" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fMT-R1-Ilw">
+                    <rect key="frame" x="10" y="190" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="XsG-hS-xLX">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="3" id="OIb-ge-FZh" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="7" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="OIb-ge-FZh" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="160" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="TOw-Te-b7j">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="d1N-WJ-UWM"/>
+                        <action selector="editTextCallbackX:" target="-2" id="W16-5H-gkh"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="3" id="lOe-WO-r1y" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="7" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lOe-WO-r1y" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="160" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="yfg-wh-44h">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="agk-kZ-lvm"/>
+                        <action selector="editTextCallbackY:" target="-2" id="S0A-1b-CZZ"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="LBO-Eg-HuC">
-                    <rect key="frame" x="9" y="9" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LBO-Eg-HuC">
+                    <rect key="frame" x="10" y="164" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="ZHh-kW-rEk">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="4" id="Gtb-cC-1xY" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-16" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Gtb-cC-1xY" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="134" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="XX5-9C-IMS">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="COn-tv-dTA"/>
+                        <action selector="editTextCallbackX:" target="-2" id="uH8-e2-rUf"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="4" id="Uxi-6y-eeU" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-16" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Uxi-6y-eeU" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="134" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="XAM-LT-Z7x">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="1Dn-wD-6zS"/>
+                        <action selector="editTextCallbackY:" target="-2" id="S22-Yw-QKi"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="21h-zI-U0K">
-                    <rect key="frame" x="9" y="-14" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21h-zI-U0K">
+                    <rect key="frame" x="10" y="138" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="50F-Qe-AdA">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="5" id="BBY-Fy-VeT" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-39" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="BBY-Fy-VeT" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="108" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Ak9-lI-5qb">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="wAQ-cv-eEe"/>
+                        <action selector="editTextCallbackX:" target="-2" id="S9h-9u-rSf"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="5" id="cL5-fP-Asf" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-39" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="cL5-fP-Asf" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="108" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="tUa-WH-ajv">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="S4h-jk-l18"/>
+                        <action selector="editTextCallbackY:" target="-2" id="V3Z-nd-iw4"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2kf-uS-PPq">
-                    <rect key="frame" x="9" y="-37" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2kf-uS-PPq">
+                    <rect key="frame" x="10" y="112" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="qPZ-V4-xIm">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="6" id="ck2-fP-dUK" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-62" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="ck2-fP-dUK" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="82" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="IwJ-Aw-kjA">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="Zhp-1P-b45"/>
+                        <action selector="editTextCallbackX:" target="-2" id="vd5-h4-VCs"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="6" id="do8-Zb-M0w" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-62" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="do8-Zb-M0w" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="82" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="VfU-MB-FL8">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="sLf-O6-bQv"/>
+                        <action selector="editTextCallbackY:" target="-2" id="6Vf-m0-ExX"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EyT-9e-1Qp">
-                    <rect key="frame" x="9" y="-60" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EyT-9e-1Qp">
+                    <rect key="frame" x="10" y="86" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="PcS-k7-80R">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="7" id="5CN-e2-UZ8" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-85" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="5CN-e2-UZ8" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="56" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Lno-QU-yC3">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="2ux-yh-kpl"/>
+                        <action selector="editTextCallbackX:" target="-2" id="qYW-L9-2dD"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="7" id="TBB-8D-2H9" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-85" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="TBB-8D-2H9" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="56" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="gRO-nN-h4U">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="PVj-bY-vCB"/>
+                        <action selector="editTextCallbackY:" target="-2" id="v1Z-PI-ugG"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="WGd-CS-FPd">
-                    <rect key="frame" x="9" y="-83" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WGd-CS-FPd">
+                    <rect key="frame" x="10" y="60" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="xvP-xd-Nqm">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="8" id="nwd-3Q-jmd" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-108" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="nwd-3Q-jmd" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="30" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="UxH-ep-Q8A">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="L0J-dd-8rw"/>
+                        <action selector="editTextCallbackX:" target="-2" id="GQJ-4S-oJv"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="8" id="Cen-qF-4Ga" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-108" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="Cen-qF-4Ga" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="30" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="ppT-EN-9Uk">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="GQC-Nt-H65"/>
+                        <action selector="editTextCallbackY:" target="-2" id="7bT-qq-3EU"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="gOa-Ma-vHR">
-                    <rect key="frame" x="9" y="-106" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gOa-Ma-vHR">
+                    <rect key="frame" x="10" y="34" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="4px-gN-aAD">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="9" id="sZG-BV-MWf" customClass="GSSteppingTextField">
-                    <rect key="frame" x="72" y="-131" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="sZG-BV-MWf" customClass="GSSteppingTextField">
+                    <rect key="frame" x="70" y="4" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="i3z-Mc-f4H">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="4ZX-za-heY"/>
+                        <action selector="editTextCallbackX:" target="-2" id="6MF-Jd-Wx5"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" tag="9" id="Sje-hw-Qrm" customClass="GSSteppingTextField">
-                    <rect key="frame" x="110" y="-131" width="36" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="Sje-hw-Qrm" customClass="GSSteppingTextField">
+                    <rect key="frame" x="108" y="4" width="36" height="22"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="lQP-YB-UNy">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="editTextCallback:" target="-2" id="aCk-EK-JAn"/>
+                        <action selector="editTextCallbackY:" target="-2" id="4pF-CC-796"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnb-Fd-ahF">
-                    <rect key="frame" x="9" y="-129" width="62" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fnb-Fd-ahF">
+                    <rect key="frame" x="10" y="8" width="54" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="sOj-SN-WeY">
-                        <font key="font" metaFont="toolTip"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="height" constant="98" id="neg-iS-sWc"/>
+                <constraint firstItem="Gtb-cC-1xY" firstAttribute="firstBaseline" secondItem="21h-zI-U0K" secondAttribute="firstBaseline" id="0DB-3C-5f9"/>
+                <constraint firstItem="TBB-8D-2H9" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="0Rz-af-W3x"/>
+                <constraint firstItem="Uxi-6y-eeU" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="0UH-oE-PXd"/>
+                <constraint firstItem="sZG-BV-MWf" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="3ci-hE-6rD"/>
+                <constraint firstItem="gOa-Ma-vHR" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="5fg-vM-AWg"/>
+                <constraint firstItem="mp8-6Z-4iV" firstAttribute="firstBaseline" secondItem="fMT-R1-Ilw" secondAttribute="firstBaseline" id="6GY-xT-ggZ"/>
+                <constraint firstItem="WGd-CS-FPd" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="6NX-Cw-fxA"/>
+                <constraint firstItem="wr3-nm-J64" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="6WV-8p-jKP"/>
+                <constraint firstItem="sZG-BV-MWf" firstAttribute="top" secondItem="nwd-3Q-jmd" secondAttribute="bottom" constant="4" id="6Z4-3r-LoB"/>
+                <constraint firstItem="Cen-qF-4Ga" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="6ub-of-nvl"/>
+                <constraint firstItem="fMT-R1-Ilw" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="7Yx-oc-aX4"/>
+                <constraint firstItem="RjK-mb-Tt9" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="7sk-4K-Zy7"/>
+                <constraint firstItem="cL5-fP-Asf" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="8Sd-TY-Rkf"/>
+                <constraint firstItem="nwd-3Q-jmd" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="8l1-EX-W85"/>
+                <constraint firstItem="cL5-fP-Asf" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="9L8-Jf-R2c"/>
+                <constraint firstItem="gOa-Ma-vHR" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="A5d-d1-lki"/>
+                <constraint firstItem="Sje-hw-Qrm" firstAttribute="firstBaseline" secondItem="fnb-Fd-ahF" secondAttribute="firstBaseline" id="Aay-gf-I15"/>
+                <constraint firstItem="smM-oH-Dii" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="B3v-Lv-4LB"/>
+                <constraint firstItem="LBO-Eg-HuC" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="COK-n7-Cwe"/>
+                <constraint firstItem="sZG-BV-MWf" firstAttribute="firstBaseline" secondItem="fnb-Fd-ahF" secondAttribute="firstBaseline" id="EIW-8C-9oj"/>
+                <constraint firstItem="TBB-8D-2H9" firstAttribute="firstBaseline" secondItem="WGd-CS-FPd" secondAttribute="firstBaseline" id="Fkq-X1-0Zm"/>
+                <constraint firstItem="t37-ZF-RKq" firstAttribute="firstBaseline" secondItem="AnE-DY-yBU" secondAttribute="firstBaseline" id="Htl-zc-RK7"/>
+                <constraint firstItem="lOe-WO-r1y" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="I0G-xo-zth"/>
+                <constraint firstItem="Gtb-cC-1xY" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="Ic5-5e-7hf"/>
+                <constraint firstItem="RjK-mb-Tt9" firstAttribute="top" secondItem="q2t-JE-Eu5" secondAttribute="bottom" constant="4" id="Imx-Qb-u9w"/>
+                <constraint firstItem="5CN-e2-UZ8" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="JXp-D1-7j4"/>
+                <constraint firstItem="Uxi-6y-eeU" firstAttribute="firstBaseline" secondItem="21h-zI-U0K" secondAttribute="firstBaseline" id="JeF-b5-jLd"/>
+                <constraint firstItem="lOe-WO-r1y" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="JzH-zU-5yQ"/>
+                <constraint firstItem="mp8-6Z-4iV" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="KGR-Un-FJs"/>
+                <constraint firstItem="mp8-6Z-4iV" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="LPx-S3-6lV"/>
+                <constraint firstItem="BBY-Fy-VeT" firstAttribute="firstBaseline" secondItem="2kf-uS-PPq" secondAttribute="firstBaseline" id="NP8-ZU-Zym"/>
+                <constraint firstItem="t37-ZF-RKq" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="trailing" constant="2" id="NUt-oN-1NB"/>
+                <constraint firstItem="Gtb-cC-1xY" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="Nw7-ea-Zgl"/>
+                <constraint firstItem="fMT-R1-Ilw" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="Oag-vw-fae"/>
+                <constraint firstItem="ck2-fP-dUK" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="Oo1-xy-8yI"/>
+                <constraint firstItem="RjK-mb-Tt9" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="PYj-T4-B4I"/>
+                <constraint firstItem="21h-zI-U0K" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="Pnc-WJ-ypX"/>
+                <constraint firstItem="WGd-CS-FPd" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="Q2G-Vz-vUO"/>
+                <constraint firstItem="R3Y-gf-LCw" firstAttribute="firstBaseline" secondItem="smM-oH-Dii" secondAttribute="firstBaseline" id="QAW-Vu-6Xh"/>
+                <constraint firstItem="nwd-3Q-jmd" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="R9V-Pe-mG1"/>
+                <constraint firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" constant="20" symbolic="YES" id="Rbw-X3-IRM"/>
+                <constraint firstItem="R3Y-gf-LCw" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="Sip-JY-XnL"/>
+                <constraint firstItem="OIb-ge-FZh" firstAttribute="top" secondItem="wr3-nm-J64" secondAttribute="bottom" constant="4" id="T04-XO-3oY"/>
+                <constraint firstItem="cL5-fP-Asf" firstAttribute="firstBaseline" secondItem="2kf-uS-PPq" secondAttribute="firstBaseline" id="TYy-Xq-dVp"/>
+                <constraint firstItem="Cen-qF-4Ga" firstAttribute="firstBaseline" secondItem="gOa-Ma-vHR" secondAttribute="firstBaseline" id="Tca-nC-mbh"/>
+                <constraint firstItem="ck2-fP-dUK" firstAttribute="top" secondItem="BBY-Fy-VeT" secondAttribute="bottom" constant="4" id="Uf0-Um-efL"/>
+                <constraint firstItem="Sje-hw-Qrm" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="VRv-BH-7uf"/>
+                <constraint firstItem="BBY-Fy-VeT" firstAttribute="top" secondItem="Gtb-cC-1xY" secondAttribute="bottom" constant="4" id="VnK-sx-f2b"/>
+                <constraint firstItem="2kf-uS-PPq" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="W52-kf-T74"/>
+                <constraint firstItem="Sje-hw-Qrm" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="X0d-Ng-e7U"/>
+                <constraint firstItem="do8-Zb-M0w" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="Xtk-yt-kJF"/>
+                <constraint firstItem="wr3-nm-J64" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="Xvu-6a-T3R"/>
+                <constraint firstItem="sZG-BV-MWf" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="afg-l4-SyS"/>
+                <constraint firstItem="nwd-3Q-jmd" firstAttribute="firstBaseline" secondItem="gOa-Ma-vHR" secondAttribute="firstBaseline" id="b1g-4u-dwv"/>
+                <constraint firstItem="5CN-e2-UZ8" firstAttribute="firstBaseline" secondItem="WGd-CS-FPd" secondAttribute="firstBaseline" id="cBd-n1-Bnk"/>
+                <constraint firstItem="OIb-ge-FZh" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="dgK-fq-T1b"/>
+                <constraint firstItem="5CN-e2-UZ8" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="eEF-VJ-f2k"/>
+                <constraint firstItem="OIb-ge-FZh" firstAttribute="firstBaseline" secondItem="LBO-Eg-HuC" secondAttribute="firstBaseline" id="eGO-rK-zYe"/>
+                <constraint firstItem="lOe-WO-r1y" firstAttribute="firstBaseline" secondItem="LBO-Eg-HuC" secondAttribute="firstBaseline" id="eMt-UU-jv7"/>
+                <constraint firstItem="BBY-Fy-VeT" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="fLk-ho-V2H"/>
+                <constraint firstItem="fnb-Fd-ahF" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="fZ8-KU-p6H"/>
+                <constraint firstItem="wr3-nm-J64" firstAttribute="top" secondItem="RjK-mb-Tt9" secondAttribute="bottom" constant="4" id="fhS-TX-pCo"/>
+                <constraint firstItem="nwd-3Q-jmd" firstAttribute="top" secondItem="5CN-e2-UZ8" secondAttribute="bottom" constant="4" id="fhT-2n-vnl"/>
+                <constraint firstItem="smM-oH-Dii" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="fxe-Ef-arF"/>
+                <constraint firstItem="2kf-uS-PPq" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="fzD-3W-gbL"/>
+                <constraint firstItem="Uxi-6y-eeU" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="hA8-gl-hJQ"/>
+                <constraint firstItem="TBB-8D-2H9" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="hJa-UJ-PxR"/>
+                <constraint firstItem="Cen-qF-4Ga" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="hVs-pi-rfN"/>
+                <constraint firstItem="LBO-Eg-HuC" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="hiS-5b-GbW"/>
+                <constraint firstItem="fnb-Fd-ahF" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="iS2-SM-3KU"/>
+                <constraint firstItem="ck2-fP-dUK" firstAttribute="firstBaseline" secondItem="EyT-9e-1Qp" secondAttribute="firstBaseline" id="ioI-c9-gQo"/>
+                <constraint firstItem="AnE-DY-yBU" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="12" id="jJY-Y1-uU5"/>
+                <constraint firstItem="OIb-ge-FZh" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="kTL-bc-Cll"/>
+                <constraint firstItem="BBY-Fy-VeT" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="kat-2n-T03"/>
+                <constraint firstItem="do8-Zb-M0w" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="lVN-dA-IHe"/>
+                <constraint firstItem="5CN-e2-UZ8" firstAttribute="top" secondItem="ck2-fP-dUK" secondAttribute="bottom" constant="4" id="lgO-KF-gH8"/>
+                <constraint firstAttribute="height" constant="260" id="neg-iS-sWc"/>
+                <constraint firstItem="Gtb-cC-1xY" firstAttribute="top" secondItem="OIb-ge-FZh" secondAttribute="bottom" constant="4" id="o83-is-kKK"/>
+                <constraint firstItem="R3Y-gf-LCw" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="ocr-8a-ZbV"/>
+                <constraint firstItem="do8-Zb-M0w" firstAttribute="firstBaseline" secondItem="EyT-9e-1Qp" secondAttribute="firstBaseline" id="owJ-PU-fii"/>
+                <constraint firstItem="q2t-JE-Eu5" firstAttribute="top" secondItem="1" secondAttribute="top" id="pEF-b3-4C3"/>
+                <constraint firstItem="q2t-JE-Eu5" firstAttribute="firstBaseline" secondItem="AnE-DY-yBU" secondAttribute="firstBaseline" id="pZe-6a-Asu"/>
+                <constraint firstItem="EyT-9e-1Qp" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="qgS-OP-AJb"/>
+                <constraint firstItem="ck2-fP-dUK" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="rBP-AG-uoP"/>
+                <constraint firstItem="RjK-mb-Tt9" firstAttribute="firstBaseline" secondItem="smM-oH-Dii" secondAttribute="firstBaseline" id="rsE-Sd-VxV"/>
+                <constraint firstItem="EyT-9e-1Qp" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="rur-rO-tIi"/>
+                <constraint firstItem="q2t-JE-Eu5" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="trailing" constant="8" symbolic="YES" id="sk3-fr-czz"/>
+                <constraint firstItem="21h-zI-U0K" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="wNP-5f-3Lo"/>
+                <constraint firstItem="wr3-nm-J64" firstAttribute="firstBaseline" secondItem="fMT-R1-Ilw" secondAttribute="firstBaseline" id="yQl-5y-3fk"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="321.5"/>
+            <point key="canvasLocation" x="139" y="421"/>
         </customView>
     </objects>
 </document>

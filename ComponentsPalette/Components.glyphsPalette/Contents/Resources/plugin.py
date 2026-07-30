@@ -51,24 +51,35 @@ class ComponentsPalette (PalettePlugin):
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
 	def settings(self):
-		self.name = Glyphs.localize({'en': u'Components'})
+		self.name = Glyphs.localize({'en': 'Components'})
 		self.loadNib('ComponentsPaletteView', __file__)
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
-		self.posxFieldsOriginX = self.posx0.frame().origin.x
+		height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
+		self.heightConstrains.setConstant_( height )
 
 	@objc.IBAction
-	def editTextCallback_(self, textField):
+	def editTextCallbackX_(self, textField):
+		self.editTextCallback(textField, "X")
+
+	@objc.IBAction
+	def editTextCallbackY_(self, textField):
+		self.editTextCallback(textField, "Y")
+
+	@objc.python_method
+	def editTextCallback(self, textField, key):
 		try:
 			newValue = float(textField.stringValue())
 		except ValueError:
 			self.update()
+			return
+		if self.font is None:
 			return
 		for layer in self.font.selectedLayers:
 			try:
 				component = layer.components[textField.tag()]
 			except IndexError:
 				continue
-			if textField.frame().origin.x == self.posxFieldsOriginX:
+			if key == "X":
 				component.position = NSPoint(newValue, component.position.y)
 			else:
 				component.position = NSPoint(component.position.x, newValue)

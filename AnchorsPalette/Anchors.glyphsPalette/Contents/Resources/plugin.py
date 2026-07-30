@@ -4,7 +4,6 @@ import objc
 from GlyphsApp import Glyphs, UPDATEINTERFACE
 from GlyphsApp.plugins import PalettePlugin
 import operator
-from AppKit import NSPoint
 
 MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
@@ -53,10 +52,18 @@ class AnchorsPalette (PalettePlugin):
 		self.name = Glyphs.localize({'en': u'Anchors'})
 		self.loadNib( 'AnchorsPaletteView', __file__ )
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
-		self.posxFieldsOriginX = self.posx0.frame().origin.x
+		height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
+		self.heightConstrains.setConstant_( height )
 
 	@objc.IBAction
-	def editTextCallback_(self, textField):
+	def editTextCallbackX_(self, textField):
+		self.editTextCallback(textField, "X")
+	@objc.IBAction
+	def editTextCallbackY_(self, textField):
+		self.editTextCallback(textField, "Y")
+
+	@objc.python_method
+	def editTextCallback(self, textField, key):
 		try:
 			newValue = float( textField.stringValue() )
 		except ValueError:
@@ -64,13 +71,13 @@ class AnchorsPalette (PalettePlugin):
 			return
 		anchorName = self.anchorNames[textField.tag()]
 		for layer in self.font.selectedLayers:
-			for anchor in layer.anchors:
-				if anchor.name == anchorName:
-					if textField.frame().origin.x == self.posxFieldsOriginX:
-						anchor.position = NSPoint( newValue, anchor.position.y )
-					else:
-						anchor.position = NSPoint( anchor.position.x, newValue )
-					break
+			anchor = layer.anchors[anchorName]
+			if anchor is None:
+				continue
+			if key == "X":
+				anchor.x = newValue
+			else:
+				anchor.y = newValue
 
 	@objc.python_method
 	def update( self, sender=None ):
