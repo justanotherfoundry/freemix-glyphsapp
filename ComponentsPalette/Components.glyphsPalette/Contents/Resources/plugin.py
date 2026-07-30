@@ -50,7 +50,10 @@ class ComponentsPalette (PalettePlugin):
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
 	def settings(self):
-		self.name = Glyphs.localize({'en': 'Components'})
+		self.name = Glyphs.localize({
+			'en': 'Components',
+			'de': 'Komponenten',
+		})
 		self.loadNib('ComponentsPaletteView', __file__)
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
 		height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
