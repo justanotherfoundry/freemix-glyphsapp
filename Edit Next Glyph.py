@@ -8,6 +8,9 @@ __doc__ = '''
 Activates the next glyph in the tab for editing. You can give it a keyboard shortcut in the macOS system preferences.
 '''
 
+from GlyphsApp import Glyphs
+
+
 font = Glyphs.font
 if font:
 	tab = font.currentTab

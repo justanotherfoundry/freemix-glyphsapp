@@ -9,6 +9,7 @@ Removes all zero-thickness,
 or otherwise invalid hints
 from all glyphs in the font.
 '''
+from GlyphsApp import Glyphs, Message
 
 doc = Glyphs.currentDocument
 font = doc.font
@@ -21,18 +22,18 @@ for glyph in font.glyphs:
 			if hint.originNode is None:
 				# this is an invalid hint that was probably set by Glyphs’ auto-instructing
 				print ( "deleting invalid hint from", layer.parent.name )
-				del( layer.hints[indx] )
+				del layer.hints[indx]
 				deletions_count += 1
 				continue
 			if hint.targetNode:
 				if hint.horizontal:
 					if hint.originNode.y == hint.targetNode.y:
-						del( layer.hints[indx] )
+						del layer.hints[indx]
 						deletions_count += 1
 						print( 'deleted zero-width hint from', glyph.name )
 				else:
 					if hint.originNode.x == hint.targetNode.x:
-						del( layer.hints[indx] )
+						del layer.hints[indx]
 						deletions_count += 1
 						print( 'deleted zero-width hint from', glyph.name )
 

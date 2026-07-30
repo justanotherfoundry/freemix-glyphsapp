@@ -8,6 +8,8 @@ __doc__ = '''
 Converts the class kerning to glyph-glyph pairs
 '''
 
+from GlyphsApp import Glyphs
+
 doc = Glyphs.currentDocument
 font = doc.font
 master_id = font.selectedFontMaster.id

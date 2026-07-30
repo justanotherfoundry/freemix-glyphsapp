@@ -8,7 +8,7 @@ __doc__ = '''
 Removes all anchors from the selected glyphs.
 '''
 
-from GlyphsApp import *
+from GlyphsApp import Glyphs
 
 doc = Glyphs.currentDocument
 font = doc.font

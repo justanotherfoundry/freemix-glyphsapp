@@ -8,6 +8,8 @@ __doc__ = '''
 This literally deletes the selected BCP(s):
 If you delete one of the two BCPs in a cubic curve then it becomes quadratic.
 '''
+from GlyphsApp import Glyphs, GSOFFCURVE, GSQCURVE, GSLINE
+
 
 for selectedLayer in Glyphs.currentDocument.selectedLayers():
 	glyph = selectedLayer.parent
@@ -16,10 +18,10 @@ for selectedLayer in Glyphs.currentDocument.selectedLayers():
 		for path in layer.paths:
 			for i in range(len(path.nodes) - 1, -1, -1):
 				node = path.nodes[i]
-				if node.selected and node.type == OFFCURVE:
-					if node.nextNode.type == OFFCURVE:
+				if node.selected and node.type == GSOFFCURVE:
+					if node.nextNode.type == GSOFFCURVE:
 						# node is the first cubic BCP
-						node.nextNode.nextNode.type = QCURVE
+						node.nextNode.nextNode.type = GSQCURVE
 						if node.position == node.prevNode.position:
 							# to-be-deleted BCP is retracted
 							bcp = node.nextNode.position
@@ -28,9 +30,9 @@ for selectedLayer in Glyphs.currentDocument.selectedLayers():
 							bcp.x = round( node.nextNode.nextNode.position.x - h2_x * 0.9 )
 							bcp.y = round( node.nextNode.nextNode.position.y - h2_y * 0.9 )
 							node.nextNode.position = bcp
-					elif node.prevNode.type == OFFCURVE:
+					elif node.prevNode.type == GSOFFCURVE:
 						# node is the second cubic BCP
-						node.nextNode.type = QCURVE
+						node.nextNode.type = GSQCURVE
 						if node.position == node.nextNode.position:
 							bcp = node.prevNode.position
 							h1_x = bcp.x - node.prevNode.prevNode.position.x
@@ -40,7 +42,7 @@ for selectedLayer in Glyphs.currentDocument.selectedLayers():
 							node.prevNode.position = bcp
 					else:
 						# curve is quadratic and is becoming a straight line
-						node.nextNode.type = LINE
+						node.nextNode.type = GSLINE
 						node.nextNode.smooth = False
 						node.prevNode.smooth = False
 					del path.nodes[i]

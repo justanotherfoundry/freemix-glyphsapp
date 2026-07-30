@@ -8,7 +8,7 @@ __doc__ = '''
 Outputs information on the supported languages as per Font Book on macOS (make sure the Macro Panel is open).
 '''
 
-from GlyphsApp import *
+from GlyphsApp import Glyphs
 
 MINIMUM_POPULATION = 0
 MAXIMUM_MISSING_CHARS = 25
@@ -52,4 +52,3 @@ print(''.join(required_characters))
 print()
 print('not required in any supported language:')
 print(''.join(superfluous_characters))
-
