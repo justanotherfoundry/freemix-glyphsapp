@@ -1,9 +1,10 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
+from GlyphsApp import GSOFFCURVE
+from GlyphsApp.plugins import ReporterPlugin
 import math, statistics
+from Cocoa import NSColor, NSBezierPath, NSClassFromString, NSPoint
 
 TAU = 6.283185307179586
 TEXT_OFFSET = 15
@@ -110,12 +111,12 @@ class HandleRelations(ReporterPlugin):
 
 	def conditionsAreMetForDrawing(self):
 		# copied from https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/Reporter
-		currentController = self.controller.view().window().windowController()
+		currentController = self.controller.windowController()
 		if currentController:
 			tool = currentController.toolDrawDelegate()
 			textToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolText"))
 			handToolIsActive = tool.isKindOfClass_(NSClassFromString("GlyphsToolHand"))
-			if not textToolIsActive and not handToolIsActive: 
+			if not textToolIsActive and not handToolIsActive:
 				return True
 		return False
 
@@ -146,7 +147,7 @@ class HandleRelations(ReporterPlugin):
 			green = DEVIATION_GREEN_MAX - deviation * DEVIATION_GREEN_FACTOR
 			green = max(0.0, green)
 			textColor = NSColor.colorWithRed_green_blue_alpha_(red, green, 0.0, 1.0)
-			textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR;
+			textSize += deviation * TEXT_SIZE_DEVIATION_FACTOR
 		self.drawTextNearNode(prevNode, node, nextNode, text = "{:.2f}".format(relPosition).lstrip('0'), fontColor = textColor, fontSize = textSize)
 
 	@objc.python_method
@@ -171,7 +172,7 @@ class HandleRelations(ReporterPlugin):
 	# returns True if the node is to be ignored
 	@objc.python_method
 	def drawOtherDirections(self, node, pathIndex, layer, otherLayers):
-		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set() 
+		NSColor.colorWithRed_green_blue_alpha_(0.0, 0.3, 1.0, 1.0).set()
 		inHandleX, inHandleY = pointDiff(node.prevNode, node)
 		outHandleX, outHandleY = pointDiff(node.nextNode, node)
 		inHandleLengthSq = inHandleX**2 + inHandleY**2
@@ -201,7 +202,7 @@ class HandleRelations(ReporterPlugin):
 		if allParallel and not node.selected and not node.prevNode.selected and not node.nextNode.selected:
 			return True
 		# draw the directions (but only for curve-curve connections):
-		if node.prevNode.type == OFFCURVE and node.nextNode.type == OFFCURVE:
+		if node.prevNode.type == GSOFFCURVE and node.nextNode.type == GSOFFCURVE:
 			for endpoint in endpoints:
 				self.drawLineFromNodeToPoint(node, endpoint)
 
@@ -218,9 +219,9 @@ class HandleRelations(ReporterPlugin):
 			for node in path.nodes:
 				if not node.smooth:
 					continue
-				if node.prevNode.type != OFFCURVE and node.nextNode.type != OFFCURVE:
+				if node.prevNode.type != GSOFFCURVE and node.nextNode.type != GSOFFCURVE:
 					continue
-				if layer.selection and not node.selected and (node.prevNode.type != OFFCURVE or not node.prevNode.selected) and (node.nextNode.type != OFFCURVE or not node.nextNode.selected):
+				if layer.selection and not node.selected and (node.prevNode.type != GSOFFCURVE or not node.prevNode.selected) and (node.nextNode.type != GSOFFCURVE or not node.nextNode.selected):
 					continue
 				if isHoriVertiAllLayers(node.prevNode, node.nextNode, pathIndex, otherLayers):
 					continue
@@ -231,12 +232,12 @@ class HandleRelations(ReporterPlugin):
 			# shallow curves:
 			for bcp1 in path.nodes:
 				node1 = bcp1.prevNode
-				if node1.type == OFFCURVE:
+				if node1.type == GSOFFCURVE:
 					continue
-				if bcp1.type != OFFCURVE:
+				if bcp1.type != GSOFFCURVE:
 					continue
 				bcp2 = bcp1.nextNode
-				if bcp2.type == OFFCURVE:
+				if bcp2.type == GSOFFCURVE:
 					node2 = bcp2.nextNode
 				else:
 					bcp2 = None
