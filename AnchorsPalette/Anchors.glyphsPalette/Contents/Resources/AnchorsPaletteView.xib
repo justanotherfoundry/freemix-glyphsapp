@@ -45,14 +45,16 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="164" height="260"/>
+            <rect key="frame" x="0.0" y="0.0" width="165" height="220"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q2t-JE-Eu5" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="238" width="36" height="22"/>
+                    <rect key="frame" x="67" y="201" width="38" height="19"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="PMy-kF-Ay1"/>
+                        <constraint firstAttribute="width" constant="38" id="PMy-kF-Ay1"/>
+                        <constraint firstAttribute="height" constant="19" id="oNp-HF-vKk"/>
                     </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="9gz-pi-C0f">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="mcY-oT-2ZG"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -62,11 +64,13 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t37-ZF-RKq" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="238" width="36" height="22"/>
+                    <rect key="frame" x="107" y="201" width="38" height="19"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="Ucw-VB-mgc"/>
+                        <constraint firstAttribute="height" constant="19" id="UbX-2j-oME"/>
+                        <constraint firstAttribute="width" constant="38" id="Ucw-VB-mgc"/>
                     </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="l9g-cC-nUP">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="cmJ-lT-WmW"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +80,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AnE-DY-yBU">
-                    <rect key="frame" x="10" y="242" width="54" height="14"/>
+                    <rect key="frame" x="10" y="202" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="VqQ-9F-XiY">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -84,8 +88,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="RjK-mb-Tt9" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="212" width="36" height="22"/>
+                    <rect key="frame" x="67" y="180" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="LeG-Ts-Tr9"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="QXY-9H-5jq">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="SwR-ZA-sKe"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -95,8 +103,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-gf-LCw" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="212" width="36" height="22"/>
+                    <rect key="frame" x="107" y="180" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="EBe-Kx-ExR"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="8df-HT-baT">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="Uz7-SA-roC"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -106,7 +118,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="smM-oH-Dii">
-                    <rect key="frame" x="10" y="216" width="54" height="14"/>
+                    <rect key="frame" x="10" y="181" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="kEW-U2-wE3">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -114,8 +126,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="wr3-nm-J64" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="186" width="36" height="22"/>
+                    <rect key="frame" x="67" y="159" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="mfb-8V-53j"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="E8D-wG-WvQ">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="IHs-ft-Ynh"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -125,8 +141,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="mp8-6Z-4iV" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="186" width="36" height="22"/>
+                    <rect key="frame" x="107" y="159" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="2D0-CX-yEf"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="qAf-7C-5v4">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="L28-Wu-8Ym"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -136,7 +156,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fMT-R1-Ilw">
-                    <rect key="frame" x="10" y="190" width="54" height="14"/>
+                    <rect key="frame" x="10" y="160" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="XsG-hS-xLX">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -144,8 +164,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="OIb-ge-FZh" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="160" width="36" height="22"/>
+                    <rect key="frame" x="67" y="138" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="ses-VS-8U1"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="TOw-Te-b7j">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="81Y-J1-UaY"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -155,8 +179,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lOe-WO-r1y" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="160" width="36" height="22"/>
+                    <rect key="frame" x="107" y="138" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="0qs-sF-BYU"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="yfg-wh-44h">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="uad-Kt-03H"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -166,7 +194,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LBO-Eg-HuC">
-                    <rect key="frame" x="10" y="164" width="54" height="14"/>
+                    <rect key="frame" x="10" y="139" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="ZHh-kW-rEk">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -174,8 +202,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Gtb-cC-1xY" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="134" width="36" height="22"/>
+                    <rect key="frame" x="67" y="117" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="a9l-8S-Cau"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="XX5-9C-IMS">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="pub-NE-d03"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -185,8 +217,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Uxi-6y-eeU" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="134" width="36" height="22"/>
+                    <rect key="frame" x="107" y="117" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="wo0-o1-cQA"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="XAM-LT-Z7x">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="l2B-Zt-j09"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +232,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21h-zI-U0K">
-                    <rect key="frame" x="10" y="138" width="54" height="14"/>
+                    <rect key="frame" x="10" y="118" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="50F-Qe-AdA">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -204,8 +240,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="BBY-Fy-VeT" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="108" width="36" height="22"/>
+                    <rect key="frame" x="67" y="96" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="MP8-le-7c0"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Ak9-lI-5qb">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="8ib-Xo-w00"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -215,8 +255,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="cL5-fP-Asf" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="108" width="36" height="22"/>
+                    <rect key="frame" x="107" y="96" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="djE-tT-m3H"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="tUa-WH-ajv">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="njH-bg-RcG"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -226,7 +270,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2kf-uS-PPq">
-                    <rect key="frame" x="10" y="112" width="54" height="14"/>
+                    <rect key="frame" x="10" y="97" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="qPZ-V4-xIm">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -234,8 +278,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="ck2-fP-dUK" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="82" width="36" height="22"/>
+                    <rect key="frame" x="67" y="73" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="rBo-8M-sht"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="IwJ-Aw-kjA">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="8xB-xN-RkG"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -245,8 +293,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="do8-Zb-M0w" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="82" width="36" height="22"/>
+                    <rect key="frame" x="107" y="73" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="wo3-a3-Z02"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="VfU-MB-FL8">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="0RJ-U8-9ec"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -256,7 +308,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EyT-9e-1Qp">
-                    <rect key="frame" x="10" y="86" width="54" height="14"/>
+                    <rect key="frame" x="10" y="74" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="PcS-k7-80R">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -264,8 +316,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="5CN-e2-UZ8" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="56" width="36" height="22"/>
+                    <rect key="frame" x="67" y="50" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="0tm-E5-Vcc"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="Lno-QU-yC3">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="0kF-dd-AvD"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -275,8 +331,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="TBB-8D-2H9" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="56" width="36" height="22"/>
+                    <rect key="frame" x="107" y="50" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="P37-mo-Uns"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="gRO-nN-h4U">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="GXs-Om-jBc"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -286,7 +346,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WGd-CS-FPd">
-                    <rect key="frame" x="10" y="60" width="54" height="14"/>
+                    <rect key="frame" x="10" y="51" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="xvP-xd-Nqm">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -294,8 +354,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="nwd-3Q-jmd" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="30" width="36" height="22"/>
+                    <rect key="frame" x="67" y="27" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="CzW-60-eog"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="UxH-ep-Q8A">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="M6G-V5-SOw"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -305,8 +369,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="Cen-qF-4Ga" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="30" width="36" height="22"/>
+                    <rect key="frame" x="107" y="27" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="nIZ-2B-VH4"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="ppT-EN-9Uk">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="v9f-Dv-eQr"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -316,7 +384,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gOa-Ma-vHR">
-                    <rect key="frame" x="10" y="34" width="54" height="14"/>
+                    <rect key="frame" x="10" y="28" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="4px-gN-aAD">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -324,8 +392,12 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="sZG-BV-MWf" customClass="GSSteppingTextField">
-                    <rect key="frame" x="70" y="4" width="36" height="22"/>
+                    <rect key="frame" x="67" y="4" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="Uds-D5-LRt"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="x" drawsBackground="YES" id="i3z-Mc-f4H">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="hKj-ns-Vvb"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -335,8 +407,12 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="Sje-hw-Qrm" customClass="GSSteppingTextField">
-                    <rect key="frame" x="108" y="4" width="36" height="22"/>
+                    <rect key="frame" x="107" y="4" width="38" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="QnI-wa-vHM"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1000" placeholderString="y" drawsBackground="YES" id="lQP-YB-UNy">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="8f2-5b-uQc"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -346,7 +422,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fnb-Fd-ahF">
-                    <rect key="frame" x="10" y="8" width="54" height="14"/>
+                    <rect key="frame" x="10" y="5" width="51" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="top 1000" id="sOj-SN-WeY">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -379,7 +455,7 @@
                 <constraint firstItem="t37-ZF-RKq" firstAttribute="firstBaseline" secondItem="AnE-DY-yBU" secondAttribute="firstBaseline" id="Htl-zc-RK7"/>
                 <constraint firstItem="lOe-WO-r1y" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="I0G-xo-zth"/>
                 <constraint firstItem="Gtb-cC-1xY" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="Ic5-5e-7hf"/>
-                <constraint firstItem="RjK-mb-Tt9" firstAttribute="top" secondItem="q2t-JE-Eu5" secondAttribute="bottom" constant="4" id="Imx-Qb-u9w"/>
+                <constraint firstItem="RjK-mb-Tt9" firstAttribute="top" secondItem="q2t-JE-Eu5" secondAttribute="bottom" constant="2" id="Imx-Qb-u9w"/>
                 <constraint firstItem="5CN-e2-UZ8" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="JXp-D1-7j4"/>
                 <constraint firstItem="Uxi-6y-eeU" firstAttribute="firstBaseline" secondItem="21h-zI-U0K" secondAttribute="firstBaseline" id="JeF-b5-jLd"/>
                 <constraint firstItem="lOe-WO-r1y" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="JzH-zU-5yQ"/>
@@ -397,12 +473,12 @@
                 <constraint firstItem="nwd-3Q-jmd" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="R9V-Pe-mG1"/>
                 <constraint firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" constant="20" symbolic="YES" id="Rbw-X3-IRM"/>
                 <constraint firstItem="R3Y-gf-LCw" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="Sip-JY-XnL"/>
-                <constraint firstItem="OIb-ge-FZh" firstAttribute="top" secondItem="wr3-nm-J64" secondAttribute="bottom" constant="4" id="T04-XO-3oY"/>
+                <constraint firstItem="OIb-ge-FZh" firstAttribute="top" secondItem="wr3-nm-J64" secondAttribute="bottom" constant="2" id="T04-XO-3oY"/>
                 <constraint firstItem="cL5-fP-Asf" firstAttribute="firstBaseline" secondItem="2kf-uS-PPq" secondAttribute="firstBaseline" id="TYy-Xq-dVp"/>
                 <constraint firstItem="Cen-qF-4Ga" firstAttribute="firstBaseline" secondItem="gOa-Ma-vHR" secondAttribute="firstBaseline" id="Tca-nC-mbh"/>
                 <constraint firstItem="ck2-fP-dUK" firstAttribute="top" secondItem="BBY-Fy-VeT" secondAttribute="bottom" constant="4" id="Uf0-Um-efL"/>
                 <constraint firstItem="Sje-hw-Qrm" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="VRv-BH-7uf"/>
-                <constraint firstItem="BBY-Fy-VeT" firstAttribute="top" secondItem="Gtb-cC-1xY" secondAttribute="bottom" constant="4" id="VnK-sx-f2b"/>
+                <constraint firstItem="BBY-Fy-VeT" firstAttribute="top" secondItem="Gtb-cC-1xY" secondAttribute="bottom" constant="2" id="VnK-sx-f2b"/>
                 <constraint firstItem="2kf-uS-PPq" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="W52-kf-T74"/>
                 <constraint firstItem="Sje-hw-Qrm" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="X0d-Ng-e7U"/>
                 <constraint firstItem="do8-Zb-M0w" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="Xtk-yt-kJF"/>
@@ -416,7 +492,7 @@
                 <constraint firstItem="lOe-WO-r1y" firstAttribute="firstBaseline" secondItem="LBO-Eg-HuC" secondAttribute="firstBaseline" id="eMt-UU-jv7"/>
                 <constraint firstItem="BBY-Fy-VeT" firstAttribute="trailing" secondItem="q2t-JE-Eu5" secondAttribute="trailing" id="fLk-ho-V2H"/>
                 <constraint firstItem="fnb-Fd-ahF" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="fZ8-KU-p6H"/>
-                <constraint firstItem="wr3-nm-J64" firstAttribute="top" secondItem="RjK-mb-Tt9" secondAttribute="bottom" constant="4" id="fhS-TX-pCo"/>
+                <constraint firstItem="wr3-nm-J64" firstAttribute="top" secondItem="RjK-mb-Tt9" secondAttribute="bottom" constant="2" id="fhS-TX-pCo"/>
                 <constraint firstItem="nwd-3Q-jmd" firstAttribute="top" secondItem="5CN-e2-UZ8" secondAttribute="bottom" constant="4" id="fhT-2n-vnl"/>
                 <constraint firstItem="smM-oH-Dii" firstAttribute="leading" secondItem="AnE-DY-yBU" secondAttribute="leading" id="fxe-Ef-arF"/>
                 <constraint firstItem="2kf-uS-PPq" firstAttribute="trailing" secondItem="AnE-DY-yBU" secondAttribute="trailing" id="fzD-3W-gbL"/>
@@ -431,8 +507,8 @@
                 <constraint firstItem="BBY-Fy-VeT" firstAttribute="leading" secondItem="q2t-JE-Eu5" secondAttribute="leading" id="kat-2n-T03"/>
                 <constraint firstItem="do8-Zb-M0w" firstAttribute="trailing" secondItem="t37-ZF-RKq" secondAttribute="trailing" id="lVN-dA-IHe"/>
                 <constraint firstItem="5CN-e2-UZ8" firstAttribute="top" secondItem="ck2-fP-dUK" secondAttribute="bottom" constant="4" id="lgO-KF-gH8"/>
-                <constraint firstAttribute="height" constant="260" id="neg-iS-sWc"/>
-                <constraint firstItem="Gtb-cC-1xY" firstAttribute="top" secondItem="OIb-ge-FZh" secondAttribute="bottom" constant="4" id="o83-is-kKK"/>
+                <constraint firstAttribute="height" constant="220" id="neg-iS-sWc"/>
+                <constraint firstItem="Gtb-cC-1xY" firstAttribute="top" secondItem="OIb-ge-FZh" secondAttribute="bottom" constant="2" id="o83-is-kKK"/>
                 <constraint firstItem="R3Y-gf-LCw" firstAttribute="leading" secondItem="t37-ZF-RKq" secondAttribute="leading" id="ocr-8a-ZbV"/>
                 <constraint firstItem="do8-Zb-M0w" firstAttribute="firstBaseline" secondItem="EyT-9e-1Qp" secondAttribute="firstBaseline" id="owJ-PU-fii"/>
                 <constraint firstItem="q2t-JE-Eu5" firstAttribute="top" secondItem="1" secondAttribute="top" id="pEF-b3-4C3"/>
@@ -447,5 +523,6 @@
             </constraints>
             <point key="canvasLocation" x="139" y="421"/>
         </customView>
+        <numberFormatter formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" maximumFractionDigits="1" id="IsR-Xz-Fho"/>
     </objects>
 </document>
