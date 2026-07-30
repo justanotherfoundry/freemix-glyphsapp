@@ -56,7 +56,9 @@ class ComponentsPalette (PalettePlugin):
 		self.lineheight = self.posx0.frame().origin.y - self.posx1.frame().origin.y
 		height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
 		self.heightConstrains.setConstant_( height )
-
+		for i in range(MAX_NUMBER_OF_LINES):
+			label = getattr(self, 'label' + str(i))
+			label.setPlaceholderString_(str(i + 1))
 	@objc.IBAction
 	def editTextCallbackX_(self, textField):
 		self.editTextCallback(textField, "X")
@@ -97,6 +99,7 @@ class ComponentsPalette (PalettePlugin):
 		self.allFieldsHidden = False
 		visibleLinesCount = 0
 		for i in range(MAX_NUMBER_OF_LINES):
+			name = None
 			x = None
 			y = None
 			label = getattr(self, 'label' + str(i))
@@ -106,16 +109,7 @@ class ComponentsPalette (PalettePlugin):
 			if not self.font.selectedLayers:
 				# this also catches None, which Glyphs may return
 				pass
-			elif (len(self.font.selectedLayers)) == 1:
-				layer = self.font.selectedLayers[0]
-				try:
-					component = layer.components[i]
-					x, y = component.position
-					label.setStringValue_(component.name)
-				except IndexError:
-					pass
 			else:
-				label.setStringValue_(str(i + 1))
 				for layer in self.font.selectedLayers:
 					try:
 						component = layer.components[i]
@@ -129,14 +123,19 @@ class ComponentsPalette (PalettePlugin):
 						y = component.position.y
 					elif y != round(component.position.y, 3):
 						y = ''
+					if name is None:
+						name = component.name
+					elif name != component.name:
+						name = ''
 			assert ((x is None) == (y is None))
-			if x is None or y is None:
-				label.setStringValue_('')
+			if x is None or y is None or name is None:
+				label.setHidden_(True)
 				posx.setHidden_(True)
 				posy.setHidden_(True)
 				continue
 			posx.setHidden_(False)
 			posy.setHidden_(False)
+			label.setHidden_(False)
 			if x == '':
 				posx.setStringValue_('')
 			else:
@@ -145,6 +144,7 @@ class ComponentsPalette (PalettePlugin):
 				posy.setStringValue_('')
 			else:
 				posy.setIntValue_(int(y))
+			label.setStringValue_(name)
 			visibleLinesCount = i + 1
 		height = VERTICAL_MARGIN + visibleLinesCount * self.lineheight
 		# we are never reducing the height of the palette
