@@ -75,7 +75,7 @@ class ComponentsPalette (PalettePlugin):
 
 	@objc.python_method
 	def update(self, sender=None):
-		collapsed = (self.dialog.frame().origin.y != 0)
+		collapsed = (self.dialog.frame().origin.y < 0)
 		if collapsed:
 			# do not update in case the palette is collapsed:
 			return
