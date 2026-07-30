@@ -1,9 +1,9 @@
 from __future__ import division, print_function, unicode_literals
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
+from GlyphsApp import Glyphs, DOCUMENTACTIVATED, DOCUMENTWILLCLOSE, UPDATEINTERFACE, WINDOW_MENU, CORNER, CAP
+from GlyphsApp.plugins import GeneralPlugin
 import vanilla
-import AppKit
+from AppKit import NSMenuItem, NSImageNameLockLockedTemplate, NSImageNameLockUnlockedTemplate
 import traceback
 
 NUMBER_OF_FIELDS = 12
@@ -11,8 +11,11 @@ MULTIPLE_VALUES = -1024
 
 # from https://forum.glyphsapp.com/t/vanilla-make-edittext-arrow-savvy/5894/2
 GSSteppingTextField = objc.lookUpClass("GSSteppingTextField")
+
+
 class ArrowEditText(vanilla.EditText):
 	nsTextFieldClass = GSSteppingTextField
+
 	def _setCallback(self, callback):
 		super(ArrowEditText, self)._setCallback(callback)
 		if callback is not None and self._continuous:
@@ -20,15 +23,19 @@ class ArrowEditText(vanilla.EditText):
 			self._nsObject.setAction_(self._target.action_)
 			self._nsObject.setTarget_(self._target)
 
+
 class CapsAndCorners(GeneralPlugin):
 
 	@objc.python_method
 	def settings(self):
-		self.name = 'Caps and Corners';
+		self.name = 'Caps and Corners'
 
 	@objc.python_method
 	def start(self):
-		newMenuItem = NSMenuItem(self.name, self.showWindow_)
+		newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(
+			self.name, self.showWindow_, ""
+		)
+		newMenuItem.setTarget_(self)
 		Glyphs.menu[WINDOW_MENU].append(newMenuItem)
 
 	def showWindow_(self, sender):
@@ -43,7 +50,7 @@ class CapsAndCorners(GeneralPlugin):
 			self.w = vanilla.HUDFloatingWindow((100, 100), title = self.name, autosaveName = 'FMXCapsAndCorners')
 			posy = self.margin
 			posx = self.margin
-			posx += widthName 
+			posx += widthName
 			width = widthFitBox
 			self.w.headerFit = vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = 'fit')
 			posx += width
@@ -61,18 +68,18 @@ class CapsAndCorners(GeneralPlugin):
 				posx = self.margin
 				width = widthName
 				setattr(self.w, 'name'+str(i), vanilla.TextBox((posx, posy, width, self.textFieldHeight), text = '_cap.something'))
-				posx += width 
+				posx += width
 				width = widthFitBox
 				setattr(self.w, 'fit_'+str(i), vanilla.CheckBox((posx, posy, width, self.textFieldHeight), callback=self.fitCallback, title = '', sizeStyle='small'))
 				posx += width
 				width = widthDimensionBox
-				setattr(self.w, 'widt' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
+				setattr(self.w, 'widt'+str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
 				posx += width + gutter
 				width = self.textFieldHeight - 2
-				setattr(self.w, 'lock'+str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
+				setattr(self.w, 'lock' + str(i), vanilla.ImageButton((posx, posy + 1, width, self.textFieldHeight - 2), callback=self.lockWidthDepthCallback, sizeStyle='small'))
 				posx += width + gutter
 				width = widthDimensionBox
-				setattr(self.w, 'dept' +str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
+				setattr(self.w, 'dept' + str(i), ArrowEditText((posx, posy, width, self.textFieldHeight), callback=self.editTextCallback, continuous=True, readOnly=False, formatter=None, placeholder='multiple'))
 				posy += self.lineToLine
 			posSize = self.w.getPosSize()
 			self.w.setPosSize((posSize[0], posSize[1], dialogWidth, posSize[3]))
@@ -106,12 +113,12 @@ class CapsAndCorners(GeneralPlugin):
 						if hint.type == CORNER:
 							corners.add(hint.name)
 						else:
-							assert(hint.type == CAP)
+							assert (hint.type == CAP)
 							caps.add(hint.name)
 		caps = sorted(list(caps))
 		corners = sorted(list(corners))
-		self.cc = [(c,CAP) for c in caps]
-		self.cc += [(c,CORNER) for c in corners]
+		self.cc = [(c, CAP) for c in caps]
+		self.cc += [(c, CORNER) for c in corners]
 		i = 0
 		for cname, ctype in self.cc:
 			if ctype == CAP:
@@ -134,9 +141,9 @@ class CapsAndCorners(GeneralPlugin):
 	@objc.python_method
 	def updateLockButtonImage(self, lockButton, i):
 		if self.isLocked[i]:
-			lockButton.setImage(imageNamed=AppKit.NSImageNameLockLockedTemplate)
+			lockButton.setImage(imageNamed=NSImageNameLockLockedTemplate)
 		else:
-			lockButton.setImage(imageNamed=AppKit.NSImageNameLockUnlockedTemplate)
+			lockButton.setImage(imageNamed=NSImageNameLockUnlockedTemplate)
 
 	@objc.python_method
 	def update(self, sender):
@@ -167,7 +174,7 @@ class CapsAndCorners(GeneralPlugin):
 			i = 0
 			for cname, ctype in self.cc:
 				anyDetails = cname in self.details
-				for dimension in ['widt','dept']:
+				for dimension in ['widt', 'dept']:
 					scaleField = getattr(self.w, dimension+str(i))
 					if anyDetails:
 						if self.details[cname][dimension] == MULTIPLE_VALUES:
@@ -197,6 +204,8 @@ class CapsAndCorners(GeneralPlugin):
 
 	@objc.python_method
 	def updateHint(self, cname, ctype, dimension, newValue):
+		if self.font is None:
+			return
 		self.font.disableUpdateInterface()
 		for layer in self.font.selectedLayers:
 			undoHasBegun = False
@@ -232,7 +241,7 @@ class CapsAndCorners(GeneralPlugin):
 		try:
 			i = 0
 			for cname, ctype in self.cc:
-				for dimension in ['widt','dept']:
+				for dimension in ['widt', 'dept']:
 					if editText == getattr(self.w, dimension+str(i)):
 						try:
 							newValue = 0.01 * float(editText.get().strip('%'))
@@ -291,7 +300,7 @@ class CapsAndCorners(GeneralPlugin):
 		except AttributeError:
 			pass
 
-	@objc.python_method	
+	@objc.python_method
 	def __del__(self):
 		Glyphs.removeCallback(self.update)
 		Glyphs.removeCallback(self.updateDocument)
