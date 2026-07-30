@@ -1,8 +1,8 @@
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-from vanilla import *
-from AppKit import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY, NSEvent, NSAlternateKeyMask
+from GlyphsApp import Glyphs, GSEditViewController, GSFontViewController, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
+from vanilla import EditText, Window, Group, TextBox, HorizontalLine
+from Cocoa import NSFont, NSAttributedString, NSFontAttributeName, NSMidX, NSMidY, NSEvent, NSShiftKeyMask
 
 # maximum number of zones to be displayed
 # (increase this value if you have more zones in your font)
@@ -44,6 +44,8 @@ class AlignmentPalette (PalettePlugin):
 	# sets the center of the bounding box of a layer
 	@objc.python_method
 	def setCenterOfLayer(self, layer, newCenter, isX):
+		if self.font is None:
+			return
 		centerX, centerY = self.centerOfLayer(layer)
 		oldCenter = centerX if isX else centerY
 		shift = newCenter - oldCenter + 0.125
@@ -189,7 +191,7 @@ class AlignmentPalette (PalettePlugin):
 	# layers must not be empty.
 	@objc.python_method
 	def overshootsOfLayers(self, layers):
-		globalOvershoots = None
+		globalOvershoots = []
 		for layer in layers:
 			if not layer:
 				continue
@@ -245,7 +247,7 @@ class AlignmentPalette (PalettePlugin):
 		self.marginTop = 6
 		self.marginLeft = 6
 		self.lineSpacing = 21
-		smallSize = NSFont.systemFontSizeForControlSize_(NSFont.smallSystemFontSize())
+		smallSize = NSFont.smallSystemFontSize()
 		textFieldHeight = smallSize + 7
 		textFieldWidth = 86
 		# lockHeight = textFieldHeight
@@ -271,7 +273,7 @@ class AlignmentPalette (PalettePlugin):
 		self.paletteView.group.centerY = ArrowEditText((self.posx_TextField, posy, textFieldWidth, textFieldHeight), callback=self.editTextCallback, continuous=False, readOnly=False, formatter=None, sizeStyle='small')
 		posy += self.lineSpacing + self.marginTop
 		# set up fields for overshoot
-		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_('Overshoot', {NSFontAttributeName: NSFont.boldSystemFontOfSize_(NSFont.systemFontSizeForControlSize_(smallSize))})
+		headlineOvershoot = NSAttributedString.alloc().initWithString_attributes_('Overshoot', {NSFontAttributeName: NSFont.boldSystemFontOfSize_(smallSize)})
 		self.paletteView.group.headlineOvershoot = TextBox((10, posy, innerWidth, 18), headlineOvershoot, sizeStyle='small')
 		posy += self.lineSpacing
 		self.paletteView.group, 'lineAbove', HorizontalLine((self.marginLeft, posy - 3, innerWidth, 1))
@@ -339,7 +341,7 @@ class AlignmentPalette (PalettePlugin):
 				zoneName, overshoot = globalOvershoots[i]
 				getattr(self.paletteView.group, 'name' + str(i)).set(zoneName)
 				getattr(self.paletteView.group, 'line' + str(i)).show(True)
-				assert(overshoot is not None)
+				assert (overshoot is not None)
 				if overshoot == -1:
 					# nothing in the zone
 					overshoot = ''
@@ -356,7 +358,7 @@ class AlignmentPalette (PalettePlugin):
 	# def lockCallback(self, button):
 	# 	posX, posY, w, h = button.getPosSize()
 
-	@objc.python_method	
+	@objc.python_method
 	def editTextCallback(self, editText):
 		if not self.font or not self.font.selectedLayers:
 			return
@@ -440,4 +442,3 @@ class AlignmentPalette (PalettePlugin):
 	@objc.python_method
 	def sortID(self):
 		return self._sortID
-	
