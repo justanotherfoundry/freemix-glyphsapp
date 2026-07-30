@@ -1,17 +1,17 @@
 # encoding: utf-8
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-import operator
-from AppKit import NSPoint
+from GlyphsApp import Glyphs, UPDATEINTERFACE
+from GlyphsApp.plugins import PalettePlugin
+from Foundation import NSPoint
 
 MIN_NUMBER_OF_LINES = 4
 MAX_NUMBER_OF_LINES = 10
 VERTICAL_MARGIN = 6
 
+
 class ComponentsPalette (PalettePlugin):
-	
+
 	dialog = objc.IBOutlet()
 	label0 = objc.IBOutlet()
 	label1 = objc.IBOutlet()
@@ -46,7 +46,7 @@ class ComponentsPalette (PalettePlugin):
 	heightConstrains = objc.IBOutlet()
 	allFieldsHidden = False
 	font = None
-	
+
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
@@ -107,15 +107,15 @@ class ComponentsPalette (PalettePlugin):
 						component = layer.components[i]
 					except IndexError:
 						continue
-					if x == None:
+					if x is None:
 						x = component.position.x
 					elif x != round(component.position.x, 3):
 						x = ''
-					if y == None:
+					if y is None:
 						y = component.position.y
 					elif y != round(component.position.y, 3):
 						y = ''
-			assert((x is None) == (y is None))
+			assert ((x is None) == (y is None))
 			if x is None:
 				getattr(self, 'label' + str(i)).setStringValue_('')
 				getattr(self, 'posx' + str(i)).setHidden_(True)
@@ -170,4 +170,3 @@ class ComponentsPalette (PalettePlugin):
 	@objc.python_method
 	def sortID(self):
 		return self._sortID
-	
