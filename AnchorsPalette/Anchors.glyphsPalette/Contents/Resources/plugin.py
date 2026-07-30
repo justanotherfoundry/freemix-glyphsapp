@@ -43,8 +43,7 @@ class AnchorsPalette (PalettePlugin):
 	posy8 = objc.IBOutlet()
 	posy9 = objc.IBOutlet()
 	heightConstrains = objc.IBOutlet()
-	allFieldsHidden = False
-	
+
 	# seems to be called whenever a new font is opened
 	# careful! not called when the user switches to a different, already opened font
 	@objc.python_method
@@ -82,7 +81,7 @@ class AnchorsPalette (PalettePlugin):
 	@objc.python_method
 	def update( self, sender=None ):
 		collapsed = ( self.dialog.frame().origin.y < 0 )
-		if collapsed and self.allFieldsHidden:
+		if collapsed:
 			# do not update in case the palette is collapsed:
 			return
 		if sender:
@@ -105,7 +104,6 @@ class AnchorsPalette (PalettePlugin):
 			# sort by average y position:
 			anchorStats = sorted( [(name, stat[1]/stat[0]) for name, stat in anchorStats], key=operator.itemgetter(1), reverse=True )
 			self.anchorNames = []
-			self.allFieldsHidden = False
 		else:
 			anchorStats = []
 		for i in range( MAX_NUMBER_OF_LINES ):
@@ -152,7 +150,6 @@ class AnchorsPalette (PalettePlugin):
 		if collapsed:
 			height = VERTICAL_MARGIN + MIN_NUMBER_OF_LINES * self.lineheight
 			self.heightConstrains.setConstant_( height )
-			self.allFieldsHidden = True
 			return
 		lines = max( MIN_NUMBER_OF_LINES, len( anchorStats ) )
 		height = VERTICAL_MARGIN + lines * self.lineheight

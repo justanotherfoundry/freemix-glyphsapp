@@ -44,7 +44,6 @@ class ComponentsPalette (PalettePlugin):
 	posy8 = objc.IBOutlet()
 	posy9 = objc.IBOutlet()
 	heightConstrains = objc.IBOutlet()
-	allFieldsHidden = False
 	font = None
 
 	# seems to be called whenever a new font is opened
@@ -96,7 +95,6 @@ class ComponentsPalette (PalettePlugin):
 			self.font = sender.object()
 		if not self.font:
 			return
-		self.allFieldsHidden = False
 		visibleLinesCount = 0
 		for i in range(MAX_NUMBER_OF_LINES):
 			name = None
