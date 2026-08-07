@@ -54,7 +54,7 @@ def counterparts( selection, background ):
 				best_point_range = point_range
 	return zip( selection, best_point_range )
 
-def subpaths( selection ):
+def get_subpaths(selection):
 	selection.append( GSNode() )
 	# build subpaths
 	subpaths = []
@@ -96,7 +96,7 @@ else:
 	selection = [node for path in layer.paths for node in path.nodes]
 any_changes = False
 background = decomposedBackground(layer.background)
-subpaths = subpaths( selection )
+subpaths = get_subpaths( selection )
 for subpath in subpaths:
 	for node, bg_node in counterparts( subpath, background ):
 		if not any_changes:
