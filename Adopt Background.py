@@ -11,7 +11,7 @@ transfer parts of the outlines between glyphs.
 '''
 
 import sys
-from AppKit import NSBeep
+from GlyphsApp import Glyphs, GSNode, OFFCURVE
 
 def decomposedBackground(background):
 	if background.components:
