@@ -13,7 +13,6 @@ Components are pasted as paths (i.e. decomposed).
 from GlyphsApp import Glyphs
 
 doc = Glyphs.currentDocument
-font = doc.font
 layers = doc.selectedLayers()
 glyph = layers[0].parent
 
