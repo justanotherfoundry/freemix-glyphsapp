@@ -16,8 +16,6 @@ doc = Glyphs.currentDocument
 layers = doc.selectedLayers()
 glyph = layers[0].parent
 
-glyph.beginUndo()
-
 for layer in layers:
 	selection = []
 	# insert the background contents and select them
@@ -30,5 +28,3 @@ for layer in layers:
 		# select path
 		selection.extend( newPath.nodes )
 	layer.selection = selection
-
-glyph.endUndo()
