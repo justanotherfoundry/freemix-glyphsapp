@@ -10,7 +10,7 @@ Pastes the background into the current layer.
 Components are pasted as paths (i.e. decomposed).
 '''
 
-from GlyphsApp import *
+from GlyphsApp import Glyphs
 
 doc = Glyphs.currentDocument
 font = doc.font
