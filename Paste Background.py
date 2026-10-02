@@ -19,22 +19,16 @@ glyph = layers[0].parent
 glyph.beginUndo()
 
 for layer in layers:
-	# deselect all in the foreground
-	for path in layer.paths:
-		for node in path.nodes:
-			layer.removeObjectFromSelection_( node )
-		# layer.removeObjectsFromSelection_( path.pyobjc_instanceMethods.nodes() )
+	selection = []
 	# insert the background contents and select them
 	for path in layer.background.copyDecomposedLayer().paths:
-		layer.paths.append( path.copy() )
+		newPath = path.copy()
+		if Glyphs.versionNumber == 2:
+			layer.paths.append( newPath )
+		else:
+			layer.shapes.append( newPath )
 		# select path
-		try:
-			# Glyphs 2
-			for node in layer.paths[-1].nodes:
-				layer.addSelection_( node )
-		except:
-			# Glyphs 3
-			for node in layer.shapes[-1].nodes:
-				layer.addSelection_( node )
+		selection.extend( newPath.nodes )
+	layer.selection = selection
 
 glyph.endUndo()
