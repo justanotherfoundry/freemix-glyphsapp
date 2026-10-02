@@ -9,6 +9,8 @@ This script toggles between the currently selected layer and the master layer (a
 
 If given a keyboard shortcut, this is very useful for comparing two versions of a glyph.
 '''
+from GlyphsApp import Glyphs
+
 
 font = Glyphs.font
 currentTab = font.currentTab
