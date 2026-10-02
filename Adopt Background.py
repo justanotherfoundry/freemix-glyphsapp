@@ -125,4 +125,3 @@ if any_changes:
 	glyph.endUndo()
 else:
 	pass
-# 	NSBeep()
