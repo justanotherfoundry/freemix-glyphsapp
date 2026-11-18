@@ -19,7 +19,7 @@ font = Glyphs.font
 
 def filterKern():
 	kerning = font.kerning
-	for master in Font.masters:
+	for master in Glyphs.font.masters:
 		masterDict = kerning[master.id]
 		newMasterDict = MGOrderedDictionary.new()
 		firstKeys = masterDict.keys()

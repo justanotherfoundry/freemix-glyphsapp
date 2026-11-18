@@ -18,6 +18,7 @@ The buttons are available only as far as the node structure allows.
 
 import math
 from AppKit import NSPoint
+from GlyphsApp import Glyphs, Message, OFFCURVE, addPoints, subtractPoints
 
 doc = Glyphs.currentDocument
 font = doc.font

@@ -10,6 +10,8 @@ Useful for “dissolving” ligatures, or to determine glyph set dependencies
 (i.e. glyphs that cannot be deleted if the selected ones are to be retained).
 '''
 
+from GlyphsApp import Glyphs
+
 tabLayers = Glyphs.font.currentTab.layers
 for layer in Glyphs.font.selectedLayers:
 	masterId = layer.master.id

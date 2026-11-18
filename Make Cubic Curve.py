@@ -12,6 +12,8 @@ but it can be applied to individual curve segments
 Careful: This script is always applied to all all layers.
 '''
 
+from GlyphsApp import Glyphs, OFFCURVE, CURVE, QCURVE
+
 def samePosition(node1, node2):
 	return node1.position.x == node2.position.x and node1.position.y == node2.position.y
 

@@ -16,6 +16,7 @@ If several glyphs are selected you can choose to add or remove suffixes.
 from builtins import chr
 import vanilla
 from Foundation import NSString, NSMakeRange
+from GlyphsApp import Glyphs
 font = Glyphs.font
 
 # returns the suffix or ''
@@ -81,8 +82,8 @@ class JumpDialog(object):
 		windowWidth = 300
 		windowHeight = 125
 		try:
-			self.layer = doc.selectedLayers()[0]
-		except TypeError:
+			self.layer = Glyphs.font.selectedLayers[0]
+		except (TypeError, IndexError, AttributeError):
 			self.layer = None
 			return
 		self.w = vanilla.FloatingWindow((windowWidth, windowHeight), 'Jump to Alternates', autosaveName='com.freemix.jump_to_alternate.mainwindow')

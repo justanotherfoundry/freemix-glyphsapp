@@ -9,6 +9,7 @@ Prints the interpolation coefficients for each master in all instances (make sur
 '''
 
 import re
+from GlyphsApp import Glyphs
 
 abbreviations = {
 	'Light': 'Lt',

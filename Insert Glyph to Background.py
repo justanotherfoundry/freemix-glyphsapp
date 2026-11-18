@@ -18,6 +18,7 @@ __doc__ = '''
 
 from vanilla import Window, EditText, Button, CheckBox
 from AppKit import NSPoint, NSTextField, NSButton, NSBeep
+from GlyphsApp import Glyphs, GSComponent
 
 LEFT = '<'
 RIGHT = '>'

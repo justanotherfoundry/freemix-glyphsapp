@@ -10,6 +10,7 @@ Select a stroke end (i.e. the two nodes). This script makes the terminal perpend
 
 import math
 from Cocoa import NSPoint, NSMakePoint
+from GlyphsApp import Glyphs, GSNode
 
 class FMXpoint:
 	def __init__(self, x, y=None):
@@ -93,9 +94,9 @@ class FMXpoint:
 	# • self and the returned vector form a rectangular triangle
 	def alignedTo(self, other):
 		if other.x == 0:
-			return (0, y)
+			return FMXpoint(0, self.y)
 		elif other.y == 0:
-			return (x, 0)
+			return FMXpoint(self.x, 0)
 		else:
 			return other * (self.dot(other) / other.lengthSquared())
 
@@ -125,7 +126,7 @@ def intersection(p1, p2, p3, p4):
 # (this is mostly because of float imprecision)
 MAX_VERTEX_DIST = 3000
 
-for selectedLayer in Font.selectedLayers:
+for selectedLayer in Glyphs.font.selectedLayers:
 	glyph = selectedLayer.parent
 	for path in selectedLayer.paths:
 		for node in path.nodes:
@@ -156,7 +157,7 @@ for selectedLayer in Font.selectedLayers:
 					lenNew = (v1.length() + v2.length()) / 2
 					p1new = vertex + v1.atLength(lenNew)
 					p2new = vertex + v2.atLength(lenNew)
-					if Font.grid != 0:
+					if Glyphs.font.grid != 0:
 						p1roundingError = p1new.roundInPlace()
 						p2roundingError = p2new.roundInPlace()
 						if p1roundingError.isShorterThan(p2roundingError):
@@ -184,7 +185,7 @@ for selectedLayer in Font.selectedLayers:
 					# parallel sides
 					shift = (p2 - p1).alignedTo(p1 - p0) * 0.5
 					p1new = p1 + shift
-					if Font.grid != 0:
+					if Glyphs.font.grid != 0:
 						# note: because of symmetry, the rounding error 
 						#       would be the same for p1 and p2
 						p1roundingError = p1new.roundInPlace()
