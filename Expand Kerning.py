@@ -14,20 +14,14 @@ doc = Glyphs.currentDocument
 font = doc.font
 master_id = font.selectedFontMaster.id
 
-right_groups = set( [ '@MMK_R_' + glyph.leftKerningGroup for glyph in font.glyphs if glyph.leftKerningGroup ] )
-left_groups = set( [ '@MMK_L_' + glyph.rightKerningGroup for glyph in font.glyphs if glyph.rightKerningGroup ] )
-glyph_names = set( [ glyph.name for glyph in font.glyphs ] )
-right_sides = right_groups.union( glyph_names )
-
 # expand
-flatKerning = { master_id: {} }
-kerningDict = flatKerning[master_id]
-for leftGlyph in font.glyphs:
-	leftLayer = leftGlyph.layers[master_id]
-	for rightGlyph in font.glyphs:
-		rightLayer = rightGlyph.layers[master_id]
-		kernValue = font.kerningFirstLayer_secondLayer_(leftLayer, rightLayer)
-
+flatKerning = []
+for left_glyph in font.glyphs:
+	if left_glyph.rightKerningGroup:
+		left_name = '@MMK_L_' + left_glyph.rightKerningGroup
+	else:
+		left_name = left_glyph.name
+	for right_glyph in font.glyphs:
 		if right_glyph.leftKerningGroup:
 			right_name = '@MMK_R_' + right_glyph.leftKerningGroup
 		else:
@@ -43,19 +37,26 @@ for leftGlyph in font.glyphs:
 			exception_value = font.kerningForPair( master_id, left_name, right_glyph.name )
 			if exception_value is not None and exception_value < 77000:
 				value = exception_value
-			try:
-				glyphKerningDict = kerningDict[left_glyph.id]
-			except KeyError:
-				kerningDict[left_glyph.id] = {}
-				glyphKerningDict = kerningDict[left_glyph.id]
-# 			glyphKerningDict[right_glyph.id] = value
-# 			font.setKerningForPair( master_id, left_glyph.name, right_glyph.name, value )
 			flatKerning.append((left_glyph.name, right_glyph.name, value))
 
-font.kerning = {}
+# remove the existing kerning of this master
+# (the kerning of the other masters is not touched)
+id_to_name = { glyph.id: glyph.name for glyph in font.glyphs }
+def kerning_name( key ):
+	if key.startswith('@'):
+		return key
+	return id_to_name.get(key)
+try:
+	master_kerning = font.kerning[master_id]
+except (KeyError, TypeError):
+	master_kerning = None
+# Glyphs returns None (rather than raising) for a master without kerning
+master_kerning = master_kerning or {}
+existing_pairs = [ ( kerning_name(left), kerning_name(right) ) for left in master_kerning for right in ( master_kerning[left] or {} ) ]
+for left_side, right_side in existing_pairs:
+	if left_side and right_side:
+		font.removeKerningForPair( master_id, left_side, right_side )
+
 print(len(flatKerning), 'flat kerning pairs')
 for left_glyph_name, right_glyph_name, value in flatKerning:
 	font.setKerningForPair( master_id, left_glyph_name, right_glyph_name, value )
-
-# remove kerning groups
-# (TODO)
