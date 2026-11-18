@@ -10,6 +10,8 @@ Converts cubic curves to quadratic curves (if a BCP is selected).
 This does not try to retain the shape, it does not add or remove nodes, it simply re-defines the cuve type.
 '''
 
+from GlyphsApp import Glyphs, OFFCURVE, CURVE, QCURVE
+
 def samePosition(node1, node2):
 	return node1.position.x == node2.position.x and node1.position.y == node2.position.y
 

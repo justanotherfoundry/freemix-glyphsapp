@@ -15,6 +15,8 @@ __doc__ = '''
 '''
 
 from vanilla import Window, EditText, Button
+import objc
+from GlyphsApp import Glyphs
 
 LEFT = '<'
 RIGHT = '>'

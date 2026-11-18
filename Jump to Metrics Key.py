@@ -11,6 +11,7 @@ Tip: Give it a keyboard shortcut!
 '''
 
 from builtins import chr
+from GlyphsApp import Glyphs
 
 def getMetricsKeyGlyph():
 	font = Glyphs.font

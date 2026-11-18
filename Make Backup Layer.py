@@ -12,6 +12,7 @@ I wrote this script mostly because it allows me to assign a keyboard shortcut. A
 
 import datetime
 import Foundation
+from GlyphsApp import Glyphs
 
 formatter = Foundation.NSDateFormatter.alloc().init()
 formatter.setDateStyle_(Foundation.NSDateFormatterMediumStyle)

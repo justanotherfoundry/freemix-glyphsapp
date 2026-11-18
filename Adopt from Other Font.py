@@ -9,6 +9,7 @@ Adopts glyph properties from the same-named glyph in a different font.
 '''
 
 import vanilla
+from GlyphsApp import Glyphs
 
 try:
 	props
@@ -30,8 +31,8 @@ class AdoptDialog(object):
 		elementHeight = 20
 		rightMargin = -10
 		try:
-			self.layer = doc.selectedLayers()[0]
-		except TypeError:
+			self.layer = Glyphs.font.selectedLayers[0]
+		except (TypeError, IndexError, AttributeError):
 			self.layer = None
 			return
 		self.w = vanilla.FloatingWindow((windowWidth, windowHeight), 'Adopt from Other Font', autosaveName='com.freemix.adopt_from.mainwindow')
@@ -77,14 +78,14 @@ class AdoptDialog(object):
 		anySuccessful = False
 		if props['... in all masters']:
 			layers = []
-			for layer in doc.selectedLayers():
+			for layer in Glyphs.font.selectedLayers:
 				if not layer:
 					continue
 				glyph = layer.parent
 				for master in glyph.parent.masters:
 					layers.append(glyph.layers[master.id])
 		else:
-			layers = doc.selectedLayers()
+			layers = Glyphs.font.selectedLayers
 		for layer in layers:
 			glyph = layer.parent
 			otherGlyph = otherFont.glyphs[glyph.name]

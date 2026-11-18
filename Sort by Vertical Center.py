@@ -9,6 +9,7 @@ Outputs the selected glyphs (from Font or Edit view) in a new tab, sorted by ver
 '''
 
 import GlyphsApp
+from GlyphsApp import Glyphs, GSControlLayer
 
 font = Glyphs.font
 
